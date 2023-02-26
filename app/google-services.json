@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "755767081837",
+    "firebase_url": "https://mysoukhin-default-rtdb.firebaseio.com",
+    "project_id": "mysoukhin",
+    "storage_bucket": "mysoukhin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755767081837:android:b68db5402366389a7e7864",
+        "android_client_info": {
+          "package_name": "com.example.mysoukhin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755767081837-gmv9aej9dlc0u5nqqvrum1c3s377m7ll.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mysoukhin",
+            "certificate_hash": "215da262c82f13103bb48f356ac15bc1d565363c"
+          }
+        },
+        {
+          "client_id": "755767081837-t40h4ud1fhsdqdl0pbrebbqcgj8ukka9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbEmvWXTFhZsAXcvGMYABJrbEmtfdxUyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755767081837-cgkd65uo8osvuqakg7ippq6af14va23k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "755767081837",
+    "project_id": "mysoukhin",
+    "storage_bucket": "mysoukhin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755767081837:android:b68db5402366389a7e7864",
+        "android_client_info": {
+          "package_name": "com.example.mysoukhin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755767081837-t40h4ud1fhsdqdl0pbrebbqcgj8ukka9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbEmvWXTFhZsAXcvGMYABJrbEmtfdxUyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755767081837-cgkd65uo8osvuqakg7ippq6af14va23k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
