@@ -24,8 +24,6 @@ public class HomeFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     TextView category_see_all;
 
-
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,7 +39,7 @@ public class HomeFragment extends Fragment {
           // category list
         cat_recycler = root.findViewById(R.id.rec_category);
         cat_recycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,true));
-        cat_recycler.setHasFixedSize(true);
+        //cat_recycler.setHasFixedSize(true);
         cat_recycler.setAdapter(categoryAdapter);
         List<CategoryModel> lists = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(getContext(),lists);

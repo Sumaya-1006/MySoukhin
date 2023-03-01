@@ -19,7 +19,16 @@
         android:theme="@style/Theme.MySoukhin"
         tools:targetApi="31">
         <activity
-            android:name=".CategoryActivity"
+            android:name=".ui.CheckOutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ShippingAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.AddProductActivity"
