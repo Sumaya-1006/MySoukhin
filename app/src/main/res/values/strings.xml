@@ -2,4 +2,16 @@
     <string name="app_name">MySoukhin</string>
     <string name="title_text">Alert title</string>
     <string name="message_text">Do you want you exit</string>
+
+    <string-array name="productstypes">
+        <item>Popular Products</item>
+        <item>Latest Products</item>
+        <item>Hoodies</item>
+        <item>T-shirts</item>
+        <item>Cap</item>
+        <item>Mug</item>
+        <item>Phone Cover</item>
+        <item>Gift</item>
+
+    </string-array>
 </resources>

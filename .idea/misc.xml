@@ -25,6 +25,7 @@
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_logout.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_shipping_address.xml" value="0.35260416666666666" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_upload_history.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/address_list.xml" value="0.365625" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/category_list.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/custom_dialog.xml" value="0.365625" />
@@ -35,6 +36,7 @@
         <entry key="..\:/MySoukhin/app/src/main/res/layout/product_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/products_item_list.xml" value="0.365625" />
         <entry key="..\:/MySoukhin/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/SDK/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

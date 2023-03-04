@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
    Context context;
-    List<CategoryModel> lists;
+   List<CategoryModel> lists;
 
     public CategoryAdapter(Context context, List<CategoryModel> lists) {
         this.context = context;
