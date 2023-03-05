@@ -60,7 +60,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
         circleImage = view.findViewById(R.id.circleImage);
@@ -80,7 +79,7 @@ public class ProfileFragment extends Fragment {
         UserId =CurrentUser.getUid();
         mStorageReference= FirebaseStorage.getInstance().getReference();
 
-       // getUserProfileData();
+        getUserProfileData();
 
         new_camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,8 +136,8 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-        /*private void getUserProfileData() {
-           *//* ProfileModel model = new ProfileModel();
+        private void getUserProfileData() {
+           ProfileModel model = new ProfileModel();
             model.setName(profile_name.getText().toString());
             model.setEmail(profile_email.getText().toString());
             FirebaseDatabase database1 = FirebaseDatabase.getInstance();
@@ -153,15 +152,20 @@ public class ProfileFragment extends Fragment {
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
-            });*//*
+            });
 
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+           /* GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
             if( account !=null){
+             String personName = account.getDisplayName();
+             String personEmail = account.getEmail();
+             profile_name.setText(personName);
+             profile_email.setText(personEmail);
+
                
-            }
+            }*/
 
         }
-*/
+
 
     private void loadImage(){
         Intent intent = new Intent();
