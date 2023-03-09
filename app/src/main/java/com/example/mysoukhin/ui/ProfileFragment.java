@@ -97,6 +97,14 @@ public class ProfileFragment extends Fragment {
              }
          });
 
+         forward3.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent intent = new Intent(getContext(),TokenActivity.class);
+                 startActivity(intent);
+             }
+         });
+
         forward6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

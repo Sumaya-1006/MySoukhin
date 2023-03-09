@@ -1,6 +1,6 @@
 package com.example.mysoukhin.models;
 
-public class ProductModel {
+public class ProductsDetailsModel {
 
      String productType;
      String price;
@@ -8,7 +8,7 @@ public class ProductModel {
      String fabric;
      String image;
 
-    public ProductModel(String productType, String price, String oldPrice, String fabric, String image) {
+    public ProductsDetailsModel(String productType, String price, String oldPrice, String fabric, String image) {
 
         this.productType = productType;
         this.price = price;

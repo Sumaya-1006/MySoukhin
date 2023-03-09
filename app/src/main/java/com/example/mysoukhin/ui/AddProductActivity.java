@@ -18,12 +18,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.models.ProductModel;
-import com.google.android.gms.analytics.ecommerce.Product;
+import com.example.mysoukhin.models.ProductsDetailsModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,15 +38,13 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.nio.charset.StandardCharsets;
-
 public class AddProductActivity extends AppCompatActivity {
     Button upload,history;
     ImageView imgProduct;
     Spinner spinner;
     MaterialButton btnSubmit,add;
     TextInputEditText name,productType,price,oldPrice,fabric;
-    private TextInputLayout nameLayout, productTypeLayout, priceLayout, expDateLayout,fabricationLayout;
+    private TextInputLayout nameLayout, productTypeLayout, priceLayout, oldPriceLayout,fabricationLayout;
     String category;
     Uri imgUri;
     private StorageReference mStorageRef;
@@ -58,8 +54,6 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
-        getSupportActionBar().setTitle("Upload ProductModel");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         upload = findViewById(R.id.uploadId);
         history = findViewById(R.id.historyId);
@@ -71,13 +65,13 @@ public class AddProductActivity extends AppCompatActivity {
         name = findViewById(R.id.editTextProductName);
         productType = findViewById(R.id.editTextProductType);
         price = findViewById(R.id.editTextProductPrice);
-        oldPrice = findViewById(R.id.editTextProductExpire);
+        oldPrice = findViewById(R.id.editTextProductOldPrice);
         fabric = findViewById(R.id.editTextProductFabrication);
 
         nameLayout = findViewById(R.id.editTextProductNameLayout);
         productTypeLayout = findViewById(R.id.editTextProductTypeLayout);
         priceLayout = findViewById(R.id.editTextProductPriceLayout);
-        expDateLayout = findViewById(R.id.editTextProductExpire);
+        oldPriceLayout = findViewById(R.id.editTextProductOldPriceLayout);
         fabricationLayout = findViewById(R.id.editTextProductFabricationLayout);
 
 
@@ -251,14 +245,14 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
-        expDateLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        oldPriceLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (oldPrice.getText().toString().trim().isEmpty()) {
-                    expDateLayout.setErrorEnabled(true);
-                    expDateLayout.setError("Please Enter Product Name");
+                    oldPriceLayout.setErrorEnabled(true);
+                    oldPriceLayout.setError("Please Enter Product Name");
                 } else {
-                    expDateLayout.setErrorEnabled(false);
+                    oldPriceLayout.setErrorEnabled(false);
                 }
             }
         });
@@ -272,10 +266,10 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (oldPrice.getText().toString().trim().isEmpty()) {
-                    expDateLayout.setErrorEnabled(true);
-                    expDateLayout.setError("Please Enter Product Name");
+                    oldPriceLayout.setErrorEnabled(true);
+                    oldPriceLayout.setError("Please Enter Product Name");
                 } else {
-                    expDateLayout.setErrorEnabled(false);
+                   oldPriceLayout.setErrorEnabled(false);
                 }
             }
 
@@ -336,7 +330,7 @@ public class AddProductActivity extends AppCompatActivity {
                     Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                     while (!urlTask.isSuccessful()) ;
                     Uri downloadUrl = urlTask.getResult();
-                    ProductModel product = new ProductModel(
+                    ProductsDetailsModel product = new ProductsDetailsModel(
                             productType.getText().toString().trim(),
                             price.getText().toString().trim(),
                             oldPrice.getText().toString().trim(),

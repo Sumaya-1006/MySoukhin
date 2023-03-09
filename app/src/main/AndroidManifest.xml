@@ -19,7 +19,14 @@
         android:theme="@style/Theme.MySoukhin"
         tools:targetApi="31">
         <activity
-            android:name=".UploadHistory"
+            android:name=".ui.ProductDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.TokenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.UploadHistory"
             android:exported="false" />
         <activity
             android:name=".ui.CheckOutActivity"
