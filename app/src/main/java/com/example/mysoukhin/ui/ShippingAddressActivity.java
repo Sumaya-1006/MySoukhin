@@ -29,6 +29,7 @@ public class ShippingAddressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipping_address);
+        this.setTitle("Address");
 
         saveBtn = findViewById(R.id.saveBtn);
         name = findViewById(R.id.nameEditText);

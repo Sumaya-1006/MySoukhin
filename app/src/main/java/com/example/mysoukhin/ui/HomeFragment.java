@@ -5,6 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,10 +21,20 @@ import com.example.mysoukhin.adapters.CategoryAdapter;
 import com.example.mysoukhin.adapters.LatestProductsAdapter;
 import com.example.mysoukhin.adapters.NewProductsAdapter;
 import com.example.mysoukhin.adapters.ProductsAdapter;
+import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.CategoryModel;
+import com.example.mysoukhin.models.FavouritesClass;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
@@ -31,11 +45,21 @@ public class HomeFragment extends Fragment {
     RecyclerView cat_recycler,rec_popular,rec_latest,rec_new;
     CategoryAdapter categoryAdapter;
     NestedScrollView nestedScrollView;
+    FirebaseDatabase database;
+    private static List<FavouritesClass> favourites;
     TextView category_see_all,popularProducts_see_all,latestProducts_see_all,newProducts_see_all;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Home");
+
+       /* ActionBar actionBar = null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);*/
+        Retrieve_fav();
+
+
 
         // Inflate the layout for this fragment
           View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -58,13 +82,14 @@ public class HomeFragment extends Fragment {
         cat_recycler.setAdapter(categoryAdapter);
         cat_recycler.setNestedScrollingEnabled(false);
         cat_recycler.setHasFixedSize(true);
+        database = FirebaseDatabase.getInstance();
 
-        lists.add(new CategoryModel(R.drawable.t,"T-Shirt"));
-        lists.add(new CategoryModel(R.drawable.grup,"Hoodies"));
-        lists.add(new CategoryModel(R.drawable.fram,"Cap"));
-        lists.add(new CategoryModel(R.drawable.fme,"Mug"));
-        lists.add(new CategoryModel(R.drawable.vector,"PhoneCover"));
-        lists.add(new CategoryModel(R.drawable.g,"Gift"));
+        lists.add(new CategoryModel(R.drawable.shirt,"T-Shirt","T_shirt"));
+        lists.add(new CategoryModel(R.drawable.hoodies,"Hoodies","Hoodies"));
+        lists.add(new CategoryModel(R.drawable.cap,"Cap","Cap"));
+        lists.add(new CategoryModel(R.drawable.mu,"Mug","Double Mug"));
+        lists.add(new CategoryModel(R.drawable.vector,"PhoneCover","Phone Cover"));
+        lists.add(new CategoryModel(R.drawable.gifts,"Gift","Gifts Item"));
 
     category_see_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,17 +114,30 @@ public class HomeFragment extends Fragment {
         productsModels.add(new ProductsModel(R.drawable.ab,"Cap","৳300","  ৳400","Cap"));
         productsModels.add(new ProductsModel(R.drawable.abd,"T_shirt","৳500","  ৳600","Shirt"));
         productsModels.add(new ProductsModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        productsModels.add(new ProductsModel(R.drawable.acd,"T_shirt","৳500","  ৳600","Shirt"));
+        productsModels.add(new ProductsModel(R.drawable.mug,"T_shirt","৳500","  ৳600","Shirt"));
         productsModels.add(new ProductsModel(R.drawable.akh,"Hoodies","৳800","   ৳1000","Hoodies"));
         productsModels.add(new ProductsModel(R.drawable.akl,"Hoodies","৳800","  ৳1000","Hoodies"));
 
-       /* popularProducts_see_all.setOnClickListener(new View.OnClickListener() {
+        database.getReference().child("popularProducts").push().setValue(productsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+              //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        popularProducts_see_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),PopularProduct.class);
+                Intent intent = new Intent(getContext(),ProductsShowAll.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
         //latest products
 
@@ -122,6 +160,27 @@ public class HomeFragment extends Fragment {
         latestModels.add(new LatestModel(R.drawable.ac,"(356 reviews)","Phone Cover","৳100","  ৳300","Phone Cover"));
         latestModels.add(new LatestModel(R.drawable.abd,"(388 reviews)","Women T_shirt","৳300","  ৳500","Shirt"));
 
+        database.getReference().child("latestProducts").push().setValue(latestModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+              //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        latestProducts_see_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),ProductsShowAll.class);
+                startActivity(intent);
+            }
+        });
+
         //new Products
         newProducts_see_all= root.findViewById(R.id.new_see_all);
         rec_new = root.findViewById(R.id.rec_newProduct);
@@ -140,6 +199,49 @@ public class HomeFragment extends Fragment {
         newProductsModels.add(new NewProductsModel(R.drawable.am,"(380 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
         newProductsModels.add(new NewProductsModel(R.drawable.akl,"(269 reviews)","Hoodies","৳1500","  ৳2000","Hoodies"));
 
+        database.getReference().child("newProducts").push().setValue(newProductsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+              //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        newProducts_see_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),ProductsShowAll.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
     }
-}
+
+
+    private void Retrieve_fav() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("favourites")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        favourites = new ArrayList<>();
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    FavouritesClass fav = new FavouritesClass();
+                    fav = ds.getValue(FavouritesClass.class);
+                    favourites.add(fav);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+    }
+    }

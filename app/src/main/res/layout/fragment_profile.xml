@@ -85,8 +85,8 @@
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="160dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="140dp"
                 android:text=" "
                 android:textColor="@color/black"
                 android:textStyle="bold" />
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_name"
                 android:layout_marginLeft="127dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text=" "
                 android:textColor="@color/black"
                 android:textStyle="bold" />
@@ -248,7 +248,7 @@
                         android:layout_width="30dp"
                         android:layout_height="23dp"
                         android:paddingRight="3dp"
-                        android:src="@drawable/th" />
+                        android:src="@drawable/history" />
 
                     <TextView
                         android:id="@+id/tHistoryText"

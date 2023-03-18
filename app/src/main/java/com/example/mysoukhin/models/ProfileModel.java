@@ -3,15 +3,15 @@ package com.example.mysoukhin.models;
 public class ProfileModel {
     private String name;
     private String email;
-    private String img;
+    private String imgUrl;
 
     public ProfileModel() {
     }
 
-    public ProfileModel(String name, String email, String img) {
+    public ProfileModel(String name, String email, String imgUrl) {
         this.name = name;
         this.email = email;
-        this.img = img;
+        this.imgUrl = imgUrl;
     }
 
     public String getName() {
@@ -30,11 +30,11 @@ public class ProfileModel {
         this.email = email;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImg(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

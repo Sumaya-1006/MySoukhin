@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK );
                             startActivity(intent);

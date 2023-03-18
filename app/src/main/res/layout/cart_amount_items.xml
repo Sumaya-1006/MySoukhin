@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_constraintTop_toBottomOf="@+id/divider3"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/total_priceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="17dp"
+                android:text="Total Product Price       :"
+                android:textColor="@color/black"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.03" />
+
+
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="৳1530"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp">
+
+            <TextView
+                android:id="@+id/total_tokenText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Your Token                      :"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.03" />
+
+
+            <TextView
+                android:id="@+id/total_token"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500 Token = ৳50"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp">
+
+            <TextView
+                android:id="@+id/total_amountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="17dp"
+                android:text="Total                                  :"
+                android:textColor="@color/black"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.03" />
+
+
+            <TextView
+                android:id="@+id/total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ৳200"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/checkoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Checkout"
+                android:textSize="17dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/purple_500"
+                android:inputType="textCapWords"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+

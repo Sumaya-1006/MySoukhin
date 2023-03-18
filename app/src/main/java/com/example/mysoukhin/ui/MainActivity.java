@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bnView = findViewById(R.id.bottomNavigationView);
         actionButton = findViewById(R.id.actionBtn);
+
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,18 +46,18 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.home) {
-                    loadFragment(new HomeFragment(),false);
+                    loadFragment(new HomeFragment(),true);
 
 
                 } else if (id == R.id.fav) {
-                    loadFragment(new FavouriteFragment(),true);
+                    loadFragment(new FavouriteFragment(),false);
 
 
                 } else if (id == R.id.carts){
-                    loadFragment(new CartsFragment(),true);
+                    loadFragment(new CartsFragment(),false);
 
                 } else if (id == R.id.profile) {
-                    loadFragment(new ProfileFragment(),true);
+                    loadFragment(new ProfileFragment(),false);
 
                 }
 
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
     }
+
 
 }
 

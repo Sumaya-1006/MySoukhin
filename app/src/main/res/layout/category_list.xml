@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_height="45dp"
         android:gravity="center"
-        android:src="@drawable/gm"
+        android:src="@drawable/shirt"
         app:civ_border_width="1dp"
         app:civ_border_color="@color/grey"/>
 

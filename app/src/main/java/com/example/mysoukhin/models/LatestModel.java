@@ -4,13 +4,19 @@ import java.io.Serializable;
 
 public class LatestModel implements Serializable {
     int productImg;
+    int checkBox;
     String rating;
     String productTitle;
     String productPrice;
     String oldPrice;
     String category;
 
+    public LatestModel(int checkBox) {
+        this.checkBox = checkBox;
+    }
+
     public LatestModel( ) {
+
 
     }
 
@@ -69,5 +75,13 @@ public class LatestModel implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(int checkBox) {
+        this.checkBox = checkBox;
     }
 }

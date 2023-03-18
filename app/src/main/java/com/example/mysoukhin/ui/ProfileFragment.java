@@ -2,14 +2,19 @@ package com.example.mysoukhin.ui;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.AddressModel;
 import com.example.mysoukhin.models.ProfileModel;
@@ -37,6 +43,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
@@ -53,9 +60,9 @@ public class ProfileFragment extends Fragment {
     private FirebaseUser CurrentUser;
     private String UserId;
     private StorageReference mStorageReference;
-    private Object CropImage;
-    private Uri resultUri;
-    private Uri filePath;
+    Uri imgUri;
+    private StorageReference mStorageRef;
+    private StorageTask mUploadTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,29 +95,43 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-         forward5.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(getContext(),ShippingAddressActivity.class);
-                 startActivity(intent);
+        forward5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),ShippingAddressActivity.class);
+                startActivity(intent);
 
-             }
-         });
+            }
+        });
 
-         forward3.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(getContext(),TokenActivity.class);
-                 startActivity(intent);
-             }
-         });
+        forward2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),OrderHistory.class);
+                startActivity(intent);
+            }
+        });
+
+        forward3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),TokenActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        forward4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),TokenHistory.class);
+                startActivity(intent);
+            }
+        });
 
         forward6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(getContext(), "You are successfully Logout", Toast.LENGTH_SHORT).show();
-              // Intent intent = new Intent(getContext(),LogoutActivity.class);
-              // startActivity(intent);
+
                 Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.custom_dialog);
                 Button logout = dialog.findViewById(R.id.logOutId);
@@ -144,36 +165,34 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-        private void getUserProfileData() {
-           ProfileModel model = new ProfileModel();
-            model.setName(profile_name.getText().toString());
-            model.setEmail(profile_email.getText().toString());
-            FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+    private void getUserProfileData() {
+        ProfileModel model = new ProfileModel();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+        String name = account.getDisplayName();
+        String email = account.getEmail();
 
-            database1.getReference().child("user").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
-            });
 
-           /* GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-            if( account !=null){
-             String personName = account.getDisplayName();
-             String personEmail = account.getEmail();
-             profile_name.setText(personName);
-             profile_email.setText(personEmail);
+        /* model.setName(profile_name.getText().toString());
+        model.setEmail(profile_email.getText().toString());*/
+        profile_name.setText(name);
+        profile_email.setText(email);
 
-               
-            }*/
+        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
 
-        }
+        database1.getReference().child("user").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
 
+
+    }
 
     private void loadImage(){
         Intent intent = new Intent();
@@ -184,30 +203,33 @@ public class ProfileFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ProfileFragment.GALARY_PICK && resultCode == Activity.RESULT_OK && data.getData() != null && data != null) {
+           imgUri = data.getData();
 
-        if (requestCode == 1 && requestCode == RESULT_OK) {
-            filePath = data.getData();
-
-            UploadImageInStorageDataBase();
-
+            try {
+                Picasso.get().load(imgUri).fit().centerCrop().into(circleImage);
+                UploadImageInStorageDataBase();
+            } catch (Exception e) {
+                Log.e(this.toString(), e.getMessage().toString());
+            }
         }
-
     }
 
 
     private void UploadImageInStorageDataBase() {
         final StorageReference FilePath = mStorageReference.child("profile").child(UserId +"jpg");
-        FilePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        FilePath.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 FilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(UserId);
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId);
                         databaseReference.child("image").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Picasso.get().load(uri.toString()).placeholder(R.drawable.profile).into(circleImage);
+                              //  getNavHeaderData();
 
                             }
                         });
@@ -217,8 +239,33 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-    }
-}
 
+    }
+
+  /* private void getNavHeaderData(){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("users").child(UserId);
+        ValueEventListener valueEventListener=new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String Name = snapshot.child("Name").getValue().toString();
+                    String Email = snapshot.child("Email").getValue().toString();
+                    String Image = snapshot.child("Image").getValue().toString();
+                    profile_name.setText(Name);
+                    profile_email.setText(Email);
+
+                    if (Image.equals("default")) {
+                        Picasso.get().load(R.drawable.profile).into(circleImage);
+                    } else
+                        Picasso.get().load(Image).placeholder(R.drawable.profile).into(circleImage);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
+    }*/
+}
 
 

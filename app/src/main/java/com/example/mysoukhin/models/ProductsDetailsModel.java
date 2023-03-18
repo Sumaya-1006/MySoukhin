@@ -3,17 +3,15 @@ package com.example.mysoukhin.models;
 public class ProductsDetailsModel {
 
      String productType;
-     String price;
-     String oldPrice;
-     String fabric;
+     String name;
+     /*String oldPrice;
+     String fabric;*/
      String image;
 
-    public ProductsDetailsModel(String productType, String price, String oldPrice, String fabric, String image) {
+    public ProductsDetailsModel(String productType, String name,String image) {
 
         this.productType = productType;
-        this.price = price;
-        this.oldPrice = oldPrice;
-        this.fabric = fabric;
+        this.name = name;
         this.image = image;
     }
 
@@ -25,29 +23,14 @@ public class ProductsDetailsModel {
         this.productType = productType;
     }
 
-    public String getPrice() {
-        return price;
+    public String getName() {
+        return name;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getOldPrice() {
-        return oldPrice;
-    }
-
-    public void setOldPrice(String oldPrice) {
-        this.oldPrice = oldPrice;
-    }
-
-    public String getFabrication() {
-        return fabric;
-    }
-
-    public void setFabrication(String fabrication) {
-        this.fabric = fabric;
-    }
     public String getImage() {
         return image;
     }
