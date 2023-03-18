@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -52,22 +53,21 @@ import java.io.InputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
-    public static final int GALARY_PICK = 200 ;
-    ImageView forward1,forward2,forward3,forward4,forward5, forward6, new_camera;
-    TextView profile_name,profile_email;
+    public static final int GALARY_PICK = 200;
+    ImageView forward1, forward2, forward3, forward4, forward5, forward6, new_camera;
+    TextView profile_name, profile_email;
     CircleImageView circleImage;
     private FirebaseAuth mAuth;
     private FirebaseUser CurrentUser;
     private String UserId;
     private StorageReference mStorageReference;
-    Uri imgUri;
-    private StorageReference mStorageRef;
-    private StorageTask mUploadTask;
+   // Uri imgUri;
+    private  Uri imgUri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         circleImage = view.findViewById(R.id.circleImage);
         profile_name = view.findViewById(R.id.profile_name);
@@ -81,10 +81,10 @@ public class ProfileFragment extends Fragment {
         forward6 = view.findViewById(R.id.forward6);
         new_camera = view.findViewById(R.id.new_cameraId);
 
-        mAuth=FirebaseAuth.getInstance();
-        CurrentUser =mAuth.getCurrentUser();
-        UserId =CurrentUser.getUid();
-        mStorageReference= FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        CurrentUser = mAuth.getCurrentUser();
+        UserId = CurrentUser.getUid();
+        mStorageReference = FirebaseStorage.getInstance().getReference();
 
         getUserProfileData();
 
@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
         forward5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),ShippingAddressActivity.class);
+                Intent intent = new Intent(getContext(), ShippingAddressActivity.class);
                 startActivity(intent);
 
             }
@@ -107,7 +107,7 @@ public class ProfileFragment extends Fragment {
         forward2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),OrderHistory.class);
+                Intent intent = new Intent(getContext(), OrderHistory.class);
                 startActivity(intent);
             }
         });
@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment {
         forward3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),TokenActivity.class);
+                Intent intent = new Intent(getContext(), TokenActivity.class);
                 startActivity(intent);
             }
         });
@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
         forward4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),TokenHistory.class);
+                Intent intent = new Intent(getContext(), TokenHistory.class);
                 startActivity(intent);
             }
         });
@@ -150,7 +150,7 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View view) {
 
                         Toast.makeText(getContext(), "You are successfully Logout", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(),LoginActivity.class);
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
                         startActivity(intent);
 
                     }
@@ -161,38 +161,81 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
         return view;
+    }
+
+    private void getNavHeaderData() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("users").child(UserId);
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String Image = snapshot.child("image").getValue().toString();
+                    if (Image.equals("default")) {
+                        Picasso.get().load(R.drawable.profile).into(circleImage);
+                    } else
+                        Picasso.get().load(Image).placeholder(R.drawable.profile).into(circleImage);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void getUserProfileData() {
         ProfileModel model = new ProfileModel();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-        String name = account.getDisplayName();
-        String email = account.getEmail();
-
-
-        /* model.setName(profile_name.getText().toString());
-        model.setEmail(profile_email.getText().toString());*/
-        profile_name.setText(name);
-        profile_email.setText(email);
-
-        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
-
-        database1.getReference().child("user").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("users").child(UserId);
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    String Image = snapshot.child("image").getValue().toString();
+
+                    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+                    String name = account.getDisplayName();
+                    String email = account.getEmail();
+
+                    profile_name.setText(name);
+                    profile_email.setText(email);
+                    FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+                    database1.getReference().child("users").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    if (Image.equals("default")) {
+                        Picasso.get().load(R.drawable.profile).into(circleImage);
+                    } else
+                        Picasso.get().load(Image).placeholder(R.drawable.profile).into(circleImage);
+                }
+
+                }
+
+
+
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
             }
-        });
-
-
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
     }
+
+
+
 
     private void loadImage(){
         Intent intent = new Intent();
@@ -204,11 +247,13 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ProfileFragment.GALARY_PICK && resultCode == Activity.RESULT_OK && data.getData() != null && data != null) {
-           imgUri = data.getData();
+            imgUri = data.getData();
+            circleImage.setImageURI(imgUri);
+
 
             try {
-                Picasso.get().load(imgUri).fit().centerCrop().into(circleImage);
-                UploadImageInStorageDataBase();
+                Picasso.get().load(imgUri). fit().centerCrop().into(circleImage);
+                UploadImageInStorageDataBase(imgUri);
             } catch (Exception e) {
                 Log.e(this.toString(), e.getMessage().toString());
             }
@@ -216,56 +261,33 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    private void UploadImageInStorageDataBase() {
-        final StorageReference FilePath = mStorageReference.child("profile").child(UserId +"jpg");
-        FilePath.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+    private void UploadImageInStorageDataBase(Uri resultUri){
+        final StorageReference FilePath =mStorageReference.child("users_image").child(UserId+"jpg");
+
+        FilePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 FilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(Uri uri) {
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId);
-                        databaseReference.child("image").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onSuccess(final Uri uri) {
+                        DatabaseReference mUserDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(UserId);
+                        mUserDatabase.child("image").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Picasso.get().load(uri.toString()).placeholder(R.drawable.profile).into(circleImage);
-                              //  getNavHeaderData();
 
+                                getNavHeaderData();
                             }
                         });
-
                     }
                 });
-
             }
         });
 
     }
 
-  /* private void getNavHeaderData(){
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("users").child(UserId);
-        ValueEventListener valueEventListener=new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String Name = snapshot.child("Name").getValue().toString();
-                    String Email = snapshot.child("Email").getValue().toString();
-                    String Image = snapshot.child("Image").getValue().toString();
-                    profile_name.setText(Name);
-                    profile_email.setText(Email);
-
-                    if (Image.equals("default")) {
-                        Picasso.get().load(R.drawable.profile).into(circleImage);
-                    } else
-                        Picasso.get().load(Image).placeholder(R.drawable.profile).into(circleImage);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        };
-        m.addListenerForSingleValueEvent(valueEventListener);
-    }*/
 }
+
 
 
