@@ -45,12 +45,11 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
         holder.title.setText(allCategoryModels.get(position).getProductTitle());
         holder.product_price.setText(allCategoryModels.get(position).getProductPrice());
         holder.product_oldPrice.setText(allCategoryModels.get(position).getOldPrice());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        holder.floating_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class);
-                intent.putExtra("details",allCategoryModels.get(position));
-                context.startActivity(intent);
+
             }
         });
 

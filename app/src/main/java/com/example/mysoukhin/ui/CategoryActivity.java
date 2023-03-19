@@ -21,7 +21,6 @@ import java.util.List;
 public class CategoryActivity extends AppCompatActivity {
     ImageView categoryHoddies, categoryShirt, categoryCap, categoryMug,
     categoryGift, categoryCover;
-    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +45,39 @@ public class CategoryActivity extends AppCompatActivity {
         categoryHoddies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             allCategories() ;
+                Intent intent = new Intent(getApplicationContext(),AllHoodies.class);
+                startActivity(intent);
 
             }
         });
         categoryShirt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                allCategories() ;
+                Intent intent = new Intent(getApplicationContext(),CategoryShirt.class);
+                startActivity(intent);
+
             }
         });
         categoryCap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                allCategories() ;
+
+                Intent intent = new Intent(getApplicationContext(),CategoryCap.class);
+                startActivity(intent);
             }
         });
         categoryMug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                allCategories() ;
+                Intent intent = new Intent(getApplicationContext(),CategoryMug.class);
+                startActivity(intent);
             }
         });
         categoryCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                allCategories() ;
+                Intent intent = new Intent(getApplicationContext(),CategoryPhone.class);
+                startActivity(intent);
             }
         });
         categoryGift.setOnClickListener(new View.OnClickListener() {

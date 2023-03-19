@@ -10,7 +10,7 @@ public class CartItemModel {
     private int quantity;
     private String producttitle;
     private boolean CartItemDelete = false;
-    public CartItemModel(int productImage , String producttitle, int price, int quantity ) {
+    public CartItemModel( int productImage, String producttitle, int price, int quantity ) {
         this.type = type;
         this.productImage = productImage;
         this.price = price;

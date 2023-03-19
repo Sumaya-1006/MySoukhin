@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.adapters.CategoryAdapter;
 import com.example.mysoukhin.adapters.SeeAllAdapter;
+import com.example.mysoukhin.models.CategoryModel;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
@@ -46,7 +47,6 @@ public class ProductsShowAll extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_show_all);
-        String types = getIntent().getStringExtra("types");
         this.setTitle("All Products");
 
         toolbar = findViewById(R.id.show_toolBar);
@@ -90,7 +90,6 @@ public class ProductsShowAll extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }

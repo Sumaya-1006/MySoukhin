@@ -21,9 +21,14 @@
         <entry key="..\:/MySoukhin/app/src/main/res/drawable/size_back.xml" value="0.264" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_add_product.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_address.xml" value="0.36666666666666664" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_all_categories_items.xml" value="0.3009833262077811" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_carts.xml" value="0.25" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_category.xml" value="0.36666666666666664" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_category_cap.xml" value="0.3009833262077811" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_category_gift.xml" value="0.3009833262077811" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_category_mug.xml" value="0.3009833262077811" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_category_phone.xml" value="0.3009833262077811" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_category_shirt.xml" value="0.2894399315946986" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_check_out.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_log_out.xml" value="0.35260416666666666" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_login.xml" value="0.22" />
@@ -31,7 +36,7 @@
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_order_history.xml" value="0.3009833262077811" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_popular_product.xml" value="0.3009833262077811" />
-        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_product_details.xml" value="0.3009833262077811" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_product_details.xml" value="0.2" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_products_show_all.xml" value="0.3009833262077811" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_shipping_address.xml" value="0.35260416666666666" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_token.xml" value="0.3009833262077811" />

@@ -25,6 +25,7 @@ import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.models.SeeAllModel;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
@@ -36,15 +37,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
     TextView double_text,allProduct_price,allProduct_oldPrice,category_name,ratingText,
     desTextView,typeText,colorText,stylishText,cottonText,fabricText,sizeTextView;
     Button buyButton,cartButton,sBtn,mBtn,lBtn,xlBtn,xxlBtn;
-
     Toolbar toolbar;
-
     NewProductsModel newProductsModel = null;
     LatestModel latestModels = null;
     ProductsModel productsModels = null;
     SeeAllModel seeAllModel = null;
     AllCategoryModel allCategoryModel = null;
     FirebaseDatabase database;
+    private String out;
+    private Bundle results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +89,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if(obj3 instanceof SeeAllModel)
             seeAllModel = (SeeAllModel) obj3;
 
-        //category products
-
-        final Object obj4 = getIntent().getSerializableExtra("details");
-        if(obj4 instanceof AllCategoryModel)
-            allCategoryModel = (AllCategoryModel) obj4;
 
 
         details_img = findViewById(R.id.details_img);
@@ -166,7 +162,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         }
 
-        //show all category
+       /* //show all category
 
         if(seeAllModel!=null) {
             Glide.with(getApplicationContext()).load(seeAllModel.getProductImg()).into(details_img);
@@ -176,7 +172,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             category_name.setText(seeAllModel.getCategory());
 
 
-        }
+        }*/
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,8 +183,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
-                startActivity(intent);
+               /*getSupportFragmentManager().beginTransaction().replace(R.id.containerId, new CartsFragment()).commit();
+                cartButton.setVisibility(View.GONE);*/
+                addToCart();
 
 
             }
@@ -211,6 +208,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         hashMap.put("productName",category_name.getText().toString());
         hashMap.put("productPrice",allProduct_price.getText().toString());
+        hashMap.put("productOldPrice",allProduct_price.getText().toString());
+        hashMap.put("date",saveCurrentDate);
+        hashMap.put("time",saveCurrentTime);
+        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("cart list");
 
     }
 

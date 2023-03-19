@@ -160,31 +160,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         return view;
-    }
-
-    private void getNavHeaderData() {
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("users").child(UserId);
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String Image = snapshot.child("image").getValue().toString();
-                    if (Image.equals("default")) {
-                        Picasso.get().load(R.drawable.profile).into(circleImage);
-                    } else
-                        Picasso.get().load(Image).placeholder(R.drawable.profile).into(circleImage);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-        m.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void getUserProfileData() {
@@ -208,7 +184,7 @@ public class ProfileFragment extends Fragment {
                     database1.getReference().child("users").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "added", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -260,8 +236,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
-
     private void UploadImageInStorageDataBase(Uri resultUri){
         final StorageReference FilePath =mStorageReference.child("users_image").child(UserId+"jpg");
 
@@ -277,7 +251,7 @@ public class ProfileFragment extends Fragment {
                             public void onComplete(@NonNull Task<Void> task) {
                                 Picasso.get().load(uri.toString()).placeholder(R.drawable.profile).into(circleImage);
 
-                                getNavHeaderData();
+
                             }
                         });
                     }

@@ -17,6 +17,7 @@ import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.CategoryModel;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.example.mysoukhin.ui.ProductsShowAll;
 
 import java.util.List;
 
@@ -42,14 +43,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(lists.get(position).getImg_url()).into(holder.imageView);
         holder.textView.setText(lists.get(position).getName());
-       holder.itemView.setOnClickListener(new View.OnClickListener() {
+       /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class);
-                intent.putExtra("details",lists.get(position));
+                Intent intent = new Intent(context, ProductsShowAll.class);
+                intent.putExtra("title",lists.get(position).getProductTitle());
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
