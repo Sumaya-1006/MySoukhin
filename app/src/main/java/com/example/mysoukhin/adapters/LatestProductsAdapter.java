@@ -10,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.LatestModel;
+import com.example.mysoukhin.ui.CartsActivity;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
 
 import java.util.List;
@@ -50,6 +53,17 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("details",latestModels.get(position));
                 context.startActivity(intent);
+            }
+        });
+
+        holder.floating_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* Intent intent = new Intent(context, CartsActivity.class);
+                intent.putExtra("cart",latestModels.get(position));
+                context.startActivity(intent);*/
+
+
             }
         });
     }

@@ -64,7 +64,7 @@ public class CategoryMug extends AppCompatActivity {
         Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
         Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
 
-        database.getReference().child("AllMug").push().setValue(Models).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("AllMug").push().setValue(Models).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

@@ -79,7 +79,7 @@ public class ProductsShowAll extends AppCompatActivity {
         seeAllModel.add(new SeeAllModel(R.drawable.abd,"(388 reviews)","Women T_shirt","৳300","  ৳500","T_shirt"));
         seeAllModel.add(new SeeAllModel(R.drawable.ab,"(389 reviews)","Cap","৳300","  ৳500","Cap"));
 
-        database.getReference().child("showAllProducts").push().setValue(seeAllModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("showAllProducts").push().setValue(seeAllModel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

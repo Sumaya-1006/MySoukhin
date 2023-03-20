@@ -79,38 +79,33 @@ public class CartsFragment extends Fragment {
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
 
-       /* cartItemModelList.add(new CartItemModel(R.drawable.ab, "Cap", 600, 2));
+       /*cartItemModelList.add(new CartItemModel(R.drawable.ab, "Cap", 600, 2));
         cartItemModelList.add(new CartItemModel(R.drawable.abd, "Shirt", 1500, 3));
         cartItemModelList.add(new CartItemModel(R.drawable.akh, "Hoodie", 1600, 2));
-        cartItemModelList.add(new CartItemModel(R.drawable.akl, "Hoodie", 1600, 2));*/
-
+        cartItemModelList.add(new CartItemModel(R.drawable.akl, "Hoodie", 1600, 2));
+*/
         root = FirebaseDatabase.getInstance().getReference();
         m = root.child("cart");
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
-        ValueEventListener valueEventListener =new ValueEventListener() {
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.child(CurrentUser).getChildren()) {
-
-                        if (!dataSnapshot.getKey().equals("totalPrice")) {
+                    for (DataSnapshot dataSnapshot : snapshot.child("latestProducts").getChildren()) {
                             Log.d("key", dataSnapshot.getKey());
-                            String cartItemTitle = dataSnapshot.child("producttitle").getValue(String.class).toString();;
-                            String cartItemImage = dataSnapshot.child("productImage").getValue(String.class).toString();
-                            String cartItemPrice = dataSnapshot.child("price").getValue(String.class).toString();
+                            String cartItemTitle = dataSnapshot.child("productTitle").getValue(String.class).toString();;
+                            String cartItemImage = dataSnapshot.child("productImg").getValue(String.class).toString();
+                            String cartItemPrice = dataSnapshot.child("productPrice").getValue(String.class).toString();
                             String quantity = dataSnapshot.child("quantity").getValue(String.class).toString();
-                           cartItemModelList.add(new CartItemModel(Integer.parseInt( cartItemImage), cartItemTitle, Integer.parseInt(cartItemPrice), Integer.parseInt(quantity)));
+                            cartItemModelList.add(new CartItemModel(Integer.parseInt( cartItemImage), cartItemTitle, Integer.parseInt(cartItemPrice), Integer.parseInt(quantity)));
                         }
 
                     }
                     accountTotalPrice();
                     cartAdapter.notifyDataSetChanged();
                 }
-            }
-
-
-            @Override
+                @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
@@ -130,7 +125,7 @@ public class CartsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.child(CurrentUser).getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.child("latestProducts").getChildren()) {
 
                         if (!dataSnapshot.getKey().equals("price")) {
 
@@ -140,7 +135,7 @@ public class CartsFragment extends Fragment {
                         }
 
                     }
-                    root.child("cart").child(CurrentUser).child("price").setValue(String.valueOf(totalpriceVal));
+                    root.child("cart").child("latestProducts").child("price").setValue(String.valueOf(totalpriceVal));
 
                     totalprice.setText(String.valueOf(totalpriceVal) + " TK");
                     cartAdapter.notifyDataSetChanged();

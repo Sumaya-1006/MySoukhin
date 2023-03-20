@@ -63,7 +63,7 @@ public class AllHoodies extends AppCompatActivity {
         allCategoryModels.add(new AllCategoryModel(R.drawable.akl, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
         allCategoryModels.add(new AllCategoryModel(R.drawable.akh, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
 
-        database.getReference().child("AllHoodies").push().setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("AllHoodies").push().setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
+import com.example.mysoukhin.ui.CartsActivity;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
 
 import java.util.List;
@@ -45,12 +46,22 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         holder.title.setText(newProductsModels.get(position).getProductTitle());
         holder.product_price.setText(newProductsModels.get(position).getProductPrice());
         holder.product_oldPrice.setText(newProductsModels.get(position).getOldPrice());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("details",newProductsModels.get(position));
                 context.startActivity(intent);
+            }
+        });
+
+        holder.floating_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CartsActivity.class);
+                intent.putExtra("cart",newProductsModels.get(position));
+                context.startActivity(intent);
+
             }
         });
     }

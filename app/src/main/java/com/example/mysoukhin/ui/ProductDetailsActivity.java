@@ -25,8 +25,12 @@ import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.models.SeeAllModel;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,17 +39,15 @@ import java.util.HashMap;
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView details_img;
     TextView double_text,allProduct_price,allProduct_oldPrice,category_name,ratingText,
-    desTextView,typeText,colorText,stylishText,cottonText,fabricText,sizeTextView;
-    Button buyButton,cartButton,sBtn,mBtn,lBtn,xlBtn,xxlBtn;
+    desTextView,typeText,colorText,stylishText,cottonText,fabricText;
+    Button buyButton,cartButton;
     Toolbar toolbar;
     NewProductsModel newProductsModel = null;
     LatestModel latestModels = null;
     ProductsModel productsModels = null;
     SeeAllModel seeAllModel = null;
-    AllCategoryModel allCategoryModel = null;
     FirebaseDatabase database;
-    private String out;
-    private Bundle results;
+    private String ProductName, ProductPrice, ProductImage, ProductIsFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         database = FirebaseDatabase.getInstance();
+
+       // sending data
+
+        //have sending data
+        ProductName= getIntent().getStringExtra("Product Name");
+        ProductPrice = getIntent().getStringExtra("Product Price");
+        ProductImage = getIntent().getStringExtra("Product Image");
+        ProductIsFavorite= getIntent().getStringExtra("Product IsFavorite");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +99,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if(obj3 instanceof SeeAllModel)
             seeAllModel = (SeeAllModel) obj3;
 
-
-
         details_img = findViewById(R.id.details_img);
         double_text = findViewById(R.id.doubleText);
         allProduct_price = findViewById(R.id.allProduct_priceId);
@@ -105,15 +113,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         stylishText = findViewById(R.id.stylishText);
         cottonText = findViewById(R.id.cottonText);
         fabricText = findViewById(R.id.fabricText);
-       // sizeTextView = findViewById(R.id.sizeTextView);
 
         buyButton = findViewById(R.id.buyButton);
         cartButton = findViewById(R.id.cartBtn);
-        /*sBtn = findViewById(R.id.sBtn);
-        mBtn = findViewById(R.id.mBtn);
-        lBtn = findViewById(R.id.lBtn);
-        xlBtn = findViewById(R.id.xlBtn);
-        xxlBtn = findViewById(R.id.xxlBtn);*/
+
+        setProductData();
 
         //new Products
         if(newProductsModel !=null){
@@ -123,8 +127,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(newProductsModel.getOldPrice());
             category_name.setText(newProductsModel.getCategory());
             ratingText.setText(newProductsModel.getRating());
-
-
         }
 
         //latest Products
@@ -136,7 +138,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(latestModels.getOldPrice());
             category_name.setText(latestModels.getCategory());
             ratingText.setText(latestModels.getRating());
-
         }
 
         //popular Products
@@ -147,8 +148,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_price.setText(productsModels.getProductPrice());
             allProduct_oldPrice.setText(productsModels.getOldPrice());
             category_name.setText(productsModels.getCategory());
-
-
         }
         //show all products
 
@@ -158,11 +157,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_price.setText(seeAllModel.getProductPrice());
             allProduct_oldPrice.setText(seeAllModel.getOldPrice());
             category_name.setText(seeAllModel.getCategory());
-
-
         }
 
-       /* //show all category
+        //show all category
 
         if(seeAllModel!=null) {
             Glide.with(getApplicationContext()).load(seeAllModel.getProductImg()).into(details_img);
@@ -170,9 +167,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_price.setText(seeAllModel.getProductPrice());
             allProduct_oldPrice.setText(seeAllModel.getOldPrice());
             category_name.setText(seeAllModel.getCategory());
-
-
-        }*/
+        }
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,38 +178,57 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /*getSupportFragmentManager().beginTransaction().replace(R.id.containerId, new CartsFragment()).commit();
-                cartButton.setVisibility(View.GONE);*/
-                addToCart();
-
-
+                Intent intent = new Intent(getApplicationContext(),CartsActivity.class);
+                startActivity(intent);
             }
         });
-
-
     }
 
-    private void addToCart() {
-        String saveCurrentTime, saveCurrentDate;
-        Calendar calendar = Calendar.getInstance();
+    private void setProductData() {
+        Picasso.get().load(ProductImage).into(details_img);
+        double_text.setText(ProductName);
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MM dd, yyyy");
-        saveCurrentDate = currentDate.format(calendar.getTime());
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("products");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot : snapshot.child("latestProducts").getChildren()){
+                        if(dataSnapshot.getKey().equals(ProductName)){
+                            double_text.setText("title");
+                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
+                            break;}
+                    }
+                    for(DataSnapshot dataSnapshot : snapshot.child("newProducts").getChildren()){
+                        if(dataSnapshot.getKey().equals(ProductName)){
+                            double_text.setText("title");
+                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
+                            break;}
+                    }
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss  a");
-        saveCurrentTime = currentTime.format(calendar.getTime());
+                    for(DataSnapshot dataSnapshot : snapshot.child("popularProducts").getChildren()){
+                        if(dataSnapshot.getKey().equals(ProductName)){
+                            double_text.setText("title");
+                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
+                            break;}
+                    }
 
-        HashMap<String,Object> hashMap = new HashMap<>();
+                    for(DataSnapshot dataSnapshot : snapshot.child("showAllProducts").getChildren()){
+                        if(dataSnapshot.getKey().equals(ProductName)){
+                            double_text.setText("title");
+                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
+                            break;}
+                    }
 
-        hashMap.put("productName",category_name.getText().toString());
-        hashMap.put("productPrice",allProduct_price.getText().toString());
-        hashMap.put("productOldPrice",allProduct_price.getText().toString());
-        hashMap.put("date",saveCurrentDate);
-        hashMap.put("time",saveCurrentTime);
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("cart list");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

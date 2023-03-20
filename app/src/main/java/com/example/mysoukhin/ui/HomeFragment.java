@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment {
         productsModels.add(new ProductsModel(R.drawable.akh,"Hoodies","৳800","   ৳1000","Hoodies"));
         productsModels.add(new ProductsModel(R.drawable.akl,"Hoodies","৳800","  ৳1000","Hoodies"));
 
-        database.getReference().child("popularProducts").push().setValue(productsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("popularProducts").push().setValue(productsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
               //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
@@ -160,7 +160,7 @@ public class HomeFragment extends Fragment {
         latestModels.add(new LatestModel(R.drawable.ac,"(356 reviews)","Phone Cover","৳100","  ৳300","Phone Cover"));
         latestModels.add(new LatestModel(R.drawable.abd,"(388 reviews)","Women T_shirt","৳300","  ৳500","Shirt"));
 
-        database.getReference().child("latestProducts").push().setValue(latestModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("latestProducts").push().setValue(latestModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
               //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
@@ -199,7 +199,7 @@ public class HomeFragment extends Fragment {
         newProductsModels.add(new NewProductsModel(R.drawable.am,"(380 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
         newProductsModels.add(new NewProductsModel(R.drawable.akl,"(269 reviews)","Hoodies","৳1500","  ৳2000","Hoodies"));
 
-        database.getReference().child("newProducts").push().setValue(newProductsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("newProducts").push().setValue(newProductsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
               //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();

@@ -7,7 +7,6 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -55,8 +54,8 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="216dp"
             android:text="৳200"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -78,16 +77,27 @@
             app:layout_constraintStart_toEndOf="@+id/PlusIcon"
             app:layout_constraintTop_toBottomOf="@+id/product_image" />
 
+        <TextView
+            android:id="@+id/quantityText"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:text="Qty"
+            app:layout_constraintEnd_toStartOf="@+id/PlusIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_image" />
+
         <ImageView
             android:id="@+id/PlusIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_image"
-            app:srcCompat="@drawable/ic_baseline_minimize_24"/>
+            app:srcCompat="@drawable/ic_baseline_add_24"/>
 
         <ImageView
             android:id="@+id/MinusIcon"
@@ -98,7 +108,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toEndOf="@+id/quan"
             app:layout_constraintTop_toBottomOf="@+id/product_image"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
+            app:srcCompat="@drawable/ic_baseline_minimize_24" />
 
         <ImageView
             android:id="@+id/Cart_ItemDelete"
@@ -112,20 +122,6 @@
             app:tint="#E90101" />
 
 
-        <Button
-            android:id="@+id/checkoutId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:backgroundTint="@color/purple_500"
-            android:inputType="textCapWords"
-            android:text="Checkout"
-            android:textSize="17dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.925"
-            app:layout_constraintStart_toEndOf="@+id/Cart_ItemDelete"
-            app:layout_constraintTop_toBottomOf="@+id/price" />
-
         <View
             android:id="@+id/divider3"
             android:layout_width="wrap_content"
@@ -136,6 +132,18 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/MinusIcon" />
+
+        <Button
+            android:id="@+id/checkoutId"
+            android:layout_width="110dp"
+            android:layout_height="47dp"
+            android:backgroundTint="@color/purple_500"
+            android:inputType="textCapWords"
+            android:text="CheckOut"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/Cart_ItemDelete" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,7 @@ public class CategoryCap extends AppCompatActivity {
         models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
 
 
-        database.getReference().child("AllCap").push().setValue(models).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("AllCap").push().setValue(models).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

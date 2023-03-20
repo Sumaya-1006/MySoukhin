@@ -84,12 +84,12 @@ public class CartAdapter extends RecyclerView.Adapter {
         private ImageView productimage;
         private TextView producttitle;
         private TextView productprice;
-        private TextView productQuantity;
+        private TextView productQuantity,QuantityText;
         private ImageView PlusIcon;
         private ImageView MinusIcon;
         private ImageView CartItemDelete;
         private Button checkOutBtn;
-        public boolean deletedItem = false;
+        public boolean deletedItem = true;
         int totalpriceVal;
         DatabaseReference root;
         String CurrentUser;
@@ -103,6 +103,7 @@ public class CartAdapter extends RecyclerView.Adapter {
             productQuantity = itemView.findViewById(R.id.quan);
             PlusIcon = itemView.findViewById(R.id.PlusIcon);
             MinusIcon = itemView.findViewById(R.id.MinusIcon);
+            QuantityText =itemView.findViewById(R.id.quantityText);
             checkOutBtn = itemView.findViewById(R.id.checkoutId);
 
             CartItemDelete = itemView.findViewById(R.id.Cart_ItemDelete);

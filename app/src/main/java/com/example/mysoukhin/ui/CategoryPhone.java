@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.adapters.AllCategoryAdapter;
 import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.SeeAllModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -58,7 +61,21 @@ public class CategoryPhone extends AppCompatActivity {
         model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
         model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
         model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
+
+        database.getReference().child("products").child("PhoneCover").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
 
 
     @Override

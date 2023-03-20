@@ -62,7 +62,7 @@ public class CategoryShirt extends AppCompatActivity {
         allCategoryModels.add(new AllCategoryModel(R.drawable.alm,"Mens T_shirt","৳700","  ৳1000","T_shirt"));
         allCategoryModels.add(new AllCategoryModel(R.drawable.abd,"Women T_shirt","৳300","  ৳500","T_shirt"));
 
-        database.getReference().child("AllShirt").push().setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("AllShirt").push().setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
