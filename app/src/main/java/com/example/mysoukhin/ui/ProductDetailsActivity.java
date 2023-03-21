@@ -15,16 +15,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.AllCategoryModel;
+import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.models.SeeAllModel;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,20 +65,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         database = FirebaseDatabase.getInstance();
 
-       // sending data
-
-        //have sending data
-        ProductName= getIntent().getStringExtra("Product Name");
-        ProductPrice = getIntent().getStringExtra("Product Price");
-        ProductImage = getIntent().getStringExtra("Product Image");
-        ProductIsFavorite= getIntent().getStringExtra("Product IsFavorite");
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        //have sending data
+        ProductName= getIntent().getStringExtra("Product Name");
+        ProductPrice= getIntent().getStringExtra("Product Price");
+        ProductImage= getIntent().getStringExtra("Product Image");
+        ProductIsFavorite= getIntent().getStringExtra("Product IsFavorite");
 
         // new products
         final Object obj = getIntent().getSerializableExtra("details");
@@ -116,8 +118,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         buyButton = findViewById(R.id.buyButton);
         cartButton = findViewById(R.id.cartBtn);
-
-        setProductData();
 
         //new Products
         if(newProductsModel !=null){
@@ -178,55 +178,33 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),CartsActivity.class);
-                startActivity(intent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.containerId,new CartsFragment()).commit();
+                setProductData();
+
+
             }
         });
     }
 
     private void setProductData() {
-        Picasso.get().load(ProductImage).into(details_img);
-        double_text.setText(ProductName);
 
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("products");
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        CartItemModel model = new CartItemModel();
+        model.setProducttitle(double_text.getText().toString());
+        model.setPrice(allProduct_price.getText().toString());
+        Glide.with(this).load(model.getProductImage()).into(details_img);
+        database = FirebaseDatabase.getInstance();
+
+        database.getReference().child("carts").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot dataSnapshot : snapshot.child("latestProducts").getChildren()){
-                        if(dataSnapshot.getKey().equals(ProductName)){
-                            double_text.setText("title");
-                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
-                            break;}
-                    }
-                    for(DataSnapshot dataSnapshot : snapshot.child("newProducts").getChildren()){
-                        if(dataSnapshot.getKey().equals(ProductName)){
-                            double_text.setText("title");
-                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
-                            break;}
-                    }
-
-                    for(DataSnapshot dataSnapshot : snapshot.child("popularProducts").getChildren()){
-                        if(dataSnapshot.getKey().equals(ProductName)){
-                            double_text.setText("title");
-                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
-                            break;}
-                    }
-
-                    for(DataSnapshot dataSnapshot : snapshot.child("showAllProducts").getChildren()){
-                        if(dataSnapshot.getKey().equals(ProductName)){
-                            double_text.setText("title");
-                            allProduct_price.setText("price: "+dataSnapshot.child("quantity").getValue());
-                            break;}
-                    }
-
-                }
+            public void onSuccess(Void unused) {
+                Toast.makeText(ProductDetailsActivity.this, "Add to cart successfully", Toast.LENGTH_SHORT).show();
             }
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        };
-        m.addListenerForSingleValueEvent(valueEventListener);
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProductDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

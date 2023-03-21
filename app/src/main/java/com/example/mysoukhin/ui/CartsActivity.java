@@ -25,15 +25,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CartsActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
-    private TextView mPerson_name;
-    private CircleImageView mPerson_image;
     private RelativeLayout CustomCartContainer;
     private TextView PageTitle;
     public static Activity fa;
+    private String ProductName, ProductPrice, ProductImage, ProductIsFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +43,18 @@ public class CartsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("My Cart");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // sending data
+        ProductName= getIntent().getStringExtra("Product Name");
+        ProductPrice = getIntent().getStringExtra("Product Price");
+        ProductImage = getIntent().getStringExtra("Product Image");
+        ProductIsFavorite= getIntent().getStringExtra("Product IsFavorite");
+
         getSupportFragmentManager().beginTransaction().replace(R.id.Cartframe,new CartsFragment()).commit();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        drawerLayout =  findViewById(R.id.cartDrawer);
-        mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-        drawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
 
         showCartIcon();
     }
@@ -69,7 +67,7 @@ public class CartsActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
 
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view= inflater.inflate(R.layout.main_toolbar,null);
+        View view = inflater.inflate(R.layout.main_toolbar,null);
         CustomCartContainer = findViewById(R.id.CustomCartIconContainer);
         PageTitle = findViewById(R.id.PageTitle);
         PageTitle.setVisibility(View.GONE);

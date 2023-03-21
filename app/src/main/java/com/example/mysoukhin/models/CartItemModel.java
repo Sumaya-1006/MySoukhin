@@ -6,16 +6,20 @@ public class CartItemModel {
     private  int type;
 
     private int productImage;
-    private int price;
+    private String price;
     private int quantity;
     private String producttitle;
     private boolean CartItemDelete = false;
-    public CartItemModel( int productImage, String producttitle, int price, int quantity ) {
+    public CartItemModel( int productImage, String producttitle, String price, int quantity ) {
         this.type = type;
         this.productImage = productImage;
         this.price = price;
         this.quantity = quantity;
         this.producttitle = producttitle;
+
+    }
+
+    public CartItemModel() {
 
     }
 
@@ -43,11 +47,11 @@ public class CartItemModel {
         this.productImage = productImage;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
