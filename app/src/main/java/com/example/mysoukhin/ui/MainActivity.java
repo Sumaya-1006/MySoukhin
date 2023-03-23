@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bnView;
     FloatingActionButton actionButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,26 +41,32 @@ public class MainActivity extends AppCompatActivity {
                  startActivity(intent);
             }
         });
+
+        HomeFragment homeFragment = new HomeFragment();
+        FavouriteFragment favouriteFragment = new FavouriteFragment();
+        CartsFragment cartsFragment = new CartsFragment();
+        ProfileFragment profileFragment = new ProfileFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,homeFragment).commit();
+
         bnView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
+              int id = item.getItemId();
 
                 if (id == R.id.home) {
-                    loadFragment(new HomeFragment(),true);
-
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,homeFragment).commit();
 
                 } else if (id == R.id.fav) {
-                    loadFragment(new FavouriteFragment(),false);
-
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,favouriteFragment).commit();
 
                 } else if (id == R.id.carts){
-                    loadFragment(new CartsFragment(),false);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,cartsFragment).commit();
 
                 } else if (id == R.id.profile) {
-                    loadFragment(new ProfileFragment(),false);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,profileFragment).commit();
 
                 }
+
 
                 return true;
             }
@@ -74,17 +81,8 @@ public class MainActivity extends AppCompatActivity {
                         Color.parseColor("#553DF2")
                 });
 
-        bnView.setSelectedItemId(R.id.home);
         bnView.setItemIconTintList(iconColorStates);
     }
-    public void loadFragment (Fragment fragment, boolean flag ){
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.frame_layout, fragment);
-        ft.commit();
-
-    }
-
 
 }
 

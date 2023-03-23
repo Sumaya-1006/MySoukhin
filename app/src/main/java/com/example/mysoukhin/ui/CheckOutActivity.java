@@ -49,7 +49,7 @@ public class CheckOutActivity extends AppCompatActivity {
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CheckOutActivity.this, "You are successfully ordered this item", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CheckOutActivity.this, "Your ordered is processed now", Toast.LENGTH_SHORT).show();
               //  Intent intent = new Intent(getApplicationContext(),OrderHistory.class);
                // startActivity(intent);
             }

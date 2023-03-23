@@ -211,8 +211,6 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
-
     private void loadImage(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -225,7 +223,6 @@ public class ProfileFragment extends Fragment {
         if (requestCode == ProfileFragment.GALARY_PICK && resultCode == Activity.RESULT_OK && data.getData() != null && data != null) {
             imgUri = data.getData();
             circleImage.setImageURI(imgUri);
-
 
             try {
                 Picasso.get().load(imgUri). fit().centerCrop().into(circleImage);

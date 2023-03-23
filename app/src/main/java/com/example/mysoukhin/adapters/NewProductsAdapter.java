@@ -58,9 +58,9 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         holder.floating_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, CartsActivity.class);
+                /*Intent intent = new Intent(context, CartsActivity.class);
                 intent.putExtra("cart",newProductsModels.get(position));
-                context.startActivity(intent);
+                context.startActivity(intent);*/
 
             }
         });

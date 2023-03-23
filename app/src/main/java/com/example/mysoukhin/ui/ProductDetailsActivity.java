@@ -4,11 +4,12 @@ package com.example.mysoukhin.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,25 +21,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.models.SeeAllModel;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView details_img;
@@ -51,7 +49,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ProductsModel productsModels = null;
     SeeAllModel seeAllModel = null;
     FirebaseDatabase database;
+    private StorageReference mStorageReference;
+    Uri imgUri;
     private String ProductName, ProductPrice, ProductImage, ProductIsFavorite;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(newProductsModel.getOldPrice());
             category_name.setText(newProductsModel.getCategory());
             ratingText.setText(newProductsModel.getRating());
+
+
         }
 
         //latest Products
@@ -186,14 +189,52 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode ==200 && resultCode == Activity.RESULT_OK) {
+            imgUri = data.getData();
+            details_img.setImageURI(imgUri);
+
+            try {
+                Picasso.get().load(imgUri). fit().centerCrop().into(details_img);
+                UploadImageInStorageDataBase(imgUri);
+            } catch (Exception e) {
+                Log.e(this.toString(), e.getMessage().toString());
+            }
+        }
+    }
+
+    private void UploadImageInStorageDataBase(Uri resultUri) {
+
+        final StorageReference FilePath =mStorageReference.child("carts_image").child("jpg");
+
+        FilePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                FilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(final Uri uri) {
+                        DatabaseReference mUserDatabase = FirebaseDatabase.getInstance().getReference().child("carts");
+                        mUserDatabase.child("image").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Picasso.get().load(uri.toString()).placeholder(R.drawable.profile).into(details_img);
+
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
     private void setProductData() {
 
         CartItemModel model = new CartItemModel();
         model.setProducttitle(double_text.getText().toString());
         model.setPrice(allProduct_price.getText().toString());
-        Glide.with(this).load(model.getProductImage()).into(details_img);
-        database = FirebaseDatabase.getInstance();
-
+        int image = model.getProductImage();
         database.getReference().child("carts").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -222,8 +263,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         }
        else if (id == R.id.cartBar) {
-            Intent intent = new Intent(getApplicationContext(), CartsFragment.class);
-            startActivity(intent);
+            /*Intent intent = new Intent(getApplicationContext(), CartsFragment.class);
+            startActivity(intent);*/
         }
 
 
