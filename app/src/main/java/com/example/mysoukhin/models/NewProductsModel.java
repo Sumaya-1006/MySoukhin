@@ -9,18 +9,20 @@ public class NewProductsModel implements Serializable {
     String productPrice;
     String oldPrice;
     String category;
+    boolean IsFavorite;
 
-    public NewProductsModel() {
-
+    public NewProductsModel(boolean IsFavorite) {
+        this.IsFavorite = IsFavorite;
     }
 
-    public NewProductsModel(int productImg, String rating, String productTitle, String productPrice, String oldPrice,String category) {
+    public NewProductsModel(int productImg, String rating, String productTitle, String productPrice, String oldPrice, String category) {
         this.productImg = productImg;
         this.rating = rating;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
         this.oldPrice = oldPrice;
         this.category = category;
+
     }
 
     public int getProductImg() {
@@ -69,5 +71,13 @@ public class NewProductsModel implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean getsFavorite() {
+        return IsFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        IsFavorite = favorite;
     }
 }

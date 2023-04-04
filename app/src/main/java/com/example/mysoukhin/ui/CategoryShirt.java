@@ -55,22 +55,23 @@ public class CategoryShirt extends AppCompatActivity {
         shirt_rec.setNestedScrollingEnabled(false);
         shirt_rec.setHasFixedSize(true);
 
-        allCategoryModels.add(new AllCategoryModel(R.drawable.alm,"Mens T_shirt","৳700","  ৳1000","T_shirt"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.abd,"Women T_shirt","৳300","  ৳500","T_shirt"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.alm,"Mens T_shirt","৳700","  ৳1000","T_shirt"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.abd,"Women T_shirt","৳300","  ৳500","T_shirt"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.alm,"Mens T_shirt","৳700","  ৳1000","T_shirt"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.abd,"Women T_shirt","৳300","  ৳500","T_shirt"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FYellow%20T-shirt%20%20.png?alt=media&token=4fab63fa-f74d-4cef-9173-381a8ccd1747","Yellow T_shirt","৳700","  ৳1000","T_shirt"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","Women T_shirt","৳300","  ৳500","T_shirt"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FYellow%20T-shirt%20%20.png?alt=media&token=4fab63fa-f74d-4cef-9173-381a8ccd1747","Yellow T_shirt","৳700","  ৳1000","T_shirt"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","Women T_shirt","৳300","  ৳500","T_shirt"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FYellow%20T-shirt%20%20.png?alt=media&token=4fab63fa-f74d-4cef-9173-381a8ccd1747","Yellow T_shirt","৳700","  ৳1000","T_shirt"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","Women T_shirt","৳300","  ৳500","T_shirt"));
 
-        database.getReference().child("products").child("AllShirt").push().setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("all shirt").setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_SHORT).show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
             }
         });
 

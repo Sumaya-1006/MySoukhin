@@ -55,30 +55,28 @@ public class CategoryMug extends AppCompatActivity {
         mug_rec.setNestedScrollingEnabled(false);
         mug_rec.setHasFixedSize(true);
 
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
-        Models.add(new AllCategoryModel(R.drawable.mug,"Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
+        Models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","৳300","  ৳500","Mug"));
 
-        database.getReference().child("products").child("AllMug").push().setValue(Models).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("all mug").setValue(Models).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
             }
         });
 
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

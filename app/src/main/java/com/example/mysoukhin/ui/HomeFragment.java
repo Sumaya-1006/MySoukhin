@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,7 +47,6 @@ public class HomeFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     NestedScrollView nestedScrollView;
     FirebaseDatabase database;
-    private static List<FavouritesClass> favourites;
     TextView category_see_all,popularProducts_see_all,latestProducts_see_all,newProducts_see_all;
 
     @Override
@@ -57,9 +57,6 @@ public class HomeFragment extends Fragment {
        /* ActionBar actionBar = null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);*/
-        Retrieve_fav();
-
-
 
         // Inflate the layout for this fragment
           View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -101,35 +98,35 @@ public class HomeFragment extends Fragment {
 
     //popular products
         popularProducts_see_all = root.findViewById(R.id.popular_see_all);
-        rec_popular= root.findViewById(R.id.rec_popular);
+        rec_popular = root.findViewById(R.id.rec_popular);
         List<ProductsModel> productsModels = new ArrayList<>();
 
-        ProductsAdapter productsAdapter = new ProductsAdapter(getActivity(),productsModels);
-        RecyclerView.LayoutManager pManager = new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
-        rec_popular.setLayoutManager(pManager);
-        rec_popular.setAdapter(productsAdapter);
+        ProductsAdapter adapter  = new ProductsAdapter(getActivity(),productsModels);
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        rec_popular.setLayoutManager(layoutManager);
+        rec_popular.setAdapter(adapter);
         rec_popular.setNestedScrollingEnabled(false);
         rec_popular.setHasFixedSize(true);
 
-        productsModels.add(new ProductsModel(R.drawable.ab,"Cap","৳300","  ৳400","Cap"));
-        productsModels.add(new ProductsModel(R.drawable.abd,"T_shirt","৳500","  ৳600","Shirt"));
-        productsModels.add(new ProductsModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        productsModels.add(new ProductsModel(R.drawable.mug,"T_shirt","৳500","  ৳600","Shirt"));
-        productsModels.add(new ProductsModel(R.drawable.akh,"Hoodies","৳800","   ৳1000","Hoodies"));
-        productsModels.add(new ProductsModel(R.drawable.akl,"Hoodies","৳800","  ৳1000","Hoodies"));
+        productsModels.add(new ProductsModel(R.drawable.ab,"Cap","300","  ৳500","Cap"));
+        productsModels.add(new ProductsModel(R.drawable.ac,"Phone Cover","200","  ৳500","Phone Cover"));
+        productsModels.add(new ProductsModel(R.drawable.am,"Black Hoodies","1000","  ৳1500","Hoodies"));
+        productsModels.add(new ProductsModel(R.drawable.akl,"Blue Hoodies","1500","  ৳2000","Hoodies"));
+        productsModels.add(new ProductsModel(R.drawable.abd,"Women T_shirt","500","  ৳800","Shirt"));
+        productsModels.add(new ProductsModel(R.drawable.mug,"Mug","300","  ৳500","Mug"));
 
-        database.getReference().child("products").child("popularProducts").push().setValue(productsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("Popular products").setValue(productsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-              //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "added successfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+
             }
         });
-
 
         popularProducts_see_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,29 +143,31 @@ public class HomeFragment extends Fragment {
         List<LatestModel> latestModels = new ArrayList<>();
 
         LatestProductsAdapter latestProductsAdapter = new LatestProductsAdapter(getActivity(),latestModels);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
-        rec_latest.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManagers= new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        rec_latest.setLayoutManager(layoutManagers);
         rec_latest.setAdapter(latestProductsAdapter);
         rec_latest.setNestedScrollingEnabled(false);
         rec_latest.setHasFixedSize(true);
 
-        latestModels.add(new LatestModel(R.drawable.am,"(500 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
-        latestModels.add(new LatestModel(R.drawable.alm,"(450 reviews)","Mens T_shirt","৳700","  ৳1000","Shirt"));
-        latestModels.add(new LatestModel(R.drawable.akl,"(488 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
-        latestModels.add(new LatestModel(R.drawable.ad,"(389 reviews)","Phone Cover","৳700","  ৳1500","Phone Cover"));
-        latestModels.add(new LatestModel(R.drawable.mug,"(397 reviews)","Mug","৳300","  ৳500","Mug"));
-        latestModels.add(new LatestModel(R.drawable.ac,"(356 reviews)","Phone Cover","৳100","  ৳300","Phone Cover"));
-        latestModels.add(new LatestModel(R.drawable.abd,"(388 reviews)","Women T_shirt","৳300","  ৳500","Shirt"));
+        latestModels.add(new LatestModel(R.drawable.am,"(500 reviews)","Black Hoodies","1000","  ৳1500","Hoodies"));
+        latestModels.add(new LatestModel(R.drawable.alm,"(450 reviews)","Yellow T_shirt","700","  ৳1000","Shirt"));
+        latestModels.add(new LatestModel(R.drawable.akl,"(488 reviews)","Blue Hoodies","1000","  ৳1500","Hoodies"));
+        latestModels.add(new LatestModel(R.drawable.ac,"(389 reviews)","Phone Cover","700","  ৳1500","Phone Cover"));
+        latestModels.add(new LatestModel(R.drawable.mug,"(397 reviews)","Mug","300","  ৳500","Mug"));
+        latestModels.add(new LatestModel(R.drawable.ac,"(356 reviews)","Phone Cover","100","  ৳300","Phone Cover"));
+        latestModels.add(new LatestModel(R.drawable.abd,"(388 reviews)","Women T_shirt","300","  ৳500","Shirt"));
 
-        database.getReference().child("products").child("latestProducts").push().setValue(latestModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("Latest products").setValue(latestModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-              //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "added successfully", Toast.LENGTH_SHORT).show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -181,6 +180,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
         //new Products
         newProducts_see_all= root.findViewById(R.id.new_see_all);
         rec_new = root.findViewById(R.id.rec_newProduct);
@@ -192,24 +193,25 @@ public class HomeFragment extends Fragment {
         rec_new.setNestedScrollingEnabled(false);
         rec_new.setHasFixedSize(true);
 
-        newProductsModels.add(new NewProductsModel(R.drawable.abd,"(289 reviews)","Women T_shirt","৳500","  ৳800","Shirt"));
-        newProductsModels.add(new NewProductsModel(R.drawable.mug,"(489 reviews)","Mug","৳300","  ৳500","Mug"));
-        newProductsModels.add(new NewProductsModel(R.drawable.ab,"(389 reviews)","Cap","৳300","  ৳500","Cap"));
-        newProductsModels.add(new NewProductsModel(R.drawable.ad,"(257 reviews)","Phone Cover","৳200","  ৳500","Phone Cover"));
-        newProductsModels.add(new NewProductsModel(R.drawable.am,"(380 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
-        newProductsModels.add(new NewProductsModel(R.drawable.akl,"(269 reviews)","Hoodies","৳1500","  ৳2000","Hoodies"));
+        newProductsModels.add(new NewProductsModel(R.drawable.abd,"(289 reviews)","Women T_shirt","500","  ৳800","Shirt"));
+        newProductsModels.add(new NewProductsModel(R.drawable.mug,"(489 reviews)","Mug","300","  ৳500","Mug"));
+        newProductsModels.add(new NewProductsModel(R.drawable.ab,"(389 reviews)","Cap","300","  ৳500","Cap"));
+        newProductsModels.add(new NewProductsModel(R.drawable.ac,"(257 reviews)","Phone Cover","200","  ৳500","Phone Cover"));
+        newProductsModels.add(new NewProductsModel(R.drawable.am,"(380 reviews)","Black Hoodies","1000","  ৳1500","Hoodies"));
+        newProductsModels.add(new NewProductsModel(R.drawable.akl,"(269 reviews)","Blue Hoodies","1500","  ৳2000","Hoodies"));
+        newProductsModels.add(new NewProductsModel(R.drawable.akh,"(269 reviews)","Sky Blue Hoodies","1500","  ৳2000","Hoodies"));
 
-        database.getReference().child("products").child("newProducts").push().setValue(newProductsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-              //  Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
+       database.getReference().child("products").child("New products").setValue(newProductsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+           @Override
+           public void onSuccess(Void unused) {
+              // Toast.makeText(getContext(), "added successfully", Toast.LENGTH_SHORT).show();
+           }
+       }).addOnFailureListener(new OnFailureListener() {
+           @Override
+           public void onFailure(@NonNull Exception e) {
+               Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+           }
+       });
 
         newProducts_see_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,29 +221,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
         return root;
     }
 
 
-    private void Retrieve_fav() {
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("favourites")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        favourites = new ArrayList<>();
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    FavouritesClass fav = new FavouritesClass();
-                    fav = ds.getValue(FavouritesClass.class);
-                    favourites.add(fav);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        ref.addListenerForSingleValueEvent(eventListener);
     }
-    }
+
+

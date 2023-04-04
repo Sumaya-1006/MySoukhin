@@ -55,22 +55,22 @@ public class CategoryPhone extends AppCompatActivity {
         cover_rec.setNestedScrollingEnabled(false);
         cover_rec.setHasFixedSize(true);
 
-        model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
-        model.add(new AllCategoryModel(R.drawable.ac,"Phone Cover","৳200","  ৳300","Phone Cover"));
+        model.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","৳200","  ৳300","Phone Cover"));
+        model.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","৳200","  ৳300","Phone Cover"));
+        model.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","৳200","  ৳300","Phone Cover"));
+        model.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","৳200","  ৳300","Phone Cover"));
+        model.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","৳200","  ৳300","Phone Cover"));
+        model.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","৳200","  ৳300","Phone Cover"));
 
-        database.getReference().child("products").child("PhoneCover").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("phone cover").setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
             }
         });
 

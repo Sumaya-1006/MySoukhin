@@ -3,20 +3,16 @@ package com.example.mysoukhin.models;
 import java.io.Serializable;
 
 public class LatestModel implements Serializable {
+    String id;
     int productImg;
-    int checkBox;
     String rating;
     String productTitle;
     String productPrice;
     String oldPrice;
     String category;
+    boolean IsFavorite;
 
-    public LatestModel(int checkBox) {
-        this.checkBox = checkBox;
-    }
-
-    public LatestModel( ) {
-
+    public LatestModel() {
 
     }
 
@@ -27,6 +23,7 @@ public class LatestModel implements Serializable {
         this.productPrice = productPrice;
         this.oldPrice = oldPrice;
         this.category = category;
+
     }
 
     public int getProductImg() {
@@ -77,11 +74,19 @@ public class LatestModel implements Serializable {
         this.category = category;
     }
 
-    public int getCheckBox() {
-        return checkBox;
+    public boolean getIsFavorite() {
+        return IsFavorite;
     }
 
-    public void setCheckBox(int checkBox) {
-        this.checkBox = checkBox;
+    public void setFavorite(boolean favorite) {
+        IsFavorite = favorite;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

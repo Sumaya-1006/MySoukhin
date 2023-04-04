@@ -59,23 +59,23 @@ public class CategoryCap extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
 
-        models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
-        models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
-        models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
-        models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
-        models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
-        models.add(new AllCategoryModel(R.drawable.ab,"Cap","৳300","  ৳500","Cap"));
+        models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","৳300","  ৳500","Cap"));
+        models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","৳300","  ৳500","Cap"));
+        models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","৳300","  ৳500","Cap"));
+        models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","৳300","  ৳500","Cap"));
+        models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","৳300","  ৳500","Cap"));
+        models.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","৳300","  ৳500","Cap"));
 
-
-        database.getReference().child("products").child("AllCap").push().setValue(models).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("products").child("all cap").setValue(models).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(), "added successfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "added successfully", Toast.LENGTH_SHORT).show();
+
             }
         });
 

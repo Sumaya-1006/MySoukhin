@@ -70,26 +70,26 @@ public class ProductsShowAll extends AppCompatActivity {
         show_all_rec.setNestedScrollingEnabled(false);
         show_all_rec.setHasFixedSize(true);
 
-        seeAllModel.add(new SeeAllModel(R.drawable.akh,"(500 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
-        seeAllModel.add(new SeeAllModel(R.drawable.alm,"(450 reviews)","Mens T_shirt","৳700","  ৳1000","T_shirt"));
-        seeAllModel.add(new SeeAllModel(R.drawable.akl,"(488 reviews)","Hoodies","৳1000","  ৳1500","Hoodies"));
-        seeAllModel.add(new SeeAllModel(R.drawable.ad,"(389 reviews)","Phone Cover","৳700","  ৳1500","Phone Cover"));
-        seeAllModel.add(new SeeAllModel(R.drawable.mug,"(397 reviews)","Mug","৳300","  ৳500","Mug"));
-        seeAllModel.add(new SeeAllModel(R.drawable.ac,"(356 reviews)","Phone Cover","৳100","  ৳300","PhoneCover"));
-        seeAllModel.add(new SeeAllModel(R.drawable.abd,"(388 reviews)","Women T_shirt","৳300","  ৳500","T_shirt"));
-        seeAllModel.add(new SeeAllModel(R.drawable.ab,"(389 reviews)","Cap","৳300","  ৳500","Cap"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FSky%20Blue%20Hoodies%20.png?alt=media&token=94d3a79f-216c-4651-9241-e645abb94881","(500 reviews)","Sky Blue Hoodies","1000",  "৳1500","Hoodies"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FYellow%20T-shirt%20%20.png?alt=media&token=4fab63fa-f74d-4cef-9173-381a8ccd1747","(450 reviews)","Yellow T_shirt","700","  ৳1000","T_shirt"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028","(488 reviews)","Blue Hoodies","1000","  ৳1500","Hoodies"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","(389 reviews)","Phone Cover","700","  ৳1500","Phone Cover"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","(397 reviews)","Mug","300","  ৳500","Mug"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","(356 reviews)","Phone Cover","100","  ৳300","PhoneCover"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","(388 reviews)","Women T_shirt","300","  ৳500","T_shirt"));
+        seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","(389 reviews)","Cap","300","  ৳500","Cap"));
 
-        database.getReference().child("products").child("showAllProducts").push().setValue(seeAllModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
+       database.getReference().child("products").child("all Products").setValue(seeAllModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+           @Override
+           public void onSuccess(Void unused) {
+              // Toast.makeText(getApplicationContext(), "added successfully", Toast.LENGTH_SHORT).show();
+           }
+       }).addOnFailureListener(new OnFailureListener() {
+           @Override
+           public void onFailure(@NonNull Exception e) {
+               Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+           }
+       });
 
 
     }

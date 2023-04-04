@@ -1,13 +1,13 @@
 package com.example.mysoukhin.models;
 
 public class FavouritesClass {
-    int productImage;
+    String productImage;
     String productTitle;
     String productPrice;
     String productOldPrice;
     boolean checked;
 
-    public FavouritesClass(int productImage, String productTitle, String productPrice, String productOldPrice, boolean checked) {
+    public FavouritesClass(String productImage, String productTitle, String productPrice, String productOldPrice, boolean checked) {
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
@@ -19,11 +19,11 @@ public class FavouritesClass {
 
     }
 
-    public int getProductImage() {
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 

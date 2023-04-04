@@ -56,24 +56,26 @@ public class AllHoodies extends AppCompatActivity {
         hoodies_rec.setNestedScrollingEnabled(false);
         hoodies_rec.setHasFixedSize(true);
 
-        allCategoryModels.add(new AllCategoryModel(R.drawable.akh, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.akl, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.akl, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.akh, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.akl, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
-        allCategoryModels.add(new AllCategoryModel(R.drawable.akh, "Hoodies", "৳1500", " ৳1000", "Hoodies"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FSky%20Blue%20Hoodies%20.png?alt=media&token=94d3a79f-216c-4651-9241-e645abb94881", "Sky BlueHoodies", "৳1500", " ৳1000", "Hoodies"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028", "Blue Hoodies", "৳1500", " ৳1000", "Hoodies"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028", "Blue Hoodies", "৳1500", " ৳1000", "Hoodies"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FSky%20Blue%20Hoodies%20.png?alt=media&token=94d3a79f-216c-4651-9241-e645abb94881", "Sky Blue Hoodies", "৳1500", " ৳1000", "Hoodies"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028", "Blue Hoodies", "৳1500", " ৳1000", "Hoodies"));
+        allCategoryModels.add(new AllCategoryModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FSky%20Blue%20Hoodies%20.png?alt=media&token=94d3a79f-216c-4651-9241-e645abb94881", "Sky Hoodies", "৳1500", " ৳1000", "Hoodies"));
 
-        database.getReference().child("products").child("AllHoodies").push().setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
+      database.getReference().child("products").child("all hoodies").setValue(allCategoryModels).addOnSuccessListener(new OnSuccessListener<Void>() {
+          @Override
+          public void onSuccess(Void unused) {
+            //  Toast.makeText(getApplicationContext(), "added successfully", Toast.LENGTH_SHORT).show();
+
+          }
+      }).addOnFailureListener(new OnFailureListener() {
+          @Override
+          public void onFailure(@NonNull Exception e) {
+              Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+
+          }
+      });
 
 
     }

@@ -3,26 +3,32 @@ package com.example.mysoukhin.models;
 import java.io.Serializable;
 
 public class SeeAllModel implements Serializable {
-    int productImg;
+    String productImg;
     String rating;
     String productTitle;
     String productPrice;
     String oldPrice;
     String category;
+    boolean IsFavorite;
 
-    public SeeAllModel(int productImg, String rating, String productTitle, String productPrice, String oldPrice,String category) {
+    public SeeAllModel( boolean IsFavorite) {
+        this.IsFavorite = IsFavorite;
+    }
+
+    public SeeAllModel(String productImg, String rating, String productTitle, String productPrice, String oldPrice,String category) {
         this.productImg = productImg;
         this.rating = rating;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
         this.oldPrice = oldPrice;
+
     }
 
-    public int getProductImg() {
+    public String getProductImg() {
         return productImg;
     }
 
-    public void setProductImg(int productImg) {
+    public void setProductImg(String productImg) {
         this.productImg = productImg;
     }
 
@@ -64,5 +70,13 @@ public class SeeAllModel implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean getIsFavorite() {
+        return IsFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        IsFavorite = favorite;
     }
 }

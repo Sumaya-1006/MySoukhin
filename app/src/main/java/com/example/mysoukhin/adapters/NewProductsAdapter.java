@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,7 +18,10 @@ import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.ui.CartsActivity;
+import com.example.mysoukhin.ui.CartsFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -44,7 +48,7 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         Glide.with(context).load(newProductsModels.get(position).getProductImg()).into(holder.imageView);
         holder.rating.setText(newProductsModels.get(position).getRating());
         holder.title.setText(newProductsModels.get(position).getProductTitle());
-        holder.product_price.setText(newProductsModels.get(position).getProductPrice());
+        holder.product_price.setText("Price: "+newProductsModels.get(position).getProductPrice()+"৳");
         holder.product_oldPrice.setText(newProductsModels.get(position).getOldPrice());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +62,47 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         holder.floating_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(context, CartsActivity.class);
+                Intent intent = new Intent(context, CartsActivity.class);
                 intent.putExtra("cart",newProductsModels.get(position));
-                context.startActivity(intent);*/
+                context.startActivity(intent);
 
             }
         });
+
+        holder.check_box.setOnClickListener(new View.OnClickListener() {
+            private String ProductName = "", ProductPrice="", ProductImage="",OldPrice="", ProductIsFavorite, UserId = " ";
+            @Override
+            public void onClick(View view) {
+                if (ProductIsFavorite != null && ProductIsFavorite.equalsIgnoreCase("true")) {
+                    holder.check_box.setImageResource(R.drawable.black);
+                    ProductIsFavorite = "false";
+
+
+                } else {
+                    holder.check_box.setImageResource(R.drawable.love_icon);
+                    holder.check_box.setVisibility(View.VISIBLE);
+                    ProductName = holder.title.getText().toString();
+                    ProductPrice = holder.product_price.getText().toString();
+                    ProductIsFavorite = "true";
+                    ProductImage = holder.imageView.toString();
+                    OldPrice = holder.product_oldPrice.getText().toString();
+
+                }
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                x.child("isFavorite").setValue(true);
+                x.child("productImg").setValue(ProductImage);
+                x.child("productPrice").setValue(ProductPrice);
+                x.child("productTitle").setValue(ProductName);
+                x.child("oldPrice").setValue(OldPrice);
+
+                AppCompatActivity activity = new AppCompatActivity();
+                CartsFragment fragment = new CartsFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
+            }
+        });
+
     }
+
 
     @Override
     public int getItemCount() {

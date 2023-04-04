@@ -33,10 +33,10 @@ public class UploadHistory extends AppCompatActivity {
 
         upload_rec = findViewById(R.id.upload_rec);
 
-        List<UploadModel> uploadModels = new ArrayList<>();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        List<UploadModel> model = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        adapter = new UploadAdapter(this, uploadModels);
+        adapter = new UploadAdapter(this, model);
         LinearLayoutManager uManager = new LinearLayoutManager(this);
         upload_rec.setLayoutManager(uManager);
         upload_rec.addItemDecoration(new DividerItemDecoration(upload_rec.getContext(),DividerItemDecoration.VERTICAL ));
@@ -44,17 +44,15 @@ public class UploadHistory extends AppCompatActivity {
         upload_rec.setNestedScrollingEnabled(false);
         upload_rec.setHasFixedSize(true);
 
-
-        firebaseDatabase.getReference().child("user upload").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("uploads").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    UploadModel model = dataSnapshot.getValue(UploadModel.class);
-                    model.getUser_name().toString().trim();
-                    model.getProduct_type().toString().trim();
-                    model.getImg().toString().trim();
-                    uploadModels.add(model);
-
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    UploadModel model1 = dataSnapshot.getValue(UploadModel.class);
+                    model1.getImg().toString().trim();
+                   // model1.getProduct_name().toString().trim();
+                    model1.getProduct_type().toString().trim();
+                    model.add(model1);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -64,6 +62,8 @@ public class UploadHistory extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 }

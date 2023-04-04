@@ -1,8 +1,6 @@
 package com.example.mysoukhin.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,15 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.CategoryModel;
 import com.example.mysoukhin.models.ProductsModel;
-import com.example.mysoukhin.ui.CartsActivity;
 import com.example.mysoukhin.ui.CartsFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -36,19 +36,19 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
+    public ProductsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ProductsAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.products_item_list, parent, false));
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ProductsAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(productsModels.get(position).getProductImg()).into(holder.imageView);
         holder.title.setText(productsModels.get(position).getProductTitle());
         holder.product_price.setText(productsModels.get(position).getProductPrice());
         holder.product_oldPrice.setText(productsModels.get(position).getOldPrice());
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
@@ -56,13 +56,35 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
-        holder.floating_img.setOnClickListener(new View.OnClickListener() {
+        holder.check_box.setOnClickListener(new View.OnClickListener() {
+            private String ProductName = "", ProductPrice ="", ProductImage = "",OldPrice = "", ProductIsFavorite, UserId = " ";
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, CartsActivity.class);
-                intent.putExtra("details",productsModels.get(position));
-                context.startActivity(intent);
+                if (ProductIsFavorite != null && ProductIsFavorite.equalsIgnoreCase("true")) {
+                    holder.check_box.setImageResource(R.drawable.black);
+                    ProductIsFavorite = "false";
 
+
+                } else {
+                    holder.check_box.setImageResource(R.drawable.love_icon);
+                    holder.check_box.setVisibility(View.VISIBLE);
+                    ProductName = holder.title.getText().toString();
+                    ProductPrice = holder.product_price.getText().toString();
+                    ProductIsFavorite = "true";
+                    ProductImage = holder.imageView.toString();
+                    OldPrice = holder.product_oldPrice.getText().toString();
+
+                }
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                x.child("isFavorite").setValue(true);
+                x.child("productImg").setValue(ProductImage);
+                x.child("productPrice").setValue(ProductPrice);
+                x.child("productTitle").setValue(ProductName);
+                x.child("oldPrice").setValue(OldPrice);
+
+                AppCompatActivity activity = new AppCompatActivity();
+                CartsFragment fragment = new CartsFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
             }
         });
     }

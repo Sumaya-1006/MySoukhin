@@ -8,17 +8,20 @@ public class ProductsModel implements Serializable {
     String productPrice;
     String oldPrice;
     String category;
+    boolean IsFavorite;
 
-    public ProductsModel( ) {
+    public ProductsModel(boolean IsFavorite) {
+        this.IsFavorite = IsFavorite;
 
     }
 
-    public ProductsModel(int productImg, String productTitle, String productPrice, String oldPrice,String category) {
+    public ProductsModel(int productImg, String productTitle, String productPrice, String oldPrice, String category) {
         this.productImg = productImg;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
         this.oldPrice = oldPrice;
         this.category = category;
+
     }
 
 
@@ -60,5 +63,13 @@ public class ProductsModel implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean getIsFavorite() {
+        return IsFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        IsFavorite = favorite;
     }
 }

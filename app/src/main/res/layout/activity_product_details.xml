@@ -9,16 +9,10 @@
     tools:context=".ui.ProductDetailsActivity"
     android:id="@+id/containerId">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:id="@+id/details_toolBar"/>
-
     <ImageView
         android:id="@+id/details_img"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="230dp"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -61,6 +55,7 @@
             android:orientation="horizontal"
             android:gravity="end"
             android:layout_margin="10dp">
+
             <TextView
                 android:id="@+id/allProduct_priceId"
                 android:layout_width="wrap_content"
@@ -180,8 +175,34 @@
                 android:layout_marginTop="10dp"
                 android:textColor="#62676C"/>
 
+      <!--  <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="Total price"
+                android:textColor="#393737"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="৳700"
+                android:textColor="#323030"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>-->
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -190,8 +211,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Quantity :"
+                        android:layout_marginTop="5dp"
+                        android:text="Quantity:"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -203,14 +224,14 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/PlusIcon"
+                            android:id="@+id/PlusIcons"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="5dp"
                             app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
                         <TextView
-                            android:id="@+id/quan"
+                            android:id="@+id/quans"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -222,7 +243,7 @@
                             />
 
                         <ImageView
-                            android:id="@+id/MinusIcon"
+                            android:id="@+id/MinusIcons"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="10dp"

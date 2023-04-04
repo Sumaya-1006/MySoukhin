@@ -39,7 +39,7 @@ public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.ViewHolder
     public void onBindViewHolder(@NonNull SeeAllAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(seeAllModels.get(position).getProductImg()).into(holder.imageView);
         holder.title.setText(seeAllModels.get(position).getProductTitle());
-        holder.product_price.setText(seeAllModels.get(position).getProductPrice());
+        holder.product_price.setText("Price: "+seeAllModels.get(position).getProductPrice()+"৳");
         holder.product_oldPrice.setText(seeAllModels.get(position).getOldPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

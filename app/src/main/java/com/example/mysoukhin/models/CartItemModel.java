@@ -1,17 +1,18 @@
 package com.example.mysoukhin.models;
 
-public class CartItemModel {
+import java.io.Serializable;
 
-    public static final int cart_item = 0  ;
-    private  int type;
+public class CartItemModel implements Serializable {
 
-    private int productImage;
+
+    private String productImage;
     private String price;
-    private int quantity;
+    private String quantity;
     private String producttitle;
     private boolean CartItemDelete = false;
-    public CartItemModel( int productImage, String producttitle, String price, int quantity ) {
-        this.type = type;
+
+    public CartItemModel( String productImage, String producttitle, String price, String quantity ) {
+
         this.productImage = productImage;
         this.price = price;
         this.quantity = quantity;
@@ -31,19 +32,11 @@ public class CartItemModel {
         CartItemDelete = cartItemDelete;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getProductImage() {
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 
@@ -55,11 +48,11 @@ public class CartItemModel {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

@@ -1,24 +1,16 @@
 package com.example.mysoukhin.ui;
 
-
+import static java.lang.String.valueOf;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.CartItemModel;
@@ -26,58 +18,32 @@ import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.models.SeeAllModel;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class ProductDetailsActivity extends AppCompatActivity {
-    ImageView details_img;
+    ImageView details_img,PlusIcon,MinusIcon;
     TextView double_text,allProduct_price,allProduct_oldPrice,category_name,ratingText,
-    desTextView,typeText,colorText,stylishText,cottonText,fabricText;
+            desTextView,typeText,colorText,stylishText,cottonText,fabricText,quantity;
     Button buyButton,cartButton;
-    Toolbar toolbar;
     NewProductsModel newProductsModel = null;
     LatestModel latestModels = null;
     ProductsModel productsModels = null;
     SeeAllModel seeAllModel = null;
     FirebaseDatabase database;
-    private StorageReference mStorageReference;
-    Uri imgUri;
-    private String ProductName, ProductPrice, ProductImage, ProductIsFavorite;
-
+    int totalQuantity = 1;
+    int totalPrice = 1;
+    String TAG = "first log";
+    private String ProductImage, Category, OldPrice, ProductRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        this.setTitle("Product details");
-
-        toolbar = findViewById(R.id.details_toolBar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         database = FirebaseDatabase.getInstance();
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        //have sending data
-        ProductName= getIntent().getStringExtra("Product Name");
-        ProductPrice= getIntent().getStringExtra("Product Price");
-        ProductImage= getIntent().getStringExtra("Product Image");
-        ProductIsFavorite= getIntent().getStringExtra("Product IsFavorite");
 
         // new products
         final Object obj = getIntent().getSerializableExtra("details");
@@ -96,9 +62,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if(obj2 instanceof ProductsModel)
             productsModels = (ProductsModel) obj2;
 
+
         //all products
 
         final Object obj3 = getIntent().getSerializableExtra("details");
+
         if(obj3 instanceof SeeAllModel)
             seeAllModel = (SeeAllModel) obj3;
 
@@ -120,14 +88,30 @@ public class ProductDetailsActivity extends AppCompatActivity {
         buyButton = findViewById(R.id.buyButton);
         cartButton = findViewById(R.id.cartBtn);
 
+        PlusIcon = findViewById(R.id.PlusIcons);
+        MinusIcon = findViewById(R.id.MinusIcons);
+        quantity = findViewById(R.id.quans);
+
         //new Products
         if(newProductsModel !=null){
             Glide.with(getApplicationContext()).load(newProductsModel.getProductImg()).into(details_img);
             double_text.setText(newProductsModel.getProductTitle());
-            allProduct_price.setText(newProductsModel.getProductPrice());
+            allProduct_price.setText(newProductsModel.getOldPrice());
             allProduct_oldPrice.setText(newProductsModel.getOldPrice());
             category_name.setText(newProductsModel.getCategory());
             ratingText.setText(newProductsModel.getRating());
+
+            //have sending data
+            ProductImage= getIntent().getStringExtra("productImg\n");
+            Category = getIntent().getStringExtra("category\n");
+            ProductRating= getIntent().getStringExtra("rating\n");
+            OldPrice = getIntent().getStringExtra("oldPrice\n");
+            try{
+                totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
+
+            }catch (Exception e){
+
+            }
 
 
         }
@@ -141,6 +125,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(latestModels.getOldPrice());
             category_name.setText(latestModels.getCategory());
             ratingText.setText(latestModels.getRating());
+            //have sending data
+            ProductImage= getIntent().getStringExtra("productImg\n");
+            Category = getIntent().getStringExtra("category\n");
+            ProductRating= getIntent().getStringExtra("rating\n");
+            OldPrice = getIntent().getStringExtra("oldPrice\n");
+           try{
+               totalPrice = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
+
+           }catch (Exception e){
+
+           }
+
+
         }
 
         //popular Products
@@ -151,6 +148,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_price.setText(productsModels.getProductPrice());
             allProduct_oldPrice.setText(productsModels.getOldPrice());
             category_name.setText(productsModels.getCategory());
+
+            //have sending data
+            ProductImage= getIntent().getStringExtra("productImg\n");
+            Category = getIntent().getStringExtra("category\n");
+            ProductRating= getIntent().getStringExtra("rating\n");
+            OldPrice = getIntent().getStringExtra("oldPrice\n");
+            try{
+                totalPrice = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
+
+            }catch (Exception e){
+
+            }
+
+
         }
         //show all products
 
@@ -160,6 +171,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_price.setText(seeAllModel.getProductPrice());
             allProduct_oldPrice.setText(seeAllModel.getOldPrice());
             category_name.setText(seeAllModel.getCategory());
+            try{
+                totalPrice = Integer.valueOf(seeAllModel.getProductPrice()) * totalQuantity;
+
+            }catch (Exception e){
+
+            }
+
+
         }
 
         //show all category
@@ -187,55 +206,76 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode ==200 && resultCode == Activity.RESULT_OK) {
-            imgUri = data.getData();
-            details_img.setImageURI(imgUri);
-
-            try {
-                Picasso.get().load(imgUri). fit().centerCrop().into(details_img);
-                UploadImageInStorageDataBase(imgUri);
-            } catch (Exception e) {
-                Log.e(this.toString(), e.getMessage().toString());
-            }
-        }
-    }
-
-    private void UploadImageInStorageDataBase(Uri resultUri) {
-
-        final StorageReference FilePath =mStorageReference.child("carts_image").child("jpg");
-
-        FilePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        PlusIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                FilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(final Uri uri) {
-                        DatabaseReference mUserDatabase = FirebaseDatabase.getInstance().getReference().child("carts");
-                        mUserDatabase.child("image").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Picasso.get().load(uri.toString()).placeholder(R.drawable.profile).into(details_img);
+            public void onClick(View view) {
+                 if(totalQuantity < 10){
+                     totalQuantity++;
+                     quantity.setText(valueOf(totalQuantity));
+                     if(newProductsModel !=null){
+                         totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
+                         allProduct_price.setText(valueOf(totalPrice));
+                     }
+                     if(latestModels !=null){
+                         totalPrice = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
+                         allProduct_price.setText(valueOf(totalPrice));
+                     }
+                     if(productsModels !=null){
+                         totalPrice = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
+                         allProduct_price.setText(valueOf(totalPrice));
+                     }
+                     if(seeAllModel!=null){
+                         totalPrice = Integer.valueOf(seeAllModel.getProductPrice()) * totalQuantity;
+                     }
 
 
-                            }
-                        });
-                    }
-                });
+                 }
+
             }
         });
+        MinusIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(totalQuantity > 1){
+                    totalQuantity--;
+                    quantity.setText(valueOf(totalQuantity));
+
+                    if(newProductsModel !=null){
+                        totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
+                        allProduct_price.setText(valueOf(totalPrice));
+                    }
+                    if(latestModels !=null){
+                        totalPrice = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
+                        allProduct_price.setText(valueOf(totalPrice));
+                    }
+                    if(productsModels !=null){
+                        totalPrice = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
+                        allProduct_price.setText(valueOf(totalPrice));
+                    }
+                    if(seeAllModel!=null){
+                        totalPrice = Integer.valueOf(seeAllModel.getProductPrice()) * totalQuantity;
+                        allProduct_price.setText(valueOf(totalPrice));
+                    }
+
+                }
+            }
+
+        });
+
     }
 
     private void setProductData() {
-
         CartItemModel model = new CartItemModel();
         model.setProducttitle(double_text.getText().toString());
         model.setPrice(allProduct_price.getText().toString());
-        int image = model.getProductImage();
-        database.getReference().child("carts").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+        model.setQuantity((quantity.getText().toString()));
+        model.setProductImage(details_img.toString());
+       // Glide.with(getApplicationContext()).load(model.getProductImage()).into(details_img);
+
+        Log.d(TAG,"image found");
+        // Picasso.get().load(ProductImage).into(details_img);*/
+
+        database.getReference().child("cart").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(ProductDetailsActivity.this, "Add to cart successfully", Toast.LENGTH_SHORT).show();
@@ -248,26 +288,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if(id ==R.id.searchBar){
-
-        }
-       else if (id == R.id.cartBar) {
-            /*Intent intent = new Intent(getApplicationContext(), CartsFragment.class);
-            startActivity(intent);*/
-        }
-
-
-        return true;
-    }
 }
+
+

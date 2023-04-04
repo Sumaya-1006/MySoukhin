@@ -3,22 +3,39 @@ package com.example.mysoukhin.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.example.mysoukhin.R;
+import com.example.mysoukhin.models.AddressModel;
+import com.example.mysoukhin.models.FavouritesClass;
 import com.example.mysoukhin.models.LatestModel;
-import com.example.mysoukhin.ui.CartsActivity;
+import com.example.mysoukhin.models.UploadModel;
+import com.example.mysoukhin.ui.CartsFragment;
+import com.example.mysoukhin.ui.FavouriteFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -41,17 +58,19 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LatestProductsAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(latestModels.get(position).getProductImg()).into(holder.imageView);
         holder.rating.setText(latestModels.get(position).getRating());
         holder.title.setText(latestModels.get(position).getProductTitle());
-        holder.product_price.setText(latestModels.get(position).getProductPrice());
+        holder.product_price.setText("Price: "+latestModels.get(position).getProductPrice()+"৳");
         holder.product_oldPrice.setText(latestModels.get(position).getOldPrice());
+
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("details",latestModels.get(position));
+              //  intent.putExtra("productImg",latestModels.get(position).getProductImg());
                 context.startActivity(intent);
             }
         });
@@ -59,14 +78,42 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
         holder.floating_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent(context, CartsActivity.class);
-                intent.putExtra("cart",latestModels.get(position));
-                context.startActivity(intent);*/
 
 
             }
         });
+        holder.check_box.setOnClickListener(new View.OnClickListener() {
+            private String ProductName = "", ProductPrice="", ProductImage="",OldPrice="", ProductIsFavorite, UserId = " ";
+            @Override
+            public void onClick(View view) {
+                if (ProductIsFavorite != null && ProductIsFavorite.equalsIgnoreCase("true")) {
+                    holder.check_box.setImageResource(R.drawable.black);
+                    ProductIsFavorite = "false";
+
+                } else {
+                    holder.check_box.setImageResource(R.drawable.love_icon);
+                    holder.check_box.setVisibility(View.VISIBLE);
+                    ProductName = holder.title.getText().toString();
+                    ProductPrice = holder.product_price.getText().toString();
+                    ProductIsFavorite = "true";
+                    ProductImage = holder.imageView.toString();
+                    OldPrice = holder.product_oldPrice.getText().toString();
+
+                    }
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                    x.child("isFavorite").setValue(true);
+                    x.child("productImg").setValue(ProductImage);
+                    x.child("productPrice").setValue(ProductPrice);
+                    x.child("productTitle").setValue(ProductName);
+                    x.child("oldPrice").setValue(OldPrice);
+                    AppCompatActivity activity = new AppCompatActivity();
+                    CartsFragment fragment = new CartsFragment();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
+            }
+        });
+
     }
+
 
     @Override
     public int getItemCount() {

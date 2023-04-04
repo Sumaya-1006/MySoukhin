@@ -3,13 +3,13 @@ package com.example.mysoukhin.models;
 import java.io.Serializable;
 
 public class AllCategoryModel implements Serializable {
-    int productImg;
+    String productImg;
     String productTitle;
     String productPrice;
     String oldPrice;
     String category;
 
-    public AllCategoryModel(int productImg, String productTitle, String productPrice, String oldPrice, String category) {
+    public AllCategoryModel(String productImg, String productTitle, String productPrice, String oldPrice, String category) {
         this.productImg = productImg;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
@@ -17,11 +17,11 @@ public class AllCategoryModel implements Serializable {
         this.category = category;
     }
 
-    public int getProductImg() {
+    public String getProductImg() {
         return productImg;
     }
 
-    public void setProductImg(int productImg) {
+    public void setProductImg(String productImg) {
         this.productImg = productImg;
     }
 

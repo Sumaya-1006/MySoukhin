@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cartDrawer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    > <RelativeLayout
+    android:layout_height="match_parent">
+
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <include
-        layout="@layout/main_toolbar"
-        android:id="@+id/cartToolbar"/>
+
+        <include
+            android:id="@+id/cartToolbar"
+            layout="@layout/main_toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

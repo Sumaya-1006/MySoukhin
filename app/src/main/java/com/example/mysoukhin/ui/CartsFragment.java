@@ -1,13 +1,10 @@
 package com.example.mysoukhin.ui;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CartsFragment extends Fragment {
-    private String mParam2;
     public ArrayList<CartItemModel> cartItemModelList;
     CartAdapter cartAdapter;
     private RecyclerView CartItemRecyclerView;
@@ -40,8 +36,6 @@ public class CartsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_carts, container, false);
         getActivity().setTitle("My Carts");
-
-        toolbar = view.findViewById(R.id.details_toolBar);
         CartItemRecyclerView = view.findViewById(R.id.cart_recycle);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -52,16 +46,21 @@ public class CartsFragment extends Fragment {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
         root = FirebaseDatabase.getInstance().getReference();
-        m = root.child("carts");
+        m = root.child("cart");
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
 
-        firebaseDatabase.getReference().child("carts").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.getReference().child("cart").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    CartItemModel model = dataSnapshot.getValue(CartItemModel.class);
-                    cartItemModelList.add(model);
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    CartItemModel models = dataSnapshot.getValue(CartItemModel.class);
+                    models.getProducttitle().toString().trim();
+                    models.getPrice().toString().trim();
+                    models.getQuantity().toString().trim();
+                    models.getProductImage().toString().trim();
+
+                    cartItemModelList.add(models);
                 }
                 cartAdapter.notifyDataSetChanged();
             }
@@ -71,9 +70,8 @@ public class CartsFragment extends Fragment {
 
             }
         });
+
         return view;
 
     }
 }
-
-
