@@ -61,8 +61,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 upload.setVisibility(View.VISIBLE);
-                history.setVisibility(View.GONE);
-
+                history.setVisibility(View.VISIBLE);
 
             }
         });
@@ -71,19 +70,20 @@ public class AddProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), UploadHistory.class);
                 startActivity(intent);
+                history.setVisibility(View.VISIBLE);
             }
         });
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
 
-        chooseImage.setOnClickListener(new View.OnClickListener() {
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openImage();
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        chooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mUploadTask != null && mUploadTask.isInProgress())
@@ -142,7 +142,7 @@ public class AddProductActivity extends AppCompatActivity {
                             .child(name.getText().toString());
 
                     z.setValue(product);
-                   Intent intent = new Intent(getApplicationContext(),ProductDetailsActivity.class);
+                   Intent intent = new Intent(getApplicationContext(),UploadHistory.class);
                     intent.putExtra("productImage",product.getImg());
 
                 }

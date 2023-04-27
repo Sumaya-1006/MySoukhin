@@ -3,49 +3,48 @@ package com.example.mysoukhin.models;
 import java.io.Serializable;
 
 public class CartItemModel implements Serializable {
-
-
-    private String productImage;
-    private String price;
+    private String productImg;
+    private String oldPrice;
+    private String productPrice;
     private String quantity;
-    private String producttitle;
+    private String productTitle;
+    int totalAmount;
     private boolean CartItemDelete = false;
 
-    public CartItemModel( String productImage, String producttitle, String price, String quantity ) {
-
-        this.productImage = productImage;
-        this.price = price;
-        this.quantity = quantity;
-        this.producttitle = producttitle;
-
-    }
 
     public CartItemModel() {
-
     }
 
-    public boolean isCartItemDelete() {
-        return CartItemDelete;
+    public CartItemModel(String productImg, String oldPrice, String productPrice, String quantity, String productTitle) {
+        this.productImg = productImg;
+        this.oldPrice = oldPrice;
+        this.productPrice = productPrice;
+        this.quantity = quantity;
+        this.productTitle = productTitle;
     }
 
-    public void setCartItemDelete(boolean cartItemDelete) {
-        CartItemDelete = cartItemDelete;
+    public String getProductImg() {
+        return productImg;
     }
 
-    public String getProductImage() {
-        return productImage;
+    public void setProductImg(String productImg) {
+        this.productImg = productImg;
     }
 
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
+    public String getOldPrice() {
+        return oldPrice;
     }
 
-    public String getPrice() {
-        return price;
+    public void setOldPrice(String oldPrice) {
+        this.oldPrice = oldPrice;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 
     public String getQuantity() {
@@ -56,13 +55,27 @@ public class CartItemModel implements Serializable {
         this.quantity = quantity;
     }
 
-    public String getProducttitle() {
-        return producttitle;
+    public String getProductTitle() {
+        return productTitle;
     }
 
-    public void setProducttitle(String producttitle) {
-        this.producttitle = producttitle;
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
     }
 
+    public boolean isCartItemDelete() {
+        return CartItemDelete;
+    }
 
+    public void setCartItemDelete(boolean cartItemDelete) {
+        CartItemDelete = cartItemDelete;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 }

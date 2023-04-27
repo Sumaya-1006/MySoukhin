@@ -11,17 +11,20 @@ public class SeeAllModel implements Serializable {
     String category;
     boolean IsFavorite;
 
-    public SeeAllModel( boolean IsFavorite) {
-        this.IsFavorite = IsFavorite;
+    public SeeAllModel(boolean isFavorite) {
+        IsFavorite = isFavorite;
     }
 
-    public SeeAllModel(String productImg, String rating, String productTitle, String productPrice, String oldPrice,String category) {
+    public SeeAllModel() {
+    }
+
+    public SeeAllModel(String productImg, String rating, String productTitle, String productPrice, String oldPrice, String category) {
         this.productImg = productImg;
         this.rating = rating;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
         this.oldPrice = oldPrice;
-
+        this.category = category;
     }
 
     public String getProductImg() {
@@ -72,7 +75,7 @@ public class SeeAllModel implements Serializable {
         this.category = category;
     }
 
-    public boolean getIsFavorite() {
+    public boolean isFavorite() {
         return IsFavorite;
     }
 

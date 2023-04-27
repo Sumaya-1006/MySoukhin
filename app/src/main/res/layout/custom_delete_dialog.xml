@@ -44,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:text="No"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#14E3E3"
+                android:backgroundTint="#1448E3"
                 android:inputType="textCapWords"
-                android:textColor="#131313"
+                android:textColor="#fff"
                 android:layout_margin="10dp"
                 />
             <Space
@@ -59,10 +59,10 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:backgroundTint="#0DDDDD"
+                android:backgroundTint="#0D3ADD"
                 android:inputType="textCapWords"
                 android:text="Yes"
-                android:textColor="#131313"/>
+                android:textColor="#fff"/>
 
 
         </LinearLayout>

@@ -21,7 +21,10 @@
         android:theme="@style/Theme.MySoukhin"
         tools:targetApi="31">
         <activity
-            android:name=".ui.FavouriteActivity"
+            android:name=".ui.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.StatusActivity"
             android:exported="false" />
         <activity
             android:name=".ui.CartsActivity"
@@ -89,10 +92,13 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_vbNhmU7c4U2Fab"/>
+
     </application>
 
 </manifest>

@@ -174,9 +174,9 @@ public class ProfileFragment extends Fragment {
 
                     String Image = snapshot.child("image").getValue().toString();
 
-                    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-                    String name = account.getDisplayName();
-                    String email = account.getEmail();
+                    GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
+                    String name = signInAccount.getDisplayName();
+                    String email = signInAccount.getEmail();
 
                     profile_name.setText(name);
                     profile_email.setText(email);

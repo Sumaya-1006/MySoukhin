@@ -7,6 +7,13 @@
     tools:context=".ui.TokenActivity"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8FF7FD"
+        app:title="Tokens"
+        android:id="@+id/token_toolBar"/>
+
     <TextView
         android:id="@+id/tokensTxt"
         android:layout_width="wrap_content"

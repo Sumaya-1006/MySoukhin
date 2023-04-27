@@ -23,6 +23,7 @@ import com.example.mysoukhin.adapters.LatestProductsAdapter;
 import com.example.mysoukhin.adapters.NewProductsAdapter;
 import com.example.mysoukhin.adapters.ProductsAdapter;
 import com.example.mysoukhin.models.AllCategoryModel;
+import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.CategoryModel;
 import com.example.mysoukhin.models.FavouritesClass;
 import com.example.mysoukhin.models.LatestModel;
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     NestedScrollView nestedScrollView;
     FirebaseDatabase database;
+    private static List<FavouritesClass> favourites;
+    String category = "";
     TextView category_see_all,popularProducts_see_all,latestProducts_see_all,newProducts_see_all;
 
     @Override
@@ -108,12 +111,12 @@ public class HomeFragment extends Fragment {
         rec_popular.setNestedScrollingEnabled(false);
         rec_popular.setHasFixedSize(true);
 
-        productsModels.add(new ProductsModel(R.drawable.ab,"Cap","300","  ৳500","Cap"));
-        productsModels.add(new ProductsModel(R.drawable.ac,"Phone Cover","200","  ৳500","Phone Cover"));
-        productsModels.add(new ProductsModel(R.drawable.am,"Black Hoodies","1000","  ৳1500","Hoodies"));
-        productsModels.add(new ProductsModel(R.drawable.akl,"Blue Hoodies","1500","  ৳2000","Hoodies"));
-        productsModels.add(new ProductsModel(R.drawable.abd,"Women T_shirt","500","  ৳800","Shirt"));
-        productsModels.add(new ProductsModel(R.drawable.mug,"Mug","300","  ৳500","Mug"));
+        productsModels.add(new ProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","Cap","300","  ৳500","Cap"));
+        productsModels.add(new ProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","Phone Cover","200","  ৳500","Phone Cover"));
+        productsModels.add(new ProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlack%20hoodies%20.png?alt=media&token=aa1011ea-cd8b-4c18-b792-4fa9214e3aad","Black Hoodies","1000","  ৳1500","Hoodies"));
+        productsModels.add(new ProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028","Blue Hoodies","1500","  ৳2000","Hoodies"));
+        productsModels.add(new ProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","Women T_shirt","500","  ৳800","Shirt"));
+        productsModels.add(new ProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","Mug","300","  ৳500","Mug"));
 
         database.getReference().child("products").child("Popular products").setValue(productsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -149,13 +152,13 @@ public class HomeFragment extends Fragment {
         rec_latest.setNestedScrollingEnabled(false);
         rec_latest.setHasFixedSize(true);
 
-        latestModels.add(new LatestModel(R.drawable.am,"(500 reviews)","Black Hoodies","1000","  ৳1500","Hoodies"));
-        latestModels.add(new LatestModel(R.drawable.alm,"(450 reviews)","Yellow T_shirt","700","  ৳1000","Shirt"));
-        latestModels.add(new LatestModel(R.drawable.akl,"(488 reviews)","Blue Hoodies","1000","  ৳1500","Hoodies"));
-        latestModels.add(new LatestModel(R.drawable.ac,"(389 reviews)","Phone Cover","700","  ৳1500","Phone Cover"));
-        latestModels.add(new LatestModel(R.drawable.mug,"(397 reviews)","Mug","300","  ৳500","Mug"));
-        latestModels.add(new LatestModel(R.drawable.ac,"(356 reviews)","Phone Cover","100","  ৳300","Phone Cover"));
-        latestModels.add(new LatestModel(R.drawable.abd,"(388 reviews)","Women T_shirt","300","  ৳500","Shirt"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlack%20hoodies%20.png?alt=media&token=aa1011ea-cd8b-4c18-b792-4fa9214e3aad","(500 reviews)","Black Hoodies","1000","  ৳1500","Hoodies"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FYellow%20T-shirt%20%20.png?alt=media&token=4fab63fa-f74d-4cef-9173-381a8ccd1747","(450 reviews)","Yellow T_shirt","700","  ৳1000","Shirt"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028","(488 reviews)","Blue Hoodies","1000","  ৳1500","Hoodies"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","(389 reviews)","Phone Cover","700","  ৳1500","Phone Cover"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","(397 reviews)","Mug","300","  ৳500","Mug"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","(356 reviews)","Phone Cover","100","  ৳300","Phone Cover"));
+        latestModels.add(new LatestModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","(388 reviews)","Women T_shirt","300","  ৳500","Shirt"));
 
         database.getReference().child("products").child("Latest products").setValue(latestModels).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -177,9 +180,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(),ProductsShowAll.class);
                 startActivity(intent);
+
             }
         });
-
 
 
         //new Products
@@ -193,13 +196,13 @@ public class HomeFragment extends Fragment {
         rec_new.setNestedScrollingEnabled(false);
         rec_new.setHasFixedSize(true);
 
-        newProductsModels.add(new NewProductsModel(R.drawable.abd,"(289 reviews)","Women T_shirt","500","  ৳800","Shirt"));
-        newProductsModels.add(new NewProductsModel(R.drawable.mug,"(489 reviews)","Mug","300","  ৳500","Mug"));
-        newProductsModels.add(new NewProductsModel(R.drawable.ab,"(389 reviews)","Cap","300","  ৳500","Cap"));
-        newProductsModels.add(new NewProductsModel(R.drawable.ac,"(257 reviews)","Phone Cover","200","  ৳500","Phone Cover"));
-        newProductsModels.add(new NewProductsModel(R.drawable.am,"(380 reviews)","Black Hoodies","1000","  ৳1500","Hoodies"));
-        newProductsModels.add(new NewProductsModel(R.drawable.akl,"(269 reviews)","Blue Hoodies","1500","  ৳2000","Hoodies"));
-        newProductsModels.add(new NewProductsModel(R.drawable.akh,"(269 reviews)","Sky Blue Hoodies","1500","  ৳2000","Hoodies"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","(289 reviews)","Women T_shirt","500","  ৳800","Shirt"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FMug%20.png?alt=media&token=13d93033-4776-4ba1-81d0-383d50971896","(489 reviews)","Mug","300","  ৳500","Mug"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","(389 reviews)","Cap","300","  ৳500","Cap"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FPhone%20Cover%20.png?alt=media&token=5e4d1126-a8c1-4841-9a03-27107df4e867","(257 reviews)","Phone Cover","200","  ৳500","Phone Cover"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlack%20hoodies%20.png?alt=media&token=aa1011ea-cd8b-4c18-b792-4fa9214e3aad","(380 reviews)","Black Hoodies","1000","  ৳1500","Hoodies"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FBlue%20hoodies%20.png?alt=media&token=967ff854-083d-4c25-a2aa-7d000b4d6028","(269 reviews)","Blue Hoodies","1500","  ৳2000","Hoodies"));
+        newProductsModels.add(new NewProductsModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FSky%20Blue%20Hoodies%20.png?alt=media&token=94d3a79f-216c-4651-9241-e645abb94881","(269 reviews)","Sky Blue Hoodies","1500","  ৳2000","Hoodies"));
 
        database.getReference().child("products").child("New products").setValue(newProductsModels).addOnSuccessListener(new OnSuccessListener<Void>() {
            @Override

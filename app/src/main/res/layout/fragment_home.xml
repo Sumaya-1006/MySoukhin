@@ -8,6 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.HomeFragment">
 
+
     <LinearLayout
         android:id="@+id/home_layout"
         android:layout_width="match_parent"

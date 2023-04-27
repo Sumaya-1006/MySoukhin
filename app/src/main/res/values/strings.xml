@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MySoukhin</string>
+    <string name="app_name">Soukhin</string>
     <string name="title_text">Alert title</string>
     <string name="message_text">Do you want you exit</string>
     <string name="Open">Open</string>

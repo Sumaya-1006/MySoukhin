@@ -21,6 +21,7 @@ public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.ViewHolder
     Context context;
     List<SeeAllModel> seeAllModels;
 
+
     public SeeAllAdapter(Context context, List<SeeAllModel> seeAllModels) {
         this.context = context;
         this.seeAllModels = seeAllModels;
@@ -41,6 +42,7 @@ public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.ViewHolder
         holder.title.setText(seeAllModels.get(position).getProductTitle());
         holder.product_price.setText("Price: "+seeAllModels.get(position).getProductPrice()+"৳");
         holder.product_oldPrice.setText(seeAllModels.get(position).getOldPrice());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -19,6 +19,7 @@ import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.ui.CartsActivity;
 import com.example.mysoukhin.ui.CartsFragment;
+import com.example.mysoukhin.ui.FavouriteFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,7 +41,6 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
     public NewProductsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new NewProductsAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.products_item_list, parent, false));
-
     }
 
     @Override
@@ -48,35 +48,31 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         Glide.with(context).load(newProductsModels.get(position).getProductImg()).into(holder.imageView);
         holder.rating.setText(newProductsModels.get(position).getRating());
         holder.title.setText(newProductsModels.get(position).getProductTitle());
-        holder.product_price.setText("Price: "+newProductsModels.get(position).getProductPrice()+"৳");
+        holder.product_price.setText(newProductsModels.get(position).getProductPrice()+"৳");
         holder.product_oldPrice.setText(newProductsModels.get(position).getOldPrice());
+
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("details",newProductsModels.get(position));
+                //  intent.putExtra("productImg",latestModels.get(position).getProductImg());
                 context.startActivity(intent);
             }
         });
 
-        holder.floating_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CartsActivity.class);
-                intent.putExtra("cart",newProductsModels.get(position));
-                context.startActivity(intent);
 
-            }
-        });
+     holder.check_box.setOnClickListener(new View.OnClickListener() {
+            private  String  ProductName = "", ProductPrice="",OldPrice="", ProductIsFavorite, UserId = " ";
+            private String ProductImage= "";
 
-        holder.check_box.setOnClickListener(new View.OnClickListener() {
-            private String ProductName = "", ProductPrice="", ProductImage="",OldPrice="", ProductIsFavorite, UserId = " ";
             @Override
             public void onClick(View view) {
                 if (ProductIsFavorite != null && ProductIsFavorite.equalsIgnoreCase("true")) {
                     holder.check_box.setImageResource(R.drawable.black);
                     ProductIsFavorite = "false";
-
+                    DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                    x.child(ProductName).removeValue();
 
                 } else {
                     holder.check_box.setImageResource(R.drawable.love_icon);
@@ -84,7 +80,7 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
                     ProductName = holder.title.getText().toString();
                     ProductPrice = holder.product_price.getText().toString();
                     ProductIsFavorite = "true";
-                    ProductImage = holder.imageView.toString();
+                    ProductImage = (newProductsModels.get(position).getProductImg().toString());
                     OldPrice = holder.product_oldPrice.getText().toString();
 
                 }
@@ -94,13 +90,22 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
                 x.child("productPrice").setValue(ProductPrice);
                 x.child("productTitle").setValue(ProductName);
                 x.child("oldPrice").setValue(OldPrice);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FavouriteFragment fragment = new FavouriteFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).addToBackStack(null).commit();
 
-                AppCompatActivity activity = new AppCompatActivity();
-                CartsFragment fragment = new CartsFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
+
             }
         });
+        holder.floating_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                CartsFragment cartsFragment = new CartsFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,cartsFragment).addToBackStack(null).commit();
 
+            }
+        });
     }
 
 

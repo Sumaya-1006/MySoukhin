@@ -1,12 +1,21 @@
 package com.example.mysoukhin.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mysoukhin.R;
@@ -24,8 +33,9 @@ public class CartsFragment extends Fragment {
     CartAdapter cartAdapter;
     private RecyclerView CartItemRecyclerView;
     DatabaseReference root;
-    DatabaseReference m;
-    Toolbar toolbar;
+    DatabaseReference ref;
+    TextView rec_amount;
+    Button rec_check;
 
     public CartsFragment() {
 
@@ -43,35 +53,59 @@ public class CartsFragment extends Fragment {
         cartItemModelList = new ArrayList<>();
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        ref = FirebaseDatabase.getInstance().getReference("cart");
+        root = FirebaseDatabase.getInstance().getReference("cart");
 
-        root = FirebaseDatabase.getInstance().getReference();
-        m = root.child("cart");
+        rec_amount = view.findViewById(R.id.rec_amount);
+        rec_check = view.findViewById(R.id.rec_checkout);
+
+        //receive data
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver,new IntentFilter("MyTotalAmount"));
+
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
 
-        firebaseDatabase.getReference().child("cart").addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+               for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                   CartItemModel itemModel = dataSnapshot.getValue(CartItemModel.class);
+                   cartItemModelList.add(itemModel);
+               }
+               cartAdapter.notifyDataSetChanged();
+               //accountTotalPrice();
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+        rec_check.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    CartItemModel models = dataSnapshot.getValue(CartItemModel.class);
-                    models.getProducttitle().toString().trim();
-                    models.getPrice().toString().trim();
-                    models.getQuantity().toString().trim();
-                    models.getProductImage().toString().trim();
-
-                    cartItemModelList.add(models);
-                }
-                cartAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ShippingAddressActivity.class);
+                startActivity(intent);
             }
         });
 
         return view;
 
+
     }
+
+   public BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String totalBill = String.valueOf((intent.getIntExtra("total_amount",0)));
+            Log.e("error tag", String.valueOf(totalBill));
+            rec_amount.setText("Total Amount :" +totalBill+" ৳");
+
+        }
+    };
+
+
 }

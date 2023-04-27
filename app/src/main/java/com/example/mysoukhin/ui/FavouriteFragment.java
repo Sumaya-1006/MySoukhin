@@ -1,47 +1,28 @@
 package com.example.mysoukhin.ui;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toolbar;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.adapters.CartAdapter;
 import com.example.mysoukhin.adapters.FavouriteAdapter;
-import com.example.mysoukhin.databinding.ActivityAddProductBinding;
-import com.example.mysoukhin.models.CartItemModel;
+
 import com.example.mysoukhin.models.FavouritesClass;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class FavouriteFragment extends Fragment {
     RecyclerView fav_recycler;
@@ -50,6 +31,8 @@ public class FavouriteFragment extends Fragment {
     private String UserId;
     public ArrayList<FavouritesClass> favouritesClasses;
     FavouriteAdapter favouriteAdapter;
+    DatabaseReference root;
+    DatabaseReference ref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,8 +53,6 @@ public class FavouriteFragment extends Fragment {
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -84,7 +65,6 @@ public class FavouriteFragment extends Fragment {
             startActivity(intent);
         }
 
-
         return true;
     }
 
@@ -94,20 +74,15 @@ public class FavouriteFragment extends Fragment {
         favouritesClasses = new ArrayList<>();
         favouriteAdapter = new FavouriteAdapter(getContext(), favouritesClasses);
         fav_recycler.setAdapter(favouriteAdapter);
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        ref = FirebaseDatabase.getInstance().getReference("favourites");
+        root = FirebaseDatabase.getInstance().getReference();
 
-        firebaseDatabase.getReference().child("Favourite").addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                  /*  FavouritesClass favourites= dataSnapshot.getValue(FavouritesClass.class);
-                    favourites.getProductTitle().toString().trim();
-                    favourites.getProductPrice().toString().trim();
-                    favourites.getProductOldPrice().toString().trim();
-                    favourites.isChecked();
-                    favourites.getProductImage().toString().trim();
-
-                    favouritesClasses.add(favourites);*/
+                    FavouritesClass favourites = dataSnapshot.getValue(FavouritesClass.class);
+                    favouritesClasses.add(favourites);
                 }
                 favouriteAdapter.notifyDataSetChanged();
             }
@@ -117,6 +92,7 @@ public class FavouriteFragment extends Fragment {
 
             }
         });
+
     }
     }
 

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,12 +17,13 @@ import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.AddressModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ShippingAddressActivity extends AppCompatActivity {
+public class  ShippingAddressActivity extends AppCompatActivity {
     Button saveBtn;
     EditText name,phoneNum,address;
     FirebaseDatabase database;
@@ -35,7 +38,6 @@ public class ShippingAddressActivity extends AppCompatActivity {
         name = findViewById(R.id.nameEditText);
         phoneNum= findViewById(R.id.phoneEditText);
         address = findViewById(R.id.deliveryEditText);
-
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +69,6 @@ public class ShippingAddressActivity extends AppCompatActivity {
                 Toast.makeText(ShippingAddressActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
     }
 }

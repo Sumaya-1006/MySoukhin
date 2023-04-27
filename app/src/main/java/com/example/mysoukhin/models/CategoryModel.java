@@ -5,15 +5,15 @@ import java.io.Serializable;
 public class CategoryModel implements Serializable {
     private int img_url;
     private String name;
-    private String productTitle;
+    private String category;
 
     public CategoryModel() {
     }
 
-    public CategoryModel(int img_url, String name,String productTitle) {
+    public CategoryModel(int img_url, String name,String category) {
         this.img_url = img_url;
         this.name = name;
-        this.productTitle = productTitle;
+        this.category = category;
 
     }
 
@@ -33,12 +33,12 @@ public class CategoryModel implements Serializable {
         this.name = name;
     }
 
-    public String getProductTitle() {
-        return productTitle;
+    public String getCategory() {
+        return category;
     }
 
-    public void setProductTitle(String productTitle) {
-        this.productTitle = productTitle;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
 }

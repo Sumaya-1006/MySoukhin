@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <item
             android:id="@+id/home"
             android:title=""
-            android:icon="@drawable/ic_baseline_home_24" />
+            android:icon="@drawable/ic_baseline_home_24"
+            />
 
         <item
             android:id="@+id/fav"
@@ -17,7 +19,8 @@
         <item
             android:id="@+id/carts"
             android:title=""
-            android:icon="@drawable/ic_baseline_shopping_cart_24" />
+            android:icon="@drawable/ic_baseline_shopping_cart"
+            app:actionLayout = "@layout/notification_badge_layout"/>
         <item
             android:id="@+id/profile"
             android:title=""

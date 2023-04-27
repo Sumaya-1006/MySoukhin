@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,13 +21,18 @@ import android.widget.Toast;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.adapters.CategoryAdapter;
 import com.example.mysoukhin.adapters.SeeAllAdapter;
+import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.CategoryModel;
+import com.example.mysoukhin.models.FavouritesClass;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.models.SeeAllModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,12 +49,12 @@ public class ProductsShowAll extends AppCompatActivity {
     SeeAllAdapter seeAllAdapter;
     Toolbar toolbar;
     FirebaseDatabase database;
-
+    DatabaseReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_show_all);
-        this.setTitle("All Products");
+        this.setTitle("Search");
 
         toolbar = findViewById(R.id.show_toolBar);
         setSupportActionBar(toolbar);
@@ -64,6 +71,7 @@ public class ProductsShowAll extends AppCompatActivity {
         show_all_rec = findViewById(R.id.show_all_rec);
         List<SeeAllModel> seeAllModel = new ArrayList<>();
 
+
         seeAllAdapter = new SeeAllAdapter(this,seeAllModel);
         show_all_rec.setLayoutManager(new GridLayoutManager(this,2));
         show_all_rec.setAdapter(seeAllAdapter);
@@ -79,7 +87,7 @@ public class ProductsShowAll extends AppCompatActivity {
         seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FWomen's%20T-shirt%20.png?alt=media&token=d96ebbda-648b-49ff-a9c4-a6e64d3ce529","(388 reviews)","Women T_shirt","300","  ৳500","T_shirt"));
         seeAllModel.add(new SeeAllModel("https://firebasestorage.googleapis.com/v0/b/mysoukhin.appspot.com/o/uploads%2FCap%20.png?alt=media&token=7c799167-3a18-466f-bd24-a0f2336623c8","(389 reviews)","Cap","300","  ৳500","Cap"));
 
-       database.getReference().child("products").child("all Products").setValue(seeAllModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+       database.getReference().child("products").child("allProducts").setValue(seeAllModel).addOnSuccessListener(new OnSuccessListener<Void>() {
            @Override
            public void onSuccess(Void unused) {
               // Toast.makeText(getApplicationContext(), "added successfully", Toast.LENGTH_SHORT).show();
@@ -94,7 +102,7 @@ public class ProductsShowAll extends AppCompatActivity {
 
     }
 
-    @Override
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
         return true;
@@ -104,16 +112,14 @@ public class ProductsShowAll extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id ==R.id.searchBar){
+        /*if(id ==R.id.searchBar){
 
+        }*/
+         if (id == R.id.cartBar) {
+             getSupportFragmentManager().beginTransaction().replace(R.id.show_layout,new CartsFragment()).commit();
         }
-        else if (id == R.id.cartBar) {
-            Intent intent = new Intent(getApplicationContext(), CartsFragment.class);
-            startActivity(intent);
-        }
 
-
-        return true;
+         return true;
     }
 
     @Override

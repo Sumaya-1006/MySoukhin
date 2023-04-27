@@ -10,13 +10,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.LatestModel;
+import com.example.mysoukhin.ui.FavouriteFragment;
+import com.example.mysoukhin.ui.HomeFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.example.mysoukhin.ui.ProductsShowAll;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -52,7 +61,12 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
 
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
     }
 

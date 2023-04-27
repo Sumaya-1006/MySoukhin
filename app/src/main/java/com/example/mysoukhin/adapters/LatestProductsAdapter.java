@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +24,7 @@ import com.example.mysoukhin.models.UploadModel;
 import com.example.mysoukhin.ui.CartsFragment;
 import com.example.mysoukhin.ui.FavouriteFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.google.android.gms.analytics.ecommerce.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,8 +62,9 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
         Glide.with(context).load(latestModels.get(position).getProductImg()).into(holder.imageView);
         holder.rating.setText(latestModels.get(position).getRating());
         holder.title.setText(latestModels.get(position).getProductTitle());
-        holder.product_price.setText("Price: "+latestModels.get(position).getProductPrice()+"৳");
+        holder.product_price.setText(latestModels.get(position).getProductPrice()+"৳");
         holder.product_oldPrice.setText(latestModels.get(position).getOldPrice());
+
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,16 +80,19 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
             @Override
             public void onClick(View view) {
 
-
             }
         });
-        holder.check_box.setOnClickListener(new View.OnClickListener() {
-            private String ProductName = "", ProductPrice="", ProductImage="",OldPrice="", ProductIsFavorite, UserId = " ";
+       holder.check_box.setOnClickListener(new View.OnClickListener() {
+            private  String  ProductName = "", ProductPrice="",OldPrice="", ProductIsFavorite, UserId = " ";
+            private String ProductImage= "";
+
             @Override
             public void onClick(View view) {
                 if (ProductIsFavorite != null && ProductIsFavorite.equalsIgnoreCase("true")) {
                     holder.check_box.setImageResource(R.drawable.black);
                     ProductIsFavorite = "false";
+                    DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                    x.child(ProductName).removeValue();
 
                 } else {
                     holder.check_box.setImageResource(R.drawable.love_icon);
@@ -96,22 +100,30 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
                     ProductName = holder.title.getText().toString();
                     ProductPrice = holder.product_price.getText().toString();
                     ProductIsFavorite = "true";
-                    ProductImage = holder.imageView.toString();
+                    ProductImage = (latestModels.get(position).getProductImg().toString());
                     OldPrice = holder.product_oldPrice.getText().toString();
 
-                    }
+                }
                 DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
-                    x.child("isFavorite").setValue(true);
-                    x.child("productImg").setValue(ProductImage);
-                    x.child("productPrice").setValue(ProductPrice);
-                    x.child("productTitle").setValue(ProductName);
-                    x.child("oldPrice").setValue(OldPrice);
-                    AppCompatActivity activity = new AppCompatActivity();
-                    CartsFragment fragment = new CartsFragment();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
+                x.child("isFavorite").setValue(true);
+                x.child("productImg").setValue(ProductImage);
+                x.child("productPrice").setValue(ProductPrice);
+                x.child("productTitle").setValue(ProductName);
+                x.child("oldPrice").setValue(OldPrice);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FavouriteFragment fragment = new FavouriteFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).addToBackStack(null).commit();
             }
         });
+        holder.floating_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                CartsFragment cartsFragment = new CartsFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,cartsFragment).addToBackStack(null).commit();
 
+            }
+        });
     }
 
 

@@ -224,11 +224,11 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/PlusIcons"
+                            android:id="@+id/MinusIcons"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="5dp"
-                            app:srcCompat="@drawable/ic_baseline_add_box_24" />
+                            app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
 
                         <TextView
                             android:id="@+id/quans"
@@ -237,18 +237,18 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginLeft="10dp"
                             android:inputType="number"
-                            android:text="3"
+                            android:text="1"
                             android:textColor="@color/black"
                             android:textAlignment="center"
                             />
 
                         <ImageView
-                            android:id="@+id/MinusIcons"
+                            android:id="@+id/PlusIcons"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
-                            app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
+                            app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
                     </LinearLayout>
 

@@ -1,10 +1,14 @@
 package com.example.mysoukhin.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,6 +18,9 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.CategoryModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +94,7 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
     }

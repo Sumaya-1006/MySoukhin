@@ -3,16 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/hoodies_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:id="@+id/hoodies_toolBar">
-
-    </androidx.appcompat.widget.Toolbar>
+        android:background="#8FF7FD"
+        app:title="All Hoodies" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

@@ -1,30 +1,29 @@
 package com.example.mysoukhin.models;
 
 public class FavouritesClass {
-    String productImage;
+    String productImg;
     String productTitle;
     String productPrice;
-    String productOldPrice;
-    boolean checked;
-
-    public FavouritesClass(String productImage, String productTitle, String productPrice, String productOldPrice, boolean checked) {
-        this.productImage = productImage;
-        this.productTitle = productTitle;
-        this.productPrice = productPrice;
-        this.productOldPrice = productOldPrice;
-        this.checked = checked;
-    }
+    String oldPrice;
+    boolean isFavorite;
 
     public FavouritesClass() {
-
     }
 
-    public String getProductImage() {
-        return productImage;
+    public FavouritesClass(String productImg, String productTitle, String productPrice, String oldPrice, boolean isFavorite) {
+        this.productImg = productImg;
+        this.productTitle = productTitle;
+        this.productPrice = productPrice;
+        this.oldPrice = oldPrice;
+        this.isFavorite = isFavorite;
     }
 
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
+    public String getProductImg() {
+        return productImg;
+    }
+
+    public void setProductImg(String productImg) {
+        this.productImg = productImg;
     }
 
     public String getProductTitle() {
@@ -43,19 +42,19 @@ public class FavouritesClass {
         this.productPrice = productPrice;
     }
 
-    public String getProductOldPrice() {
-        return productOldPrice;
+    public String getOldPrice() {
+        return oldPrice;
     }
 
-    public void setProductOldPrice(String productOldPrice) {
-        this.productOldPrice = productOldPrice;
+    public void setOldPrice(String oldPrice) {
+        this.oldPrice = oldPrice;
     }
 
-    public boolean isChecked() {
-        return checked;
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    public void setChecked(boolean checked) {
-        this.checked = checked;
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

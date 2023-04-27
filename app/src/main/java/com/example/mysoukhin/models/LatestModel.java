@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class LatestModel implements Serializable {
     String id;
-    int productImg;
+    String productImg;
     String rating;
     String productTitle;
     String productPrice;
@@ -12,11 +12,15 @@ public class LatestModel implements Serializable {
     String category;
     boolean IsFavorite;
 
+    public LatestModel(boolean isFavorite) {
+        IsFavorite = isFavorite;
+    }
+
     public LatestModel() {
 
     }
 
-    public LatestModel(int productImg, String rating, String productTitle, String productPrice, String oldPrice, String category) {
+    public LatestModel(String productImg, String rating, String productTitle, String productPrice, String oldPrice, String category) {
         this.productImg = productImg;
         this.rating = rating;
         this.productTitle = productTitle;
@@ -26,11 +30,11 @@ public class LatestModel implements Serializable {
 
     }
 
-    public int getProductImg() {
+    public String getProductImg() {
         return productImg;
     }
 
-    public void setProductImg(int productImg) {
+    public void setProductImg(String productImg) {
         this.productImg = productImg;
     }
 

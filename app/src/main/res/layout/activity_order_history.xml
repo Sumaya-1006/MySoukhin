@@ -7,10 +7,18 @@
     android:layout_height="wrap_content"
     tools:context=".ui.OrderHistory">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/shipping_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8FF7FD"
+        app:title="Order History" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/order_rec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/order_rec"
-        android:padding="10dp"/>
+        android:layout_marginTop="50dp"
+        android:padding="10dp" />
 
 </androidx.cardview.widget.CardView>
