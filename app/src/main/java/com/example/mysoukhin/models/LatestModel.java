@@ -3,7 +3,6 @@ package com.example.mysoukhin.models;
 import java.io.Serializable;
 
 public class LatestModel implements Serializable {
-    String id;
     String productImg;
     String rating;
     String productTitle;
@@ -11,8 +10,10 @@ public class LatestModel implements Serializable {
     String oldPrice;
     String category;
     boolean IsFavorite;
+    int count;
 
     public LatestModel(boolean isFavorite) {
+
         IsFavorite = isFavorite;
     }
 
@@ -86,11 +87,12 @@ public class LatestModel implements Serializable {
         IsFavorite = favorite;
     }
 
-    public String getId() {
-        return id;
+    public int getCount() {
+        return count;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCount(int count) {
+        this.count = count;
     }
+
 }

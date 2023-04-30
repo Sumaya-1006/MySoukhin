@@ -10,7 +10,7 @@ public class NewProductsModel implements Serializable {
     String oldPrice;
     String category;
     boolean IsFavorite;
-
+    int count;
     public NewProductsModel(boolean IsFavorite) {
         this.IsFavorite = IsFavorite;
     }
@@ -83,4 +83,13 @@ public class NewProductsModel implements Serializable {
     public void setFavorite(boolean favorite) {
         IsFavorite = favorite;
     }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
 }

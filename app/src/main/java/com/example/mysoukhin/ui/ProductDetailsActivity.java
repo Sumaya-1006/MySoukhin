@@ -60,12 +60,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     int totalAmount;
     int totalPrice = 1;
     private String ProductImage, ProductQuantity, OldPrice, ProductRating, ProductName, ProductPrice;
-    public static int Count = 0;
     static NotificationBadge badge;
     static ImageView icon;
-    TextView badgeText;
-    ReviewManager manager;
-    ReviewInfo info;
+
+    static  int count = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +118,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
         PlusIcon = findViewById(R.id.PlusIcons);
         MinusIcon = findViewById(R.id.MinusIcons);
         quantity = findViewById(R.id.quans);
-        badgeText = findViewById(com.nex3z.notificationbadge.R.id.tv_badge_text);
         icon = findViewById(R.id.icon);
         badge = findViewById(R.id.badge_id);
-      //  NotificationBadge badge = findViewById(R.id.badge_id);
 
+        ratingText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              /*  Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                startActivity(intent);*/
+
+            }
+        });
 
 
         //new Products
@@ -135,7 +139,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(newProductsModel.getOldPrice());
             category_name.setText(newProductsModel.getCategory());
             totalAmount = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
-            Count = Integer.valueOf(totalQuantity);
             totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
 
         }
@@ -149,7 +152,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(latestModels.getOldPrice());
             category_name.setText(latestModels.getCategory());
             ratingText.setText(latestModels.getRating());
-            Count = Integer.valueOf(totalQuantity);
+
 
             //have sending data
             ProductImage = getIntent().getStringExtra("productImg\n");
@@ -169,7 +172,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             allProduct_oldPrice.setText(productsModels.getOldPrice());
             category_name.setText(productsModels.getCategory());
             totalAmount = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
-            Count = Integer.valueOf(totalQuantity);
             totalPrice = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
 
 
@@ -221,14 +223,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.containerId, new CartsFragment()).commit();
 
-              /*  BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
-                navigationView.getOrCreateBadge(R.id.carts);
-*/
                 setProductData();
 
-             //  showCartIcon();
-              //  setNumberOfItemsInCartIcon();
-          // getBadgePosition();
             }
         });
         PlusIcon.setOnClickListener(new View.OnClickListener() {
@@ -237,7 +233,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if (totalQuantity < 10) {
                     totalQuantity++;
                     quantity.setText(valueOf(totalQuantity));
-                  //  badgeText.setText(String.valueOf(totalQuantity));
+
                     if (newProductsModel != null) {
                         totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
                      //   totalAmount = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
@@ -254,7 +250,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                        allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (seeAllModel != null) {
-                      //  totalPrice = Integer.valueOf(seeAllModel.getProductPrice() + "৳") * totalQuantity;
+
                     }
 
                 }
@@ -266,7 +262,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if (totalQuantity > 1) {
                     totalQuantity--;
                     quantity.setText(valueOf(totalQuantity));
-                   // badgeText.setText(String.valueOf(totalQuantity));
 
                     if (newProductsModel != null) {
                         totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
@@ -285,70 +280,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     }
                     if (seeAllModel != null) {
                         totalPrice = Integer.valueOf(seeAllModel.getProductPrice()) * totalQuantity;
-                      //  allProduct_price.setText(valueOf(totalPrice) + "৳");
+
                     }
 
                 }
             }
 
         });
-
-
     }
-
-/*   private void getBadgePosition() {
-        BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
-        navigationView.getOrCreateBadge(R.id.carts);
-        NotificationBadge badge = findViewById(R.id.badge_id);
-        badge.setText(String.valueOf(Count));
-
-    }*/
-
-    /*  private void showCartIcon() {
-            BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-            navigationView.getOrCreateBadge(R.id.carts);
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.notification_badge_layout, null);
-           BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
-           badgeDrawable.setNumber(15);
-
-            icon = findViewById(R.id.icon);
-            badge = findViewById(R.id.badge_id);
-            if(view !=null){
-                badge.setText(String.valueOf(totalQuantity));
-                Log.d("count", String.valueOf(totalQuantity));
-            }
-
-        setNumberOfItemsInCartIcon();
-    }
-
-    private void setNumberOfItemsInCartIcon () {
-
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("cart").child(ProductName);
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    if (dataSnapshot.getChildrenCount() == 1) {
-                        badge.setVisibility(View.GONE);
-
-                    } else {
-                        badge.setVisibility(View.VISIBLE);
-                        Log.d("tag", String.valueOf(badge));
-                        badge.setText(String.valueOf(dataSnapshot.getChildrenCount() - 1));
-                    }
-                } else {
-                    badge.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        m.addListenerForSingleValueEvent(eventListener);
-    }*/
 
     private void setProductData() {
         ProductName = double_text.getText().toString();
@@ -356,11 +295,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
         OldPrice = allProduct_oldPrice.getText().toString();
         ProductQuantity = quantity.getText().toString();
 
-       /* String cartSum ="0";
-        CartItemModel model = new CartItemModel();
-        String.valueOf(cartSum += model.getQuantity());
-        badge.setNumber(Integer.parseInt(cartSum));*/
+       /* if(productsModels !=null){
+           count = Integer.valueOf(totalQuantity);
 
+        }
+        if(latestModels !=null){
+            count = Integer.valueOf(totalQuantity);
+
+        }
+        if(newProductsModel !=null){
+            count = Integer.valueOf(totalQuantity);
+
+        }*/
         if(productsModels !=null){
             ProductImage = (productsModels.getProductImg().toString());
 
@@ -379,10 +325,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
         x.child("productImg").setValue(ProductImage);
         x.child("productPrice").setValue(ProductPrice);
         x.child("productTitle").setValue(ProductName);
+      //  x.child("count").setValue(count);
       //  x.child("oldPrice").setValue(OldPrice);
         Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT).show();
 
     }
+
 
 }
 

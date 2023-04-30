@@ -78,4 +78,5 @@ public class CartItemModel implements Serializable {
     public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
     }
+
 }

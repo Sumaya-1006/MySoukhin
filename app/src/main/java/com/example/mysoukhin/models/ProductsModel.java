@@ -9,9 +9,11 @@ public class ProductsModel implements Serializable {
     String oldPrice;
     String category;
     boolean IsFavorite;
+    int count;
 
-    public ProductsModel(boolean IsFavorite) {
+    public ProductsModel(boolean IsFavorite,int count) {
         this.IsFavorite = IsFavorite;
+        this.count = count;
 
     }
 
@@ -74,5 +76,13 @@ public class ProductsModel implements Serializable {
 
     public void setFavorite(boolean favorite) {
         IsFavorite = favorite;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

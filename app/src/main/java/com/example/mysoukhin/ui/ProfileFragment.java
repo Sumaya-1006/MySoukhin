@@ -200,10 +200,7 @@ public class ProfileFragment extends Fragment {
                 }
 
                 }
-
-
-
-            @Override
+                @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };

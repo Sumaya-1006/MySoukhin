@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nex3z.notificationbadge.NotificationBadge;
+
 import java.util.ArrayList;
 
 public class CartsFragment extends Fragment {
@@ -36,7 +36,7 @@ public class CartsFragment extends Fragment {
     DatabaseReference ref;
     TextView rec_amount;
     Button rec_check;
-
+    NotificationBadge badge;
     public CartsFragment() {
 
     }
@@ -53,6 +53,7 @@ public class CartsFragment extends Fragment {
         cartItemModelList = new ArrayList<>();
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
+        badge = view.findViewById(R.id.badge_id);
         ref = FirebaseDatabase.getInstance().getReference("cart");
         root = FirebaseDatabase.getInstance().getReference("cart");
 
@@ -92,8 +93,6 @@ public class CartsFragment extends Fragment {
         });
 
         return view;
-
-
     }
 
    public BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -106,6 +105,4 @@ public class CartsFragment extends Fragment {
 
         }
     };
-
-
 }

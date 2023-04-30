@@ -20,7 +20,7 @@
       android:layout_width="35dp"
       android:layout_height="35dp"
       android:layout_toRightOf="@id/icon"
-      android:layout_marginLeft="9dp"
+      android:layout_marginLeft="8dp"
       android:layout_alignTop="@id/icon"
       android:layout_marginTop="-2dp"
       app:nbMaxTextLength="2"/>
