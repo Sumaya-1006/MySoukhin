@@ -46,7 +46,6 @@ public class CheckOutActivity extends AppCompatActivity {
         cashText = findViewById(R.id.cashText);
         checkBtn = findViewById(R.id.cashId);
         bankBtn = findViewById(R.id.bankId);
-        Object obj = getIntent().getSerializableExtra("item");
 
         seekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
         seekBar.getThumb().setColorFilter(getResources().getColor(R.color.purple_500), PorterDuff.Mode.SRC_ATOP);
@@ -60,6 +59,7 @@ public class CheckOutActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),StatusActivity.class);
                 startActivity(intent);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
                 firebaseDatabase.getReference().child("cart").removeValue();
             }
         });

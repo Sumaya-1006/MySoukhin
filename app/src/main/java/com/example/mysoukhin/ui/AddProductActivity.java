@@ -138,7 +138,7 @@ public class AddProductActivity extends AppCompatActivity {
                     DatabaseReference z = FirebaseDatabase.getInstance().getReference()
                             .child("uploads")
                            // .child(productType.getText().toString())
-                            //.child(imgProduct.toString())
+                           // .child(imgProduct.toString())
                             .child(name.getText().toString());
 
                     z.setValue(product);

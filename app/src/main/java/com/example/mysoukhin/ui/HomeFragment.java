@@ -12,6 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -19,9 +20,11 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.adapters.CategoryAdapter;
+import com.example.mysoukhin.adapters.DesignAdapter;
 import com.example.mysoukhin.adapters.LatestProductsAdapter;
 import com.example.mysoukhin.adapters.NewProductsAdapter;
 import com.example.mysoukhin.adapters.ProductsAdapter;
+import com.example.mysoukhin.adapters.UploadAdapter;
 import com.example.mysoukhin.models.AllCategoryModel;
 import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.CategoryModel;
@@ -29,6 +32,7 @@ import com.example.mysoukhin.models.FavouritesClass;
 import com.example.mysoukhin.models.LatestModel;
 import com.example.mysoukhin.models.NewProductsModel;
 import com.example.mysoukhin.models.ProductsModel;
+import com.example.mysoukhin.models.UploadModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,12 +48,11 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView cat_recycler,rec_popular,rec_latest,rec_new;
+    RecyclerView cat_recycler,rec_popular,rec_latest,rec_new,rec_design;
     CategoryAdapter categoryAdapter;
     NestedScrollView nestedScrollView;
     FirebaseDatabase database;
     private static List<FavouritesClass> favourites;
-    String category = "";
     TextView category_see_all,popularProducts_see_all,latestProducts_see_all,newProducts_see_all;
 
     @Override
@@ -224,7 +227,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // design
+        rec_design = root.findViewById(R.id.rec_design);
 
+        List<UploadModel> uploadModels = new ArrayList<>();
+        DesignAdapter designAdapter = new DesignAdapter(getActivity(),uploadModels);
+        RecyclerView.LayoutManager designManager= new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        rec_design.setLayoutManager(designManager);
+        rec_design.setAdapter(designAdapter);
+        rec_design.setNestedScrollingEnabled(false);
+        rec_design.setHasFixedSize(true);
+
+        database.getReference().child("uploads").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    UploadModel model = dataSnapshot.getValue(UploadModel.class);
+                    model.getImg().toString().trim();
+                    model.getProduct_name().toString().trim();
+                    uploadModels.add(model);
+                }
+                designAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return root;
     }

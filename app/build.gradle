@@ -69,4 +69,5 @@ dependencies {
     implementation 'com.razorpay:checkout:1.6.26'
     //Review
     implementation 'com.google.android.play:review:2.0.1'
+
 }
