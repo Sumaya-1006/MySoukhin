@@ -30,6 +30,7 @@ import java.util.List;
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder> {
     Context context;
     List<AddressModel> model;
+    private RadioButton selectedBtn;
 
     public AddressAdapter(Context context, List<AddressModel> model) {
         this.context = context;
@@ -48,12 +49,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.address_name.setText(model.get(position).getName());
         holder.address_phn.setText(model.get(position).getPhoneNum());
         holder.address_details.setText(model.get(position).getAddress());
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, CheckOutActivity.class);
-                holder.imageView.setSelected(true);
+                holder.radioButton.setSelected(true);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK );
                 context.startActivity(intent);
 
@@ -62,6 +63,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(selectedBtn !=null){
+                    selectedBtn.setChecked(true);
+
+                }
+
                 Intent intent = new Intent(context, ShippingAddressActivity.class);
                 context.startActivity(intent);
                 FirebaseDatabase.getInstance().getReference().child("address").removeValue();
@@ -78,14 +84,14 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView address_name,address_details,address_phn;
-        ImageView imageView;
+        RadioButton radioButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             address_name = itemView.findViewById(R.id.address_name);
             address_details = itemView.findViewById(R.id.address_details);
             address_phn = itemView.findViewById(R.id.address_phn);
-            imageView = itemView.findViewById(R.id.address_img);
+            radioButton = itemView.findViewById(R.id.address_img);
 
 
         }

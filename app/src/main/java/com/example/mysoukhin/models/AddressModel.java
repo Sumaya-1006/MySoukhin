@@ -4,6 +4,7 @@ public class AddressModel {
     private String name;
     private String address;
     private String phoneNum;
+    boolean isSelected;
 
     public AddressModel() {
     }
@@ -36,5 +37,13 @@ public class AddressModel {
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

@@ -13,55 +13,57 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
+import com.example.mysoukhin.models.HistoryModel;
 import com.example.mysoukhin.models.OrderModel;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     Context context;
-    List<OrderModel> orderModels;
+    List<HistoryModel> models;
 
-    public OrderAdapter(Context context, List<OrderModel> orderModels) {
+    public HistoryAdapter(Context context, List<HistoryModel> models) {
         this.context = context;
-        this.orderModels = orderModels;
+        this.models = models;
     }
 
     @NonNull
     @Override
-    public OrderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new OrderAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.order_items, parent, false));
+    public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new HistoryAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.order_history_items, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(context).load(orderModels.get(position).getProductImg()).into(holder.imageView);
-        holder.title.setText(orderModels.get(position).getProductTitle());
-        holder.product_price.setText(orderModels.get(position).getProductPrice()+"৳");
-
+    public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        Glide.with(context).load(models.get(position).getProductImg()).into(holder.imageView);
+        holder.title.setText(models.get(position).getProductTitle());
+        holder.product_price.setText("Price : "+models.get(position).getProductPrice() + "৳");
+        holder.quantity.setText("Quantity : "+models.get(position).getQuantity());
 
     }
 
     @Override
     public int getItemCount() {
-        return  orderModels.size();
+        return models.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView title,product_price,date;
+        TextView title, product_price, date,quantity;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.order_image);
             title = itemView.findViewById(R.id.order_title);
             product_price = itemView.findViewById(R.id.order_price);
-          /*  date = itemView.findViewById(R.id.date);
+            quantity = itemView.findViewById(R.id.history_quantity);
+            date = itemView.findViewById(R.id.date);
             Calendar calendar = Calendar.getInstance();
             String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-            date.setText(currentDate);
-*/
+            date.setText("Date : "+currentDate);
 
         }
     }

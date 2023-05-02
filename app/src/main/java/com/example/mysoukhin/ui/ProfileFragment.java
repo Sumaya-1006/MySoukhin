@@ -95,6 +95,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        forward1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), PendingOrder.class);
+                startActivity(intent);
+            }
+        });
+
         forward5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

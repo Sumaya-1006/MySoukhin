@@ -1,18 +1,19 @@
 package com.example.mysoukhin.models;
 
-public class OrderModel {
+public class HistoryModel {
     String productImg;
     String productPrice;
     String productTitle;
+    String quantity;
 
-
-    public OrderModel() {
+    public HistoryModel() {
     }
 
-    public OrderModel(String productImg, String productPrice, String productTitle) {
+    public HistoryModel(String productImg, String productPrice, String productTitle, String quantity) {
         this.productImg = productImg;
         this.productPrice = productPrice;
         this.productTitle = productTitle;
+        this.quantity = quantity;
     }
 
     public String getProductImg() {
@@ -39,4 +40,11 @@ public class OrderModel {
         this.productTitle = productTitle;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 }

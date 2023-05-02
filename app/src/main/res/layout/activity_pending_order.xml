@@ -8,14 +8,14 @@
     tools:context=".ui.OrderHistory">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/order_toolbar"
+        android:id="@+id/pending_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#8FF7FD"
-        app:title="Order History" />
+        app:title="Pending Order" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/order_rec"
+        android:id="@+id/pending_rec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"

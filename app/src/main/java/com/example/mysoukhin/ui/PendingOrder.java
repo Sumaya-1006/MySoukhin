@@ -6,17 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.adapters.CartAdapter;
-import com.example.mysoukhin.adapters.HistoryAdapter;
 import com.example.mysoukhin.adapters.OrderAdapter;
-import com.example.mysoukhin.models.CartItemModel;
-import com.example.mysoukhin.models.HistoryModel;
 import com.example.mysoukhin.models.OrderModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,49 +21,51 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderHistory extends AppCompatActivity {
+public class PendingOrder extends AppCompatActivity {
     RecyclerView recyclerView;
-    HistoryAdapter historyAdapter;
+    OrderAdapter orderAdapter;
     DatabaseReference root;
     DatabaseReference ref;
-    Toolbar oToolbar;
+    Toolbar pToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_history);
-        oToolbar = findViewById(R.id.order_toolbar);
-        setSupportActionBar(oToolbar);
+        setContentView(R.layout.activity_pending_order);
+
+        pToolbar = findViewById(R.id.pending_toolbar);
+        setSupportActionBar(pToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        oToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        pToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        recyclerView = findViewById(R.id.order_rec);
+        recyclerView = findViewById(R.id.pending_rec);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        List<HistoryModel> historyModels = new ArrayList<>();
+        List<OrderModel> orderModels = new ArrayList<>();
 
-        recyclerView.setAdapter(historyAdapter);
-        ref = FirebaseDatabase.getInstance().getReference("order");
+        recyclerView.setAdapter(orderAdapter);
+        ref = FirebaseDatabase.getInstance().getReference("cart");
         root = FirebaseDatabase.getInstance().getReference();
 
-        historyAdapter = new HistoryAdapter(this,historyModels);
-        recyclerView.setAdapter(historyAdapter);
+        orderAdapter = new OrderAdapter(this,orderModels);
+        recyclerView.setAdapter(orderAdapter);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                   HistoryModel model = dataSnapshot.getValue(HistoryModel.class);
-                    historyModels.add(model);
+                    OrderModel model = dataSnapshot.getValue(OrderModel.class);
+                    orderModels.add(model);
                 }
-                historyAdapter.notifyDataSetChanged();
+                orderAdapter.notifyDataSetChanged();
             }
 
             @Override
