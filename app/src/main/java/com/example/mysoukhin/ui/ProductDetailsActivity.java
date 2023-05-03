@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     TextView double_text, allProduct_price, allProduct_oldPrice, category_name, ratingText,
             desTextView, typeText, colorText, stylishText, cottonText, fabricText, quantity;
     Button buyButton, cartButton;
+    ImageButton review;
     NewProductsModel newProductsModel = null;
     LatestModel latestModels = null;
     ProductsModel productsModels = null;
@@ -120,13 +122,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
         quantity = findViewById(R.id.quans);
         icon = findViewById(R.id.icon);
         badge = findViewById(R.id.badge_id);
+        review = findViewById(R.id.review);
 
-        ratingText.setOnClickListener(new View.OnClickListener() {
+        review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-                startActivity(intent);
 
+                if(productsModels !=null){
+                    ProductImage = (productsModels.getProductImg().toString());
+                    ProductName = double_text.getText().toString();
+
+                }
+
+                if(latestModels !=null){
+                    ProductImage = (latestModels.getProductImg().toString());
+                    ProductName = double_text.getText().toString();
+                }
+
+                if(newProductsModel !=null){
+                    ProductImage = (newProductsModel.getProductImg().toString());
+                    ProductName = double_text.getText().toString();
+                }
+
+                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                intent.putExtra("productTitle",ProductName);
+                intent.putExtra("productImg",ProductImage);
+                startActivity(intent);
 
             }
         });
@@ -237,18 +258,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     if (newProductsModel != null) {
                         totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
-                     //   totalAmount = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
                         allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (latestModels != null) {
                         totalPrice = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
-                       //totalAmount = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
                         allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (productsModels != null) {
                         totalPrice = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
-                       // totalAmount = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
-                       allProduct_price.setText(valueOf(totalPrice));
+                        allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (seeAllModel != null) {
 
@@ -266,18 +284,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     if (newProductsModel != null) {
                         totalPrice = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
-                       // totalAmount = Integer.valueOf(newProductsModel.getProductPrice()) * totalQuantity;
-                      allProduct_price.setText(valueOf(totalPrice));
+                        allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (latestModels != null) {
                         totalPrice = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
-                       // totalAmount = Integer.valueOf(latestModels.getProductPrice()) * totalQuantity;
-                      allProduct_price.setText(valueOf(totalPrice));
+                        allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (productsModels != null) {
                         totalPrice = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
-                      //  totalAmount = Integer.valueOf(productsModels.getProductPrice()) * totalQuantity;
-                       allProduct_price.setText(valueOf(totalPrice));
+                        allProduct_price.setText(valueOf(totalPrice));
                     }
                     if (seeAllModel != null) {
                         totalPrice = Integer.valueOf(seeAllModel.getProductPrice()) * totalQuantity;
@@ -321,7 +336,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             ProductImage = (newProductsModel.getProductImg().toString());
         }
 
-        DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("cart").child(ProductName);
+        DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("cart").push();
         x.child("quantity").setValue(ProductQuantity);
         x.child("productImg").setValue(ProductImage);
         x.child("productPrice").setValue(ProductPrice);

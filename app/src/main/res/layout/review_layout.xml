@@ -2,10 +2,9 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_marginTop="12dp"
     android:padding="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,41 +12,53 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/order_image"
+            android:id="@+id/reviewImg"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/akh"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <TextView
-            android:id="@+id/order_title"
+            android:id="@+id/review_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:text="T_shirt"
             android:textColor="#000"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/order_image"
+            app:layout_constraintStart_toEndOf="@+id/reviewImg"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/order_price"
+            android:id="@+id/reviewRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:text="200"
+            android:layout_marginTop="10dp"
+            android:text="rating"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/order_image"
-            app:layout_constraintTop_toBottomOf="@+id/order_title" />
+            app:layout_constraintStart_toEndOf="@+id/reviewImg"
+            app:layout_constraintTop_toBottomOf="@+id/review_title" />
+
+        <TextView
+            android:id="@+id/review_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:text="review"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/reviewImg"
+            app:layout_constraintTop_toBottomOf="@+id/reviewRating" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

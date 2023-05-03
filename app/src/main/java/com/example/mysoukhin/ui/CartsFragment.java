@@ -94,7 +94,7 @@ public class CartsFragment extends Fragment {
         rec_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savedData();
+               // savedData();
                 Intent intent = new Intent(getContext(), AddressActivity.class);
                 startActivity(intent);
             }
@@ -103,15 +103,18 @@ public class CartsFragment extends Fragment {
         return view;
     }
 
-    private void savedData() {
-        root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference x = root.child("cart");
-        x.addListenerForSingleValueEvent(new ValueEventListener() {
+
+               /* root.child("order").child("productImg").setValue(snapshot.getValue());
+                root.child("order").child("productTitle").setValue(snapshot.getValue());
+                root.child("order").child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));
+                Toast.makeText( getContext() ,"Confirmed Completed" , Toast.LENGTH_LONG).show();
+                root.child("cart").removeValue();*/
+
+       /* x.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseDatabase t = FirebaseDatabase.getInstance();
-               // String key  = t.getReference("order").push().getKey();
-                root.child("order").setValue(snapshot.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                root.child("order").push().setValue(snapshot.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText( getContext() ,"Successfully added" , Toast.LENGTH_LONG).show();
@@ -123,19 +126,15 @@ public class CartsFragment extends Fragment {
 
                     }
                 });
-                /*root.child("order").child(key).child("productImg").setValue(snapshot.getValue());
-                root.child("order").child(key).child("productTitle").setValue(snapshot.getValue());
-                root.child("order").child(key).child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));*/
-               // Toast.makeText( getContext() ,"Confirmed Completed" , Toast.LENGTH_LONG).show();
-                //root.child("cart").removeValue();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
-    }
+        });*/
+
 
     public BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override

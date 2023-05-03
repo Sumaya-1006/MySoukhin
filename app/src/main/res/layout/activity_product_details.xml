@@ -49,12 +49,21 @@
             android:layout_marginLeft="30dp"
             android:textColor="#363431"/>
 
+        <ImageButton
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_baseline_rate_review_24"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="end"
-            android:layout_margin="10dp">
+            android:layout_margin="18dp">
 
             <TextView
                 android:id="@+id/allProduct_priceId"
@@ -98,6 +107,7 @@
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/icon"
                 android:layout_marginLeft="10dp"/>
+
 
         </LinearLayout>
 

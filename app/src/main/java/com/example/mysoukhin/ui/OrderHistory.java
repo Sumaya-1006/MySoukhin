@@ -18,6 +18,8 @@ import com.example.mysoukhin.adapters.OrderAdapter;
 import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.HistoryModel;
 import com.example.mysoukhin.models.OrderModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +32,9 @@ import java.util.List;
 public class OrderHistory extends AppCompatActivity {
     RecyclerView recyclerView;
     HistoryAdapter historyAdapter;
-    DatabaseReference root;
     DatabaseReference ref;
     Toolbar oToolbar;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public class OrderHistory extends AppCompatActivity {
         oToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(),StatusActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -54,29 +57,30 @@ public class OrderHistory extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         List<HistoryModel> historyModels = new ArrayList<>();
-
         recyclerView.setAdapter(historyAdapter);
         ref = FirebaseDatabase.getInstance().getReference("order");
-        root = FirebaseDatabase.getInstance().getReference();
 
         historyAdapter = new HistoryAdapter(this,historyModels);
         recyclerView.setAdapter(historyAdapter);
 
-        ref.addValueEventListener(new ValueEventListener() {
+       ref.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                   HistoryModel model = dataSnapshot.getValue(HistoryModel.class);
-                    historyModels.add(model);
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                HistoryModel model = dataSnapshot.getValue(HistoryModel.class);
+                                historyModels.add(model);
+                            }
+                            historyAdapter.notifyDataSetChanged();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
-                historyAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
-}

@@ -2,6 +2,7 @@ package com.example.mysoukhin.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -27,12 +28,23 @@ public class  ShippingAddressActivity extends AppCompatActivity {
     Button saveBtn;
     EditText name,phoneNum,address;
     FirebaseDatabase database;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipping_address);
         this.setTitle("Address");
+        toolbar = findViewById(R.id.shipping_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         saveBtn = findViewById(R.id.saveBtn);
         name = findViewById(R.id.nameEditText);
