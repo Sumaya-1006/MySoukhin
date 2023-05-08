@@ -6,8 +6,14 @@ public class OrderModel {
     String productTitle;
     String quantity;
 
-
     public OrderModel() {
+    }
+
+    public OrderModel(String productImg, String productPrice, String productTitle, String quantity) {
+        this.productImg = productImg;
+        this.productPrice = productPrice;
+        this.productTitle = productTitle;
+        this.quantity = quantity;
     }
 
     public String getProductImg() {

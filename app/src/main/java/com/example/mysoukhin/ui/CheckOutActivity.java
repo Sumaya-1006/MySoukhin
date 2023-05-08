@@ -1,47 +1,27 @@
 package com.example.mysoukhin.ui;
 
-import static com.example.mysoukhin.ui.ProductDetailsActivity.ProductName;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.models.CartItemModel;
 import com.example.mysoukhin.models.HistoryModel;
-import com.example.mysoukhin.models.LatestModel;
-import com.example.mysoukhin.models.NewProductsModel;
-import com.example.mysoukhin.models.OrderModel;
-import com.example.mysoukhin.models.ProductsModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 
 public class CheckOutActivity extends AppCompatActivity {
     SeekBar seekBar;
@@ -108,26 +88,9 @@ public class CheckOutActivity extends AppCompatActivity {
 
        root = FirebaseDatabase.getInstance().getReference();
        DatabaseReference x = root.child("cart");
-       String timestamp = "" + System.currentTimeMillis();
        x.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-           /*    root.child("Order").setValue(snapshot.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                   @Override
-                   public void onSuccess(Void unused) {
-                       //Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
-                       // x.child("cart").removeValue();
-
-
-                     //  startActivity(new Intent(getApplicationContext(), OrderHistory.class));
-                   }
-               }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-
-                   }
-               });*/
 
                FirebaseDatabase t = FirebaseDatabase.getInstance();
                String key  = t.getReference("Order").push().getKey();

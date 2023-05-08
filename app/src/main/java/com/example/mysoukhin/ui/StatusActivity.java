@@ -1,6 +1,7 @@
 package com.example.mysoukhin.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,14 +22,27 @@ public class StatusActivity extends AppCompatActivity {
     ImageView status;
     TextView text_Views,text_Views2;
     Button statusBtn;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
 
+        toolbar = findViewById(R.id.status_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
         text_Views2 = findViewById(R.id.text_Views2);
-        String text = "Your Order is Completed. Please Check the Delivery Status at Pending Order Tracking Pages";
+        String text = "Your Order is Completed. Please Check the Delivery Status at Pending Order Tracking Pages.";
         SpannableString ss = new SpannableString(text);
 
      /*   ForegroundColorSpan fcs = new ForegroundColorSpan(Color.BLACK);

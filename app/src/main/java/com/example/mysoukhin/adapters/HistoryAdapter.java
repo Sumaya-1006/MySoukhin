@@ -2,9 +2,11 @@ package com.example.mysoukhin.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.HistoryModel;
 import com.example.mysoukhin.models.OrderModel;
+import com.example.mysoukhin.ui.ScanQRCodeActivity;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -45,13 +48,23 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.orderDate.setText(models.get(position).getDate());
         holder.OrderCheck.setText( models.get(position).getOrderCheck());
 
-
-       if(models.get(position).getOrderCheck().equalsIgnoreCase("false")){
+        if(models.get(position).getOrderCheck().equalsIgnoreCase("false")){
             holder.OrderCheck.setText("Order: Pending");
+            holder.ScanQrCode.setVisibility(View.VISIBLE);
         }
         else{
             holder.OrderCheck.setText("Order: Received");
+            holder.ScanQrCode.setVisibility(View.GONE);
         }
+
+        holder.ScanQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ScanQRCodeActivity.class);
+                intent.putExtra("OrderId",models.get(position).getOrderId());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -61,24 +74,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView title, product_price, date,quantity,orderDate, orderNums, orderPrice, orderProducts, OrderCheck;
+        Button ScanQrCode;
+        TextView orderDate, orderNums, orderPrice, orderProducts, OrderCheck;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            /*title = itemView.findViewById(R.id.order_title);
-            product_price = itemView.findViewById(R.id.order_price);
-            quantity = itemView.findViewById(R.id.history_quantity);
-            date = itemView.findViewById(R.id.date);
-            imageView = itemView.findViewById(R.id.order_image);
-            Calendar calendar = Calendar.getInstance();
-            String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-            date.setText("Date : "+currentDate);*/
+
             orderDate = itemView.findViewById(R.id.orderDate);
             orderNums = itemView.findViewById(R.id.orderNums);
            // orderPrice = itemView.findViewById(R.id.orderPrice);
             orderProducts = itemView.findViewById(R.id.orderProducts);
             OrderCheck = itemView.findViewById(R.id.OrderCheck);
+            ScanQrCode = itemView.findViewById(R.id.ScanQRCode);
 
 
         }

@@ -79,7 +79,6 @@ public class OrderHistory extends AppCompatActivity {
                         String products="Products :\n";
                         for (DataSnapshot data : dataSnapshot.child("orderproducts").getChildren())
                         {
-                         // products+= "Price :"+data.child("productPrice").getValue()+ " \n " +data.child("productTitle").getValue()+"\n"+data.child("quantity");
                             products+= "    #"+data.getKey() + "\n        Price: " + data.child("productPrice").getValue().toString() + " TK\n        Quantity: " + data.child("quantity").getValue().toString()+"\n";
 
                         }

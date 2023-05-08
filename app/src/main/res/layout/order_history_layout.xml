@@ -96,18 +96,17 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <!-- <Button
-             android:id="@+id/ScanQRCode"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-             android:layout_marginTop="10dp"
-             android:layout_marginRight="21dp"
-             android:inputType="textCapWords"
-             android:paddingLeft="10dp"
-             android:paddingRight="10dp"
-             android:text="QR Code Scanner"
-             android:textColor="#00ACC1" />-->
+        <Button
+            android:id="@+id/ScanQRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="21dp"
+            android:inputType="textCapWords"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="QR Code Scanner"
+            android:textColor="#00ACC1" />
 
     </RelativeLayout>
 

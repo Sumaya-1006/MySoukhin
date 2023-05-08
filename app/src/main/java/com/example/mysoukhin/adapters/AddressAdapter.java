@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,13 @@ import com.example.mysoukhin.models.AddressModel;
 import com.example.mysoukhin.ui.CheckOutActivity;
 import com.example.mysoukhin.ui.MainActivity;
 import com.example.mysoukhin.ui.ShippingAddressActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -43,12 +50,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         return new ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.address_list, parent, false));
     }
-
     @Override
     public void onBindViewHolder(@NonNull AddressAdapter.ViewHolder holder, int position) {
-        holder.address_name.setText(model.get(position).getName());
-        holder.address_phn.setText(model.get(position).getPhoneNum());
-        holder.address_details.setText(model.get(position).getAddress());
+        holder.address_name.setText("Name : "+model.get(position).getName());
+        holder.address_phn.setText("Number : "+model.get(position).getPhoneNum());
+        holder.address_details.setText("Address : "+model.get(position).getAddress());
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +62,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
                 Intent intent = new Intent(context, CheckOutActivity.class);
                 holder.radioButton.setSelected(true);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK );
+               // FirebaseDatabase.getInstance().getReference().child("address").removeValue();
                 context.startActivity(intent);
 
             }
@@ -63,11 +70,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(selectedBtn !=null){
-                    selectedBtn.setChecked(true);
-
-                }
-
                 Intent intent = new Intent(context, ShippingAddressActivity.class);
                 context.startActivity(intent);
                 FirebaseDatabase.getInstance().getReference().child("address").removeValue();
@@ -76,6 +78,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         });
 
     }
+
 
     @Override
     public int getItemCount() {
