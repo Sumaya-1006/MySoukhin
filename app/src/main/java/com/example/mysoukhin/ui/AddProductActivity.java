@@ -179,7 +179,8 @@ public class AddProductActivity extends AppCompatActivity {
             try {
                 Picasso.get().load(imgUri).fit().centerCrop().into(imgProduct);
             } catch (Exception e) {
-                Log.e(this.toString(), e.getMessage().toString());
+               // Log.e(this.toString(), e.getMessage().toString());
+                imgProduct.setImageResource(R.drawable.grocery);
             }
         }
     }

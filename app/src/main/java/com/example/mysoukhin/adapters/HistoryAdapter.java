@@ -33,15 +33,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @Override
     public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new HistoryAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.order_history_items, parent, false));
+                .inflate(R.layout.order_history_layout, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(context).load(models.get(position).getProductImg()).into(holder.imageView);
-        holder.title.setText(models.get(position).getProductTitle());
-        holder.product_price.setText("Price : "+models.get(position).getProductPrice() + "৳");
-        holder.quantity.setText("Quantity : "+models.get(position).getQuantity());
+
+        holder.orderProducts.setText(models.get(position).getOrderProducts());
+      //  holder.orderPrice.setText(models.get(position).getOrderPrice());
+        holder.orderNums.setText(models.get(position).getOrderNums());
+        holder.orderDate.setText(models.get(position).getDate());
+        holder.OrderCheck.setText( models.get(position).getOrderCheck());
+
+
+       if(models.get(position).getOrderCheck().equalsIgnoreCase("false")){
+            holder.OrderCheck.setText("Order: Pending");
+        }
+        else{
+            holder.OrderCheck.setText("Order: Received");
+        }
 
     }
 
@@ -52,18 +62,24 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView title, product_price, date,quantity;
+        TextView title, product_price, date,quantity,orderDate, orderNums, orderPrice, orderProducts, OrderCheck;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.order_image);
-            title = itemView.findViewById(R.id.order_title);
+            /*title = itemView.findViewById(R.id.order_title);
             product_price = itemView.findViewById(R.id.order_price);
             quantity = itemView.findViewById(R.id.history_quantity);
             date = itemView.findViewById(R.id.date);
+            imageView = itemView.findViewById(R.id.order_image);
             Calendar calendar = Calendar.getInstance();
             String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-            date.setText("Date : "+currentDate);
+            date.setText("Date : "+currentDate);*/
+            orderDate = itemView.findViewById(R.id.orderDate);
+            orderNums = itemView.findViewById(R.id.orderNums);
+           // orderPrice = itemView.findViewById(R.id.orderPrice);
+            orderProducts = itemView.findViewById(R.id.orderProducts);
+            OrderCheck = itemView.findViewById(R.id.OrderCheck);
+
 
         }
     }

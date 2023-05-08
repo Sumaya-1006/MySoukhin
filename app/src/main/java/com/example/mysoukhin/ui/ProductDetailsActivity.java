@@ -40,6 +40,7 @@ import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.review.model.ReviewErrorCode;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +62,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     int totalQuantity = 1;
     int totalAmount;
     int totalPrice = 1;
-    private String ProductImage, ProductQuantity, OldPrice, ProductRating, ProductName, ProductPrice;
+    public static String  ProductImage, ProductQuantity, OldPrice, ProductRating, ProductName, ProductPrice;
     static NotificationBadge badge;
     static ImageView icon;
 
@@ -75,6 +76,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         // new products
+
         final Object obj = getIntent().getSerializableExtra("details");
         if (obj instanceof NewProductsModel)
             newProductsModel = (NewProductsModel) obj;
@@ -91,11 +93,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (obj2 instanceof ProductsModel)
             productsModels = (ProductsModel) obj2;
 
-
         //all products
 
         final Object obj3 = getIntent().getSerializableExtra("details");
-
         if (obj3 instanceof SeeAllModel)
             seeAllModel = (SeeAllModel) obj3;
 
@@ -131,7 +131,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if(productsModels !=null){
                     ProductImage = (productsModels.getProductImg().toString());
                     ProductName = double_text.getText().toString();
-
                 }
 
                 if(latestModels !=null){
@@ -310,19 +309,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ProductPrice = allProduct_price.getText().toString();
         OldPrice = allProduct_oldPrice.getText().toString();
         ProductQuantity = quantity.getText().toString();
+        String timestamp = ""+System.currentTimeMillis();
 
-       /* if(productsModels !=null){
-           count = Integer.valueOf(totalQuantity);
-
-        }
-        if(latestModels !=null){
-            count = Integer.valueOf(totalQuantity);
-
-        }
-        if(newProductsModel !=null){
-            count = Integer.valueOf(totalQuantity);
-
-        }*/
         if(productsModels !=null){
             ProductImage = (productsModels.getProductImg().toString());
 
@@ -336,7 +324,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             ProductImage = (newProductsModel.getProductImg().toString());
         }
 
-        DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("cart").push();
+        DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("cart").child(ProductName);
         x.child("quantity").setValue(ProductQuantity);
         x.child("productImg").setValue(ProductImage);
         x.child("productPrice").setValue(ProductPrice);

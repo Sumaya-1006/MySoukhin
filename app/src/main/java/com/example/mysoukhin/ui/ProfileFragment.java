@@ -158,7 +158,7 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View view) {
 
                         Toast.makeText(getContext(), "You are successfully Logout", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        Intent intent = new Intent(getContext(), AddressActivity.class);
                         startActivity(intent);
 
                     }

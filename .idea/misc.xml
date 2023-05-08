@@ -37,6 +37,9 @@
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_logout.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_my_order.xml" value="0.3009833262077811" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_order.xml" value="0.3009833262077811" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_order_details.xml" value="0.3009833262077811" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_order_history.xml" value="0.3009833262077811" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_payment.xml" value="0.2894399315946986" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/activity_pending_order.xml" value="0.3009833262077811" />
@@ -66,6 +69,7 @@
         <entry key="..\:/MySoukhin/app/src/main/res/layout/main_toolbar.xml" value="0.30012825994014536" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/notification_badge_layout.xml" value="0.30012825994014536" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/order_history_items.xml" value="0.30012825994014536" />
+        <entry key="..\:/MySoukhin/app/src/main/res/layout/order_history_layout.xml" value="0.30012825994014536" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/order_items.xml" value="0.30012825994014536" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/product_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/MySoukhin/app/src/main/res/layout/products_item_list.xml" value="0.365625" />

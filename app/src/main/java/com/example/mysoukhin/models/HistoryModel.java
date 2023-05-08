@@ -1,50 +1,69 @@
 package com.example.mysoukhin.models;
 
 public class HistoryModel {
-    String productImg;
-    String productPrice;
-    String productTitle;
-    String quantity;
+    String OrderId,  Date, orderNums, orderPrice, orderProducts, OrderCheck;
 
     public HistoryModel() {
     }
 
-    public HistoryModel(String productImg, String productPrice, String productTitle, String quantity) {
-        this.productImg = productImg;
-        this.productPrice = productPrice;
-        this.productTitle = productTitle;
-        this.quantity = quantity;
+    public HistoryModel(String OrderId, String date, String orderNums, String OrderCheck,String orderProducts) {
+        Date = date;
+        this.orderNums = orderNums;
+        this.OrderCheck = OrderCheck;
+        this.OrderId = OrderId;
+        this.orderProducts = orderProducts;
+
     }
 
-    public String getProductImg() {
-        return productImg;
+    public String getDate() {
+        return Date;
     }
 
-    public void setProductImg(String productImg) {
-        this.productImg = productImg;
+    public void setDate(String date) {
+        Date = date;
     }
 
-    public String getProductPrice() {
-        return productPrice;
+    public String getOrderNums() {
+        return orderNums;
     }
 
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+    public void setOrderNums(String orderNums) {
+        this.orderNums = orderNums;
     }
 
-    public String getProductTitle() {
-        return productTitle;
+    public String getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setProductTitle(String productTitle) {
-        this.productTitle = productTitle;
+    public void setOrderPrice(String orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getOrderProducts() {
+        return orderProducts;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setOrderProducts(String orderProducts) {
+        this.orderProducts = orderProducts;
     }
+
+    public String getOrderCheck() {
+        return OrderCheck;
+    }
+
+    public void setOrderCheck(String orderCheck) {
+        OrderCheck = orderCheck;
+    }
+
+    public String getOrderId() {
+        return OrderId;
+    }
+
+    public void setOrderId(String orderId) {
+        OrderId = orderId;
+    }
+
+
 }
+
+

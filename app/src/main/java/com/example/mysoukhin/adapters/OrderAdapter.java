@@ -39,9 +39,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(orderModels.get(position).getProductImg()).into(holder.imageView);
         holder.title.setText(orderModels.get(position).getProductTitle());
-        holder.product_price.setText(orderModels.get(position).getProductPrice()+"৳");
-
-
+        holder.product_price.setText("Price : "+orderModels.get(position).getProductPrice() + "৳");
+        holder.quantity.setText("Quantity : "+orderModels.get(position).getQuantity());
     }
 
     @Override
@@ -51,17 +50,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView title,product_price,date;
+        TextView title,product_price,quantity;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.order_image);
-            title = itemView.findViewById(R.id.order_title);
+           /* title = itemView.findViewById(R.id.order_title);
             product_price = itemView.findViewById(R.id.order_price);
-          /*  date = itemView.findViewById(R.id.date);
-            Calendar calendar = Calendar.getInstance();
-            String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-            date.setText(currentDate);
-*/
+            quantity = itemView.findViewById(R.id.order_quant);*/
+
+
 
         }
     }

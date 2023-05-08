@@ -39,11 +39,9 @@ public class CartsFragment extends Fragment {
     public ArrayList<CartItemModel> cartItemModelList;
     CartAdapter cartAdapter;
     private RecyclerView CartItemRecyclerView;
-    DatabaseReference root;
     DatabaseReference ref;
     TextView rec_amount;
     Button rec_check;
-    NotificationBadge badge;
     public CartsFragment() {
 
     }
@@ -60,10 +58,8 @@ public class CartsFragment extends Fragment {
         cartItemModelList = new ArrayList<>();
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
-        badge = view.findViewById(R.id.badge_id);
-        ref = FirebaseDatabase.getInstance().getReference("cart");
-        root = FirebaseDatabase.getInstance().getReference("cart");
 
+        ref = FirebaseDatabase.getInstance().getReference("cart");
         rec_amount = view.findViewById(R.id.rec_amount);
         rec_check = view.findViewById(R.id.rec_checkout);
 
@@ -72,6 +68,7 @@ public class CartsFragment extends Fragment {
 
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
+        String timestamp = ""+System.currentTimeMillis();
 
         ref.addValueEventListener(new ValueEventListener() {
            @Override
@@ -91,11 +88,13 @@ public class CartsFragment extends Fragment {
 
            }
        });
+
+
         rec_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // savedData();
-                Intent intent = new Intent(getContext(), AddressActivity.class);
+              //  savedData();
+                Intent intent = new Intent(getContext(),AddressActivity.class);
                 startActivity(intent);
             }
         });
@@ -103,17 +102,14 @@ public class CartsFragment extends Fragment {
         return view;
     }
 
-
-               /* root.child("order").child("productImg").setValue(snapshot.getValue());
-                root.child("order").child("productTitle").setValue(snapshot.getValue());
-                root.child("order").child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));
-                Toast.makeText( getContext() ,"Confirmed Completed" , Toast.LENGTH_LONG).show();
-                root.child("cart").removeValue();*/
-
-       /* x.addValueEventListener(new ValueEventListener() {
+    /*private void savedData() {
+        root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference x = root.child("cart");
+        x.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 root.child("order").push().setValue(snapshot.getValue()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -133,7 +129,9 @@ public class CartsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });*/
+        });
+
+    }*/
 
 
     public BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -143,8 +141,8 @@ public class CartsFragment extends Fragment {
             String totalBill = String.valueOf((intent.getIntExtra("total_amount",0)));
             Log.e("error tag", String.valueOf(totalBill));
             rec_amount.setText("Total Amount :" +totalBill+" ৳");
-          //  DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("order");
-           // x.child("totalAmount").setValue(totalBill+"৳");
+          /* DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("Order");
+           x.child("totalAmount").setValue(totalBill+"৳");*/
 
 
         }

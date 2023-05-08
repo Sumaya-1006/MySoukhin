@@ -4,15 +4,10 @@ public class OrderModel {
     String productImg;
     String productPrice;
     String productTitle;
+    String quantity;
 
 
     public OrderModel() {
-    }
-
-    public OrderModel(String productImg, String productPrice, String productTitle) {
-        this.productImg = productImg;
-        this.productPrice = productPrice;
-        this.productTitle = productTitle;
     }
 
     public String getProductImg() {
@@ -39,4 +34,11 @@ public class OrderModel {
         this.productTitle = productTitle;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 }
