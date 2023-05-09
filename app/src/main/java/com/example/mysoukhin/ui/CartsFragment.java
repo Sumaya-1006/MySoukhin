@@ -24,6 +24,7 @@ import com.example.mysoukhin.models.CartItemModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,8 @@ public class CartsFragment extends Fragment {
     DatabaseReference ref;
     TextView rec_amount;
     Button rec_check;
+    FirebaseAuth auth;
+
     public CartsFragment() {
 
     }
@@ -58,6 +61,9 @@ public class CartsFragment extends Fragment {
         cartItemModelList = new ArrayList<>();
         cartAdapter = new CartAdapter(getContext(), cartItemModelList);
         CartItemRecyclerView.setAdapter(cartAdapter);
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
         ref = FirebaseDatabase.getInstance().getReference("cart");
         rec_amount = view.findViewById(R.id.rec_amount);
@@ -80,7 +86,6 @@ public class CartsFragment extends Fragment {
                }
                cartAdapter.notifyDataSetChanged();
                //accountTotalPrice();
-
            }
 
            @Override
@@ -89,13 +94,22 @@ public class CartsFragment extends Fragment {
            }
        });
 
-
         rec_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  savedData();
-                Intent intent = new Intent(getContext(),AddressActivity.class);
-                startActivity(intent);
+                //savedData();
+
+                  if (user != null) {
+                    // user logged in
+                    Intent intent = new Intent(getContext(), AddressActivity.class);
+                    startActivity(intent);
+
+
+                }else{
+                    Toast.makeText(getContext(), "Please first create your account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -141,9 +155,6 @@ public class CartsFragment extends Fragment {
             String totalBill = String.valueOf((intent.getIntExtra("total_amount",0)));
             Log.e("error tag", String.valueOf(totalBill));
             rec_amount.setText("Total Amount :" +totalBill+" ৳");
-          /* DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("Order");
-           x.child("totalAmount").setValue(totalBill+"৳");*/
-
 
         }
     };
