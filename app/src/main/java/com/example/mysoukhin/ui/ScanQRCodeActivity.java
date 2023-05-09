@@ -96,7 +96,6 @@ public class ScanQRCodeActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onPostResume() {
         super.onPostResume();
@@ -132,6 +131,8 @@ public class ScanQRCodeActivity extends AppCompatActivity {
 
                     textView.setText("This Order Received Successfully");
                     Toast.makeText(ScanQRCodeActivity.this,"Order Received Successfully",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
+                    startActivity(intent);
                     finish();
                 }
                 else {

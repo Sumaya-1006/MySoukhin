@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.HistoryModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,7 @@ public class CheckOutActivity extends AppCompatActivity {
     String ProductName = "";
     ProgressDialog progressDialog;
     ArrayList<HistoryModel> models;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class CheckOutActivity extends AppCompatActivity {
         cashText = findViewById(R.id.cashText);
         checkBtn = findViewById(R.id.cashId);
         bankBtn = findViewById(R.id.bankId);
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
         seekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
         seekBar.getThumb().setColorFilter(getResources().getColor(R.color.purple_500), PorterDuff.Mode.SRC_ATOP);
@@ -65,11 +70,18 @@ public class CheckOutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // Toast.makeText(CheckOutActivity.this, "Your ordered is processed now", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
-                intent.putExtra("productTitle",ProductName);
-                startActivity(intent);
-              savedData();
+                if (user != null) {
+                    // user logged in
+                    Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
+                    intent.putExtra("productTitle",ProductName);
+                    startActivity(intent);
+                    savedData();
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please first create your account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
 
             }
         });

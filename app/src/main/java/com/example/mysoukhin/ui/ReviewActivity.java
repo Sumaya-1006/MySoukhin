@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,6 +56,7 @@ public class ReviewActivity extends AppCompatActivity {
         setSupportActionBar(reviewToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
         reviewBtn = findViewById(R.id.reviewBtn);
 
         database = FirebaseDatabase.getInstance();
@@ -65,10 +68,8 @@ public class ReviewActivity extends AppCompatActivity {
         submit = findViewById(R.id.review_submit);
         // get reviews
         loadMyReview();
-        //get shop info
-        //shopInfo();
 
-        reviewToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+         reviewToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -80,9 +81,9 @@ public class ReviewActivity extends AppCompatActivity {
         reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(getApplicationContext(), SeeReviewsActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -90,7 +91,26 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                inputData();
+               if (user != null) {
+                    // user logged in
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please first create your account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                String rating = "" + ratingBar.getRating();
+                String review = "" + reviewEdtText.getText().toString();
+                if(TextUtils.isEmpty(rating)){
+                    Toast.makeText(ReviewActivity.this, "Rating is empty", Toast.LENGTH_SHORT).show();
+                }
+                if(TextUtils.isEmpty(review)){
+                    reviewEdtText.setError("Review is empty");
+                }else{
+                    inputData();
+
+                }
+
             }
         });
 
@@ -139,30 +159,31 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void inputData() {
-        String rating = ""+ratingBar.getRating();
-        String review = ""+reviewEdtText.getText().toString();
+        String rating = "" + ratingBar.getRating();
+        String review = "" + reviewEdtText.getText().toString();
 
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("rating",rating);
-        hashMap.put("reviews",review);
-        hashMap.put("uid",auth.getUid());
-        hashMap.put("productTitle",productTitle);
-        hashMap.put("productImg",productImg);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("rating", rating);
+            hashMap.put("reviews", review);
+            hashMap.put("uid", auth.getUid());
+            hashMap.put("productTitle", productTitle);
+            hashMap.put("productImg", productImg);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("ratings").push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(ReviewActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            ref.child("ratings").push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(ReviewActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ReviewActivity.this, "error", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ReviewActivity.this, "error", Toast.LENGTH_SHORT).show();
 
-            }
-        });
-
+                }
+            });
+        }
     }
-}
+
+
