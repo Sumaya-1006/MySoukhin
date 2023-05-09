@@ -1,33 +1,21 @@
 package com.example.mysoukhin.ui;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.models.AddressModel;
 import com.example.mysoukhin.models.ProfileModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -46,12 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.io.InputStream;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
@@ -59,11 +43,11 @@ public class ProfileFragment extends Fragment {
     ImageView forward1, forward2, forward3, forward4, forward5, forward6, new_camera;
     TextView profile_name, profile_email;
     CircleImageView circleImage;
+    ImageView back;
     private FirebaseAuth mAuth;
     private FirebaseUser CurrentUser;
     private String UserId;
     private StorageReference mStorageReference;
-   // Uri imgUri;
     private  Uri imgUri;
 
     @Override
@@ -74,6 +58,7 @@ public class ProfileFragment extends Fragment {
         circleImage = view.findViewById(R.id.circleImage);
         profile_name = view.findViewById(R.id.profile_name);
         profile_email = view.findViewById(R.id.profile_email);
+        back = view.findViewById(R.id.backId);
 
         forward1 = view.findViewById(R.id.forward1);
         forward2 = view.findViewById(R.id.forward2);
@@ -94,6 +79,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 loadImage();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),MainActivity.class));
             }
         });
 
