@@ -14,6 +14,7 @@ import com.example.mysoukhin.R;
 import com.example.mysoukhin.adapters.AddressAdapter;
 import com.example.mysoukhin.models.AddressModel;
 import com.example.mysoukhin.models.NewProductsModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,6 +27,8 @@ public class AddressActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     AddressAdapter adapter;
     Toolbar toolbar;
+    FirebaseAuth auth;
+    String CurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class AddressActivity extends AppCompatActivity {
                 finish();
             }
         });
+        auth = FirebaseAuth.getInstance();
+        CurrentUser = auth.getCurrentUser().getUid();
 
         recyclerView = findViewById(R.id.address_rec);
         List<AddressModel> model = new ArrayList<>();
@@ -55,7 +60,7 @@ public class AddressActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
 
-        firebaseDatabase.getReference().child("address").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.getReference().child("address").child(CurrentUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){

@@ -41,6 +41,7 @@ import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.review.model.ReviewErrorCode;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,6 +66,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public static String  ProductImage, ProductQuantity, OldPrice, ProductRating, ProductName, ProductPrice;
     static NotificationBadge badge;
     static ImageView icon;
+    FirebaseAuth mAuth;
+    String CurrentUser;
 
     static  int count = 1;
 
@@ -323,8 +326,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if(newProductsModel !=null){
             ProductImage = (newProductsModel.getProductImg().toString());
         }
+        mAuth=FirebaseAuth.getInstance();
+        CurrentUser = mAuth.getCurrentUser().getUid();
 
-        DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("cart").child(ProductName);
+        DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("cart").child(CurrentUser).child(ProductName);
         x.child("quantity").setValue(ProductQuantity);
         x.child("productImg").setValue(ProductImage);
         x.child("productPrice").setValue(ProductPrice);

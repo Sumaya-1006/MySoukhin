@@ -10,8 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.adapters.OrderAdapter;
-import com.example.mysoukhin.models.OrderModel;
+import com.example.mysoukhin.adapters.PendingAdapter;
+import com.example.mysoukhin.models.PendingModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +24,12 @@ import java.util.List;
 
 public class PendingOrder extends AppCompatActivity {
     RecyclerView recyclerView;
-    OrderAdapter orderAdapter;
+    PendingAdapter pendingAdapter;
     DatabaseReference root;
     DatabaseReference ref;
     Toolbar pToolbar;
+    FirebaseAuth auth;
+    String CurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,9 @@ public class PendingOrder extends AppCompatActivity {
         pToolbar = findViewById(R.id.pending_toolbar);
         setSupportActionBar(pToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        auth = FirebaseAuth.getInstance();
+        CurrentUser = auth.getCurrentUser().getUid();
 
         pToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,23 +55,23 @@ public class PendingOrder extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        List<OrderModel> orderModels = new ArrayList<>();
+        List<PendingModel> orderModels = new ArrayList<>();
 
-        recyclerView.setAdapter(orderAdapter);
-        ref = FirebaseDatabase.getInstance().getReference("cart");
+        recyclerView.setAdapter(pendingAdapter);
+        ref = FirebaseDatabase.getInstance().getReference("cart").child(CurrentUser);
         root = FirebaseDatabase.getInstance().getReference();
 
-        orderAdapter = new OrderAdapter(this,orderModels);
-        recyclerView.setAdapter(orderAdapter);
+        pendingAdapter = new PendingAdapter(this,orderModels);
+        recyclerView.setAdapter(pendingAdapter);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    OrderModel model = dataSnapshot.getValue(OrderModel.class);
+                    PendingModel model = dataSnapshot.getValue(PendingModel.class);
                     orderModels.add(model);
                 }
-                orderAdapter.notifyDataSetChanged();
+                pendingAdapter.notifyDataSetChanged();
             }
 
             @Override

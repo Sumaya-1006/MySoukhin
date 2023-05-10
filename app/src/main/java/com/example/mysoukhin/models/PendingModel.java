@@ -1,15 +1,15 @@
 package com.example.mysoukhin.models;
 
-public class OrderModel {
+public class PendingModel {
     String productImg;
     String productPrice;
     String productTitle;
     String quantity;
 
-    public OrderModel() {
+    public PendingModel() {
     }
 
-    public OrderModel(String productImg, String productPrice, String productTitle, String quantity) {
+    public PendingModel(String productImg, String productPrice, String productTitle, String quantity) {
         this.productImg = productImg;
         this.productPrice = productPrice;
         this.productTitle = productTitle;
@@ -47,4 +47,6 @@ public class OrderModel {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-}
+
+    }
+

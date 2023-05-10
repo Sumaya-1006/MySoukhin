@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -41,7 +42,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     List<CartItemModel> cartItemModels;
     int totalAmount ;
 
-
     public CartAdapter(Context context, List<CartItemModel> cartItemModels) {
         this.context = context;
         this.cartItemModels = cartItemModels;
@@ -62,20 +62,42 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.price.setText("Price: "+cartItemModels.get(position).getProductPrice()+"৳");
        // holder.total_price.setText(cartItemModels.get(position).getTotalPrice()+"");
         holder.quan.setText(cartItemModels.get(position).getQuantity());
+      //  holder.radioButton.setText(cartItemModels.get(position).getChecked());
 
+       /* holder.radioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    totalAmount = Integer.parseInt(cartItemModels.get(position).getProductPrice())+totalAmount;
+                    Log.d("tag", String.valueOf(totalAmount));
+                    Intent intent = new Intent("MyTotalAmount");
+                    intent.putExtra("total_amount",totalAmount);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                    DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("carts");
+
+                    x.child("amount").setValue(totalAmount);
+
+
+                }catch (Exception e){
+
+                }
+
+            }
+        });*/
 
         //pass total amount
-       try{
-               totalAmount = Integer.parseInt(cartItemModels.get(position).getProductPrice())+totalAmount;
-               Log.d("tag", String.valueOf(totalAmount));
-               Intent intent = new Intent("MyTotalAmount");
-               intent.putExtra("total_amount",totalAmount);
-               LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        try{
+            totalAmount = Integer.parseInt(cartItemModels.get(position).getProductPrice())+totalAmount;
+            Log.d("tag", String.valueOf(totalAmount));
+            Intent intent = new Intent("MyTotalAmount");
+            intent.putExtra("total_amount",totalAmount);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
 
-       }catch (Exception e){
+        }catch (Exception e){
 
         }
+
 
         holder.Cart_ItemDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,34 +109,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
                 notifyDataSetChanged();
-               /* Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.custom_delete_dialog);
-                Button yes = dialog.findViewById(R.id.yesId);
-                Button no = dialog.findViewById(R.id.no_Id);
 
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String ProductName = "";
-                        ProductName = holder.product_title.getText().toString();
-                        FirebaseDatabase.getInstance().getReference().child("cart").child(ProductName).removeValue();
-                        Toast.makeText(context, "You are successfully delete", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startActivity(intent);
-                        dialog.dismiss();
-
-                    }
-                });
-                dialog.show();*/
             }
         });
 
@@ -126,9 +121,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView productImage,Cart_ItemDelete;
+        ImageView productImage,Cart_ItemDelete,increment,decrement;
         TextView product_title,price,quan,quantityText,total_price;
+       // RadioButton radioButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -139,6 +134,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             quan = itemView.findViewById(R.id.quantity);
            // total_price = itemView.findViewById(R.id.totalprice);
             quantityText = itemView.findViewById(R.id.quantityText);
+           // radioButton = itemView.findViewById(R.id.radioBtn);
+          /*  increment = itemView.findViewById(R.id.IncrementIcon);
+            decrement = itemView.findViewById(R.id.decrementIcon);*/
+
 
         }
     }

@@ -194,7 +194,7 @@ public class ProfileFragment extends Fragment {
                     database1.getReference().child("users").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(getContext(), "added", Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(getContext(), "added", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -216,7 +216,6 @@ public class ProfileFragment extends Fragment {
         };
         m.addListenerForSingleValueEvent(valueEventListener);
     }
-
 
     private void loadImage(){
         Intent intent = new Intent();

@@ -85,6 +85,8 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
        holder.check_box.setOnClickListener(new View.OnClickListener() {
             private  String  ProductName = "", ProductPrice="",OldPrice="", ProductIsFavorite, UserId = " ";
             private String ProductImage= "";
+           FirebaseAuth auth;
+           String CurrentUser;
 
             @Override
             public void onClick(View view) {
@@ -104,7 +106,9 @@ public class LatestProductsAdapter extends RecyclerView.Adapter<LatestProductsAd
                     OldPrice = holder.product_oldPrice.getText().toString();
 
                 }
-                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                auth = FirebaseAuth.getInstance();
+                CurrentUser = auth.getCurrentUser().getUid();
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(CurrentUser).child(ProductName);
                 x.child("isFavorite").setValue(true);
                 x.child("productImg").setValue(ProductImage);
                 x.child("productPrice").setValue(ProductPrice);

@@ -116,7 +116,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
-
     private void loadMyReview() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ratings");
         ref.addValueEventListener(new ValueEventListener() {

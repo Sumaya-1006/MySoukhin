@@ -22,7 +22,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/container">
+        android:background="@drawable/qr_container">
 
         <com.budiyev.android.codescanner.CodeScannerView
             android:id="@+id/ScannerView"

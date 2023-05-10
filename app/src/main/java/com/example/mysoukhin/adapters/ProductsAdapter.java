@@ -20,6 +20,7 @@ import com.example.mysoukhin.models.ProductsModel;
 import com.example.mysoukhin.ui.CartsFragment;
 import com.example.mysoukhin.ui.FavouriteFragment;
 import com.example.mysoukhin.ui.ProductDetailsActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -57,6 +58,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         });
        holder.check_box.setOnClickListener(new View.OnClickListener() {
             private String ProductName = "", ProductPrice ="", ProductImage = "",OldPrice = "", ProductIsFavorite, UserId = " ";
+            FirebaseAuth auth;
+            String CurrentUser;
             @Override
             public void onClick(View view) {
                 if (ProductIsFavorite != null && ProductIsFavorite.equalsIgnoreCase("true")) {
@@ -74,7 +77,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                     ProductImage = (productsModels.get(position).getProductImg().toString());
                     OldPrice = holder.product_oldPrice.getText().toString();
                 }
-                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(ProductName);
+                auth = FirebaseAuth.getInstance();
+                CurrentUser = auth.getCurrentUser().getUid();
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favourites").child(CurrentUser).child(ProductName);
                 x.child("isFavorite").setValue(true);
                 x.child("productImg").setValue(ProductImage);
                 x.child("productPrice").setValue(ProductPrice);

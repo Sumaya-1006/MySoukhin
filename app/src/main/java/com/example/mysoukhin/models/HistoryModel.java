@@ -1,18 +1,14 @@
 package com.example.mysoukhin.models;
 
 public class HistoryModel {
-    String OrderId,  Date, orderNums, orderPrice, orderProducts, OrderCheck;
+    private String OrderID, Date, orderNums, orderProducts, OrderCheck;
 
-    public HistoryModel() {
-    }
-
-    public HistoryModel(String OrderId, String date, String orderNums, String OrderCheck,String orderProducts) {
+    public HistoryModel(String OrderId, String date, String orderNums, String orderProducts, String OrderCheck) {
+        this.OrderID = OrderId;
         Date = date;
         this.orderNums = orderNums;
-        this.OrderCheck = OrderCheck;
-        this.OrderId = OrderId;
         this.orderProducts = orderProducts;
-
+        this.OrderCheck = OrderCheck;
     }
 
     public String getDate() {
@@ -31,14 +27,6 @@ public class HistoryModel {
         this.orderNums = orderNums;
     }
 
-    public String getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(String orderPrice) {
-        this.orderPrice = orderPrice;
-    }
-
     public String getOrderProducts() {
         return orderProducts;
     }
@@ -55,15 +43,13 @@ public class HistoryModel {
         OrderCheck = orderCheck;
     }
 
-    public String getOrderId() {
-        return OrderId;
+    public String getOrderID() {
+        return OrderID;
     }
 
-    public void setOrderId(String orderId) {
-        OrderId = orderId;
+    public void setOrderID(String orderID) {
+        OrderID = orderID;
     }
-
-
 }
 
 

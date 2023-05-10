@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.HistoryModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,7 @@ public class CheckOutActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     ArrayList<HistoryModel> models;
     FirebaseAuth auth;
+    String CurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class CheckOutActivity extends AppCompatActivity {
         bankBtn = findViewById(R.id.bankId);
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
+        CurrentUser = auth.getCurrentUser().getUid();
 
         seekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_ATOP);
         seekBar.getThumb().setColorFilter(getResources().getColor(R.color.purple_500), PorterDuff.Mode.SRC_ATOP);
@@ -99,18 +102,22 @@ public class CheckOutActivity extends AppCompatActivity {
    private void savedData() {
 
        root = FirebaseDatabase.getInstance().getReference();
-       DatabaseReference x = root.child("cart");
+
+       auth = FirebaseAuth.getInstance();
+       CurrentUser = auth.getCurrentUser().getUid();
+       DatabaseReference x = root.child("cart").child(CurrentUser);
        x.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                FirebaseDatabase t = FirebaseDatabase.getInstance();
-               String key  = t.getReference("Order").push().getKey();
-               root.child("Order").child(key).child("orderproducts").setValue(snapshot.getValue());
-               root.child("Order").child(key).child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));
-               root.child("Order").child(key).child("IsChecked").setValue("false");
+               String key  = t.getReference("order").push().getKey();
+               root.child("order").child(CurrentUser).child(key).child("orderproducts").setValue(snapshot.getValue());
+               root.child("order").child(CurrentUser).child(key).child("orderproducts").child("totalPrice").removeValue();
+               root.child("order").child(CurrentUser).child(key).child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));
+               root.child("order").child(CurrentUser).child(key).child("IsChecked").setValue("false");
                Toast.makeText( getApplicationContext() ,"Confirmed Completed" , Toast.LENGTH_LONG).show();
-               root.child("cart").removeValue();
+               startActivity(new Intent(getApplicationContext(), OrderHistory.class));
+               root.child("cart").child(CurrentUser).removeValue();
            }
 
            @Override

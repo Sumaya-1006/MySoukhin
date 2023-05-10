@@ -25,13 +25,12 @@ import java.util.ArrayList;
 
 public class FavouriteFragment extends Fragment {
     RecyclerView fav_recycler;
-    private FirebaseAuth mAuth;
-    private FirebaseUser CurrentUser;
-    private String UserId;
     public ArrayList<FavouritesClass> favouritesClasses;
     FavouriteAdapter favouriteAdapter;
     DatabaseReference root;
     DatabaseReference ref;
+    FirebaseAuth auth;
+    String CurrentUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,10 +41,9 @@ public class FavouriteFragment extends Fragment {
         getActivity().setTitle("Favourite");
         // fToolbar = view.findViewById(R.id.favourite_toolbar);
         fav_recycler = view.findViewById(R.id.recyclerViewId);
+        auth = FirebaseAuth.getInstance();
+        CurrentUser = auth.getCurrentUser().getUid();
 
-        mAuth = FirebaseAuth.getInstance();
-        CurrentUser = mAuth.getCurrentUser();
-        UserId = CurrentUser.getUid();
         Retrieve_fav();
 
         return view;
@@ -73,7 +71,7 @@ public class FavouriteFragment extends Fragment {
         favouritesClasses = new ArrayList<>();
         favouriteAdapter = new FavouriteAdapter(getContext(), favouritesClasses);
         fav_recycler.setAdapter(favouriteAdapter);
-        ref = FirebaseDatabase.getInstance().getReference("favourites");
+        ref = FirebaseDatabase.getInstance().getReference("favourites").child(CurrentUser);
         root = FirebaseDatabase.getInstance().getReference();
 
         ref.addValueEventListener(new ValueEventListener() {

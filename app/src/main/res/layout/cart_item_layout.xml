@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp">
@@ -10,6 +9,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+       <!-- <RadioButton
+            android:id="@+id/radioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageView
             android:id="@+id/product_image"
@@ -50,7 +58,7 @@
             app:layout_constraintStart_toEndOf="@+id/product_image"
             app:layout_constraintTop_toBottomOf="@+id/product_title" />
 
-     <!--   <TextView
+       <!-- <TextView
             android:id="@+id/totalprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,9 +69,9 @@
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/price"
-            app:layout_constraintTop_toBottomOf="@+id/product_title" />-->
+            app:layout_constraintTop_toBottomOf="@+id/product_title" />
 
-       <!-- <TextView
+        &lt;!&ndash;<TextView
             android:id="@+id/Quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,40 +82,46 @@
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/product_image"
-            app:layout_constraintTop_toBottomOf="@+id/price" />-->
+            app:layout_constraintTop_toBottomOf="@+id/price" />&ndash;&gt;
 
-        <!-- <ImageView
+        <ImageView
             android:id="@+id/decrementIcon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/Quantity"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cart_quan"
+            app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintStart_toEndOf="@+id/Cart_ItemDelete"
             app:layout_constraintTop_toBottomOf="@+id/price"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_baseline_minimize_24" />
 
         <TextView
             android:id="@+id/cart_quan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="64dp"
             android:text="1"
             android:textColor="#000"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/IncrementIcon"
-            app:layout_constraintStart_toEndOf="@+id/decrementIcon"
-            app:layout_constraintTop_toBottomOf="@+id/price" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/price"
+            app:layout_constraintVertical_bias="0.607" />
 
         <ImageView
             android:id="@+id/IncrementIcon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.653"
+            app:layout_constraintHorizontal_bias="0.673"
             app:layout_constraintStart_toEndOf="@+id/cart_quan"
             app:layout_constraintTop_toBottomOf="@+id/price"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_baseline_add_24" />-->
 
         <TextView

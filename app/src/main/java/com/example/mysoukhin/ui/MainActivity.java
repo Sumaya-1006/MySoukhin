@@ -1,36 +1,31 @@
 package com.example.mysoukhin.ui;
 
-import static com.example.mysoukhin.ui.ProductDetailsActivity.badge;
-import static com.example.mysoukhin.ui.ProductDetailsActivity.count;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.mysoukhin.R;
-import com.example.mysoukhin.models.CartItemModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bnView;
     FloatingActionButton actionButton;
-    DatabaseReference root1;
     DatabaseReference reference;
-    static int totalCount = 1;
+    FirebaseAuth auth;
+    String CurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         bnView.setItemIconTintList(iconColorStates);
-        reference = FirebaseDatabase.getInstance().getReference("cart");
+
+        auth = FirebaseAuth.getInstance();
+        CurrentUser = auth.getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference("cart").child(CurrentUser);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

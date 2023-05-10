@@ -37,20 +37,15 @@ public class ScanQRCodeActivity extends AppCompatActivity {
     private CodeScanner codeScanner;
     private CodeScannerView codeScannerView;
     private TextView textView;
-    private FirebaseAuth mAuth;
-    private FirebaseUser CurrentUser;
-    private String UserId;
     private String OrderId;
     private Toolbar mToolBar;
-
+    FirebaseAuth auth;
+    String CurrentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qrcode);
 
-        mAuth= FirebaseAuth.getInstance();
-        CurrentUser = mAuth.getCurrentUser();
-        UserId = CurrentUser.getUid();
 
         //tool bar
         mToolBar = findViewById(R.id.QRScanner_TooBar);
@@ -64,11 +59,11 @@ public class ScanQRCodeActivity extends AppCompatActivity {
             }
         });
 
-
         OrderId = getIntent().getStringExtra("OrderId");
-
         codeScannerView =findViewById(R.id.ScannerView);
         textView = findViewById(R.id.text);
+        auth = FirebaseAuth.getInstance();
+        CurrentUser = auth.getCurrentUser().getUid();
         codeScanner = new CodeScanner(this,codeScannerView);
 
         codeScanner.setDecodeCallback(new DecodeCallback() {
@@ -127,7 +122,7 @@ public class ScanQRCodeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    FirebaseDatabase.getInstance().getReference().child("Order").child(OrderId).child("IsChecked").setValue("true");
+                    FirebaseDatabase.getInstance().getReference().child("order").child(CurrentUser).child(OrderId).child("IsChecked").setValue("true");
 
                     textView.setText("This Order Received Successfully");
                     Toast.makeText(ScanQRCodeActivity.this,"Order Received Successfully",Toast.LENGTH_LONG).show();

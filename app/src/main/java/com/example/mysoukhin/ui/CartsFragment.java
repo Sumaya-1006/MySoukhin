@@ -44,6 +44,7 @@ public class CartsFragment extends Fragment {
     TextView rec_amount;
     Button rec_check;
     FirebaseAuth auth;
+    String CurrentUser;
 
     public CartsFragment() {
 
@@ -64,8 +65,9 @@ public class CartsFragment extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
+        CurrentUser = auth.getCurrentUser().getUid();
 
-        ref = FirebaseDatabase.getInstance().getReference("cart");
+        ref = FirebaseDatabase.getInstance().getReference("cart").child(CurrentUser);
         rec_amount = view.findViewById(R.id.rec_amount);
         rec_check = view.findViewById(R.id.rec_checkout);
 

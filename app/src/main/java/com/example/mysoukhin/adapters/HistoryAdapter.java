@@ -7,19 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.models.HistoryModel;
-import com.example.mysoukhin.models.OrderModel;
+import com.example.mysoukhin.ui.PendingOrder;
 import com.example.mysoukhin.ui.ScanQRCodeActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -43,7 +47,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.orderProducts.setText(models.get(position).getOrderProducts());
-      //  holder.orderPrice.setText(models.get(position).getOrderPrice());
+        //  holder.orderPrice.setText(models.get(position).getOrderPrice());
         holder.orderNums.setText(models.get(position).getOrderNums());
         holder.orderDate.setText(models.get(position).getDate());
         holder.OrderCheck.setText( models.get(position).getOrderCheck());
@@ -51,6 +55,31 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         if(models.get(position).getOrderCheck().equalsIgnoreCase("false")){
             holder.OrderCheck.setText("Order: Pending");
             holder.ScanQrCode.setVisibility(View.VISIBLE);
+
+            /*  DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference x = root.child("Order");
+            x.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    FirebaseDatabase t = FirebaseDatabase.getInstance();
+                    String key  = t.getReference("Pending order").push().getKey();
+                    root.child("Pending order").child(key).child("pendingProducts").setValue(snapshot.getValue());
+                    root.child("Pending order").child(key).child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));
+                    root.child("Pending order").child(key).child("IsChecked").setValue("false");
+
+                    Toast.makeText( context ,"Confirmed Completed" , Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(context, PendingOrder.class);
+                    context.startActivity(intent);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });*/
+
         }
         else{
             holder.OrderCheck.setText("Order: Received");
@@ -61,7 +90,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ScanQRCodeActivity.class);
-                intent.putExtra("OrderId",models.get(position).getOrderId());
+                intent.putExtra("OrderId",models.get(position).getOrderID());
                 context.startActivity(intent);
             }
         });
@@ -82,9 +111,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
             orderDate = itemView.findViewById(R.id.orderDate);
             orderNums = itemView.findViewById(R.id.orderNums);
-           // orderPrice = itemView.findViewById(R.id.orderPrice);
+            // orderPrice = itemView.findViewById(R.id.orderPrice);
             orderProducts = itemView.findViewById(R.id.orderProducts);
-            OrderCheck = itemView.findViewById(R.id.OrderCheck);
+            OrderCheck = itemView.findViewById(R.id.order_Check);
             ScanQrCode = itemView.findViewById(R.id.ScanQRCode);
 
 
