@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mysoukhin.R;
 import com.example.mysoukhin.adapters.CartAdapter;
 import com.example.mysoukhin.models.CartItemModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -100,18 +102,28 @@ public class CartsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //savedData();
-
-                  if (user != null) {
-                    // user logged in
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+                if(account !=null){
                     Intent intent = new Intent(getContext(), AddressActivity.class);
                     startActivity(intent);
+
+                }else{
+                    Toast.makeText(getContext(), "Please first create your account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+
+                }
+
+                  /*if (user != null) {
+                    // user logged in
+
 
 
                 }else{
                     Toast.makeText(getContext(), "Please first create your account", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
-                }
+                }*/
             }
         });
 

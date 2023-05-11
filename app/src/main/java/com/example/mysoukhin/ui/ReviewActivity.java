@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mysoukhin.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -91,8 +93,10 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               if (user != null) {
-                    // user logged in
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+                if(account !=null){
+                    Intent intent = new Intent(getApplicationContext(), SeeReviewsActivity.class);
+                    startActivity(intent);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Please first create your account", Toast.LENGTH_SHORT).show();
@@ -102,7 +106,7 @@ public class ReviewActivity extends AppCompatActivity {
                 String rating = "" + ratingBar.getRating();
                 String review = "" + reviewEdtText.getText().toString();
                 if(TextUtils.isEmpty(rating)){
-                    Toast.makeText(ReviewActivity.this, "Rating is empty", Toast.LENGTH_SHORT).show();
+                    ratingBar.setRating(Float.parseFloat(rating));
                 }
                 if(TextUtils.isEmpty(review)){
                     reviewEdtText.setError("Review is empty");

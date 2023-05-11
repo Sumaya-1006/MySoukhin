@@ -9,11 +9,11 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/shipping_toolbar"
+        android:id="@+id/admin_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#8FF7FD"
-        app:title="Add Products" />
+        app:title="Admin Control" />
 
     <LinearLayout
         android:id="@+id/linearlayout1"

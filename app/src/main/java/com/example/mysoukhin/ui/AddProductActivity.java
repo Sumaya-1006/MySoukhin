@@ -2,6 +2,7 @@ package com.example.mysoukhin.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -40,12 +41,24 @@ public class AddProductActivity extends AppCompatActivity {
     static Uri imgUri;
     private StorageReference mStorageRef;
     private StorageTask mUploadTask;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+
+        toolbar = findViewById(R.id.admin_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         upload = findViewById(R.id.uploadId);
         history = findViewById(R.id.historyId);
@@ -61,7 +74,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 upload.setVisibility(View.VISIBLE);
-                history.setVisibility(View.VISIBLE);
+                history.setVisibility(View.GONE);
 
             }
         });

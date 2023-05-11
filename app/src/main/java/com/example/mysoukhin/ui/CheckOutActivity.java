@@ -112,7 +112,6 @@ public class CheckOutActivity extends AppCompatActivity {
                FirebaseDatabase t = FirebaseDatabase.getInstance();
                String key  = t.getReference("order").push().getKey();
                root.child("order").child(CurrentUser).child(key).child("orderproducts").setValue(snapshot.getValue());
-               root.child("order").child(CurrentUser).child(key).child("orderproducts").child("totalPrice").removeValue();
                root.child("order").child(CurrentUser).child(key).child("Date").setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a").format(Calendar.getInstance().getTime())));
                root.child("order").child(CurrentUser).child(key).child("IsChecked").setValue("false");
                Toast.makeText( getApplicationContext() ,"Confirmed Completed" , Toast.LENGTH_LONG).show();
@@ -125,6 +124,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
            }
        });
+
       /* progressDialog.setMessage("Placing order");
         progressDialog.show();;
 
